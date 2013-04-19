@@ -1,12 +1,12 @@
 # Game - Programming Assignments Private Repository
 ### Student Information
-  + Name: Tommy Trojan
-  + USC Email: ttrojan@usc.edu
-  + USC ID: 0123456789
+  + Name: Cathy Ji
+  + USC Email: catherhj@usc.edu
+  + USC ID: 6862729897
 
 ### Game Information
-  + Game Name: myAwsomeGame
-  + Game Description: One sentence game description
+  + Game Name: High Flyer
+  + Game Description: Send the High Flyer up, up, up to a successful mission collecting stars by avoiding space debris and aliens.
   + [Game Design Doc](GameDesignDoc.md)
 
 

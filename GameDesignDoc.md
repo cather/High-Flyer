@@ -1,89 +1,37 @@
-# Game Design Document
-This is a place holder for your game design document. You are advised to write your document in [Markdown](http://daringfireball.net/projects/markdown/) and the following section will show you how to write a document using Markdown markup.
-
-Alternativley, you can write your document in plain text if you wish.
+# Game Overview
+The National Aeronautic Space Corporation has just received unprecedented funding for its newest space flight project to collect data on stars in the solar system. The rocket, named High Flyer, has been built and is ready to launch. Don't let all of NASC's hard work go to waste. Help the High Flyer travel to the furthest limits of the galaxy... and beyond!
 
 ----
+## Components
 
-## Markdown
-Markdown is a human-readable structured plain text format that is used to convert text into HTML. GitHub automatically renders Markdown into HTML.
+### Layout
+The game will be a vertical scroller. The rocket ship will be free to move around the entirety of the screen. The background will appear to scroll down as if the rocketship is moving up in space. A pause button will be in the top right corner. Score will be displayed in the center top of the screen. Number of lives will be displayed in the center bottom of the screen.
 
-This is a crash course on how to use Markdown. The following section will show you the plain text used to generate the document shown in the rendering section.
+#### Preliminary layout
 
-### Code
-
-```
-# Header 1
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
-
-You can also write in **bold** or _italics_. You can also ~~strike through~~ or write inline `Code Segments`
-
->Blockquotes are done as such.
-
-Just make sure to separate paragraphs with an emptyline. 
-Otherwise, they are considered in the same paragraph.
-
-You link to [Google](https://www.google.com) as such and lists are written has follows:
-  1. First you indent with two empty spaces.
-  1. Then, you use:
-    * `1.` to signal an ordered (i.e. numbered) list, or
-    * `*`, `-`, `+` to represent an unordered list.
-      1. Make sure to maintain indentation
-      1. As it is used to identify sub-lists
-  1. Numbering and symboles don't matter as they are auto-generated later.
-
-Tables are pretty easy to make:
-
-| Tables        | Are           | Easy          |
-| ------------- |:-------------:| -------------:|
-| left-aligned  | centered      | right-aligned |
-| header are    | bolded and    | centered      |
-| zebra stripes | are neat      | 1             |
+![alt text](http://octodex.github.com/images/Professortocat_v2.png "Storyboarding High Flyer")
 
 
-Images are added inline by using the following syntax
-![alt text](http://octodex.github.com/images/Professortocat_v2.png "Image Title")
-```
-
-----
-
-### Rendering
-This section shows the rendering of the plain text above.
-
-# Header 1
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
-
-You can also write in **bold** or _italics_. You can also ~~strike through~~ or write inline `Code Segments`
-
->Blockquotes are done as such.
-
-Just make sure to separate paragraphs with an emptyline. 
-Otherwise, they are considered in the same paragraph.
-
-You link to [Google](https://www.google.com) as such and lists are written has follows:
-  1. First you indent with two empty spaces.
-  1. Then, you use:
-    * `1.` to signal an ordered (i.e. numbered) list, or
-    * `*`, `-`, `+` to represent an unordered list.
-      1. Make sure to maintain indentation
-      1. As it is used to identify sub-lists
-  1. Numbering and symboles don't matter as they are auto-generated later.
-
-Tables are pretty easy to make:
-
-| Tables        | Are           | Easy          |
-| ------------- |:-------------:| -------------:|
-| left-aligned  | centered      | right-aligned |
-| header are    | bolded and    | centered      |
-| zebra stripes | are neat      | 1             |
+## Gameplay
 
 
-Images are added inline by using the following syntax
-![alt text](http://octodex.github.com/images/Professortocat_v2.png "Image Title")
+### Objects
+| Object        | Role          | In gameplay          | Preliminary Appearance |
+|:-------------:|---------------|----------------------|----------------------|
+| Rocket Ship   | Player        | The user controls the rocketship with the keyboard arrows in order to safely guide it through space       |
+| Laser Beam   | Weapon        | Damages enemies. Activated by left-clicking the mouse. The laser shoots (travels) quickly in the direction of the mouse, originating from the rocketship.|
+| Comet        | Enemy         | Appear randomly on the left of the screen and move in a straight line until going off-screen. They can move directly left to right, or may move to the right of the screen on a diagonal path. If they hit the rocket, the rocket suffers some damage |
+| Alien ship    | Enemy         | Alien ships appear randomly from any direction off screen, and move randomy on-screen. They drop off missiles in their paths. If the alien ship collides with the rocket, the rocket suffers some damage. Alien ships can be attacked with the laser. |
+| Missile        | Enemy        | Missiles explode after a certain period of time or if they collide with any other object. They travel in a path that follows the rocket hip. If the radius of their explosions hits the rocket, the rocket suffers damage. If the missile collides with the rocket, the rocket loses a life. If the missile collides with any other object, it is destroyed. If shot by the laser, the missile explodes.|
+| Planet       | Barrier       | Rocket must avoid planets or else they lose a life. Planets are stationary, as in they only move with the background and not independently. |
+| Star        | Collectable   | The rocket ship collects stars for points. Stars are collected when the rocketship collides with them. Stars are stationary in that they only move with the background and not independently. |
 
+### Controls
+
+The user will control the rocketship with the up, down, left, and right arrow keys. The laser beam will be activated when the user left-clicks the mouse on screen. The user right-clicks anywhere on screen to pause the game. On the pause screen, the user can left-click 'continue' to resume the game, 'restart' to restart, and 'quit' to exit.
+
+### Lives
+The player starts with three lives, indicated on screen by small icons. The rocketship has a health bar that depletes when hit by commets or alien bombs. When the health bar is depleted, a life is lost. A life is immediately lost when the rocket collides with a planet. When a life is lost, this is indicated on-screen by have one of the life icons disappear. When all three lives are lost, the game ends.
+
+###  Scoring
+The aim of the game is to collect as many stars as possible. The score will reflect this number. A star is 'collected' when the rocket ship touches it. An icon of a star is then added to the score display area of the screen. Scores can only increase, never decrease.
