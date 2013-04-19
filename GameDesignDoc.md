@@ -1,5 +1,5 @@
 # Game Overview
-The National Aeronautic Space Corporation has just received unprecedented funding for its newest space flight project to collect data on stars in the solar system. The rocket, named High Flyer, has been built and is ready to launch. Don't let all of NASC's hard work go to waste. Help the High Flyer travel to the furthest limits of the galaxy... and beyond!
+The National Aeronautic Space Corporation has just received unprecedented funding for its newest space flight project to travel the universe and see the sights. (Oh and collect data on stars too, I guess). The rocket, named High Flyer, has been built and is ready to launch. Don't let all of NASC's hard work go to waste. Help the High Flyer travel to the furthest limits of the galaxy... and beyond!
 
 ----
 ## Components
@@ -31,7 +31,8 @@ The game will be a vertical scroller. The rocket ship will be free to move aroun
 The user will control the rocketship with the up, down, left, and right arrow keys. The laser beam will be activated when the user left-clicks the mouse on screen. The user right-clicks anywhere on screen to pause the game. On the pause screen, the user can left-click 'continue' to resume the game, 'restart' to restart, and 'quit' to exit.
 
 ### Lives
-The player starts with three lives, indicated on screen by small icons. The rocketship has a health bar that depletes when hit by commets or alien bombs. When the health bar is depleted, a life is lost. A life is immediately lost when the rocket collides with a planet. When a life is lost, this is indicated on-screen by have one of the life icons disappear. When all three lives are lost, the game ends.
+The player starts with four lives, three of which are indicated on screen by small icons. The rocketship has a health bar that depletes when hit by commets or alien bombs. When the health bar is depleted, a life is lost. A life is immediately lost when the rocket collides with a planet. When a life is lost, a life icon on screen disappears and the health bar replenishes to indicate that the player has moved on to his or her next life.
+When all three lives are lost, the game ends.
 
 ###  Scoring
-The aim of the game is to collect as many stars as possible. The score will reflect this number. A star is 'collected' when the rocket ship touches it. An icon of a star is then added to the score display area of the screen. Scores can only increase, never decrease.
+The aim of the game is to survive as long as possible. Scoring will correspond to the number of seconds the player has been alive. Stars collected will also factor into the score. Each star will add an equivalent of 5 seconds to the score. Scores can only increase, never decrease.
