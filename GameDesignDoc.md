@@ -1,10 +1,14 @@
 # Game Overview
-The National Aeronautic Space Corporation has just received unprecedented funding for its newest space flight project to travel the universe and see the sights. (Oh and collect data on stars too, I guess). The rocket, named High Flyer, has been built and is ready to launch. Don't let all of NASC's hard work go to waste. Help the High Flyer travel to the furthest limits of the galaxy... and beyond!
+Pilot High Flyer through outer space as long as possible, collecting stars and avoiding obstacles! Use the arrow keys to move High Flyer, mouse to shoot lasers at enemies, and space bar to pause the game.
 
 ----
 
 ## Gameplay
 
+### Objective
+The National Aeronautic Space Corporation has just received unprecedented funding for its newest space flight project to travel the universe and see the sights. (Oh and collect data on stars too, I guess). The rocket, named High Flyer, has been built and is ready to launch. Don't let all of NASC's hard work go to waste. Help High Flyer travel to the furthest limits of the galaxy... and beyond!
+
+The aim of the game is to survive as long as possible. Navigate the rocket to avoid comets, alien ships, missiles, and planets. Collect stars for extra points.
 
 ### Objects
 | Object        | Role          | In gameplay          | Preliminary Appearance |
@@ -19,18 +23,31 @@ The National Aeronautic Space Corporation has just received unprecedented fundin
 
 ### Controls
 
-The user will control the rocketship with the up, down, left, and right arrow keys. The laser beam will be activated when the user left-clicks the mouse on screen. The user right-clicks anywhere on screen to pause the game. On the pause screen, the user can left-click 'continue' to resume the game, 'restart' to restart, and 'quit' to exit.
+##### In-game
+  * Up, down, left, right arrow keys: controls the rocketship's movement
+  * Left click: Shoots a laser from the rocket to the location of the mouse
+  * Right click: Pauses the game
+  
+##### Menus
+  * Left click: selects an option, whether to Start, Continue, Restart, go back to the Main home screen, or Quit, depending on whether the user is in the Main screen or the Pause screen menus.
+  * Keyboard: Allows the user to type in his/her name when the name field is on screen
+
+###  Scoring
+Scoring corresponds to the number of seconds the player has been alive. Collecting a star adds an equivalent of 5 seconds to the score. Scores can only increase, never decrease.
 
 ### Lives
 The player starts with four lives, three of which are indicated on screen by small icons. The rocketship has a health bar that depletes when hit by commets or alien bombs. When the health bar is depleted, a life is lost. A life is immediately lost when the rocket collides with a planet. When a life is lost, a life icon on screen disappears and the health bar replenishes to indicate that the player has moved on to his or her next life.
 When all three lives are lost, the game ends.
 
-###  Scoring
-The aim of the game is to survive as long as possible. Scoring will correspond to the number of seconds the player has been alive. Stars collected will also factor into the score. Each star will add an equivalent of 5 seconds to the score. Scores can only increase, never decrease.
-### Layout
-The game will be a vertical scroller. The rocket ship will be free to move around the entirety of the screen. The background will appear to scroll down as if the rocketship is moving up in space. A pause button will be in the top right corner. Score will be displayed in the center top of the screen. Number of lives will be displayed in the center bottom of the screen.
+## Layout
+The game will be a vertical scroller. The rocket ship will be free to move around the entirety of the screen. The background will appear to scroll down as if the rocketship is moving up in space. The rest of the layout will consist of the following:
+  - A pause button in the top right corner. 
+  - Score, displayed in the center top of the screen. 
+  - Number of lives, displayed in the center bottom of the screen.
 
-#### Preliminary layout
+In the pause menu, there will be buttons to continue, restart, or quit the game.
+
+### Preliminary layout
 
 ![Layouts](images/layout.jpg "Storyboarding High Flyer")
 
