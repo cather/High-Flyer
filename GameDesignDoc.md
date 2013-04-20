@@ -36,7 +36,7 @@ Scoring corresponds to the number of seconds the player has been alive. Collecti
 
 ### Lives
 The player starts with four lives, three of which are indicated on screen by small icons. The rocketship has a health bar that depletes when hit by commets or alien bombs. When the health bar is depleted, a life is lost. A life is immediately lost when the rocket collides with a planet. When a life is lost, a life icon on screen disappears and the health bar replenishes to indicate that the player has moved on to his or her next life.
-When all three lives are lost, the game ends.
+When all four lives are lost, the game ends.
 
 ## Layout
 The game will be a vertical scroller. The rocket ship will be free to move around the entirety of the screen. The background will appear to scroll down as if the rocketship is moving up in space. The rest of the layout will consist of the following:
