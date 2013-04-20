@@ -1,5 +1,5 @@
 # Game Overview
-Pilot High Flyer through outer space as long as possible, collecting stars and avoiding obstacles! Use the arrow keys to move High Flyer, mouse to shoot lasers at enemies, and space bar to pause the game.
+Pilot High Flyer through outer space as long as possible, collecting stars and avoiding obstacles! Use the arrow keys to move High Flyer, mouse left-click to shoot lasers at enemies, and mouse right-click to pause the game.
 
 ----
 
