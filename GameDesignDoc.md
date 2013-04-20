@@ -1,21 +1,21 @@
 # Game Overview
 The National Aeronautic Space Corporation has just received unprecedented funding for its newest space flight project to travel the universe and see the sights. (Oh and collect data on stars too, I guess). The rocket, named High Flyer, has been built and is ready to launch. Don't let all of NASC's hard work go to waste. Help High Flyer travel to the furthest limits of the galaxy... and beyond!
 
-Pilot High Flyer through outer space as long as possible, collecting stars and avoiding obstacles! Use the arrow keys to move High Flyer and mouse left-click to shoot lasers at enemies.
+Pilot High Flyer through outer space as long as possible, collecting stars and avoiding obstacles. Use the arrow keys to move High Flyer and the mouse to shoot lasers at enemies.
 
 ----
 
 ## Gameplay
 
 ### Objective
-The aim of the game is to survive as long as possible. Navigate the rocket to avoid comets, alien ships, missiles, and planets. Collect stars for extra points.
+Survive as long as possible. Avoid comets, alien ships, missiles, and planets. Collect stars for extra points.
 
 ### Objects
 | Object        | Role          | In gameplay          | Preliminary Appearance |
 |:-------------:|---------------|----------------------|----------------------|
 | Rocket Ship   | Player        | The user controls the rocketship with the keyboard arrows in order to safely guide it through space       | ![Rocket](images/rocket.jpg "Rocket Ship") |
 | Laser Beam   | Weapon        | Damages enemies. Activated by left-clicking the mouse. The laser shoots (moves) quickly in the direction of the mouse, originating from the rocketship.| ![Laser beams](images/laser.jpg "Two laser beams") |
-| Meteor        | Enemy         | Appear randomly on the left of the screen and move in a straight line until going off-screen. They can move directly left to right, or may move to the right of the screen on a diagonal path. If they hit the rocket, the rocket suffers some damage. Meteors can be damaged by the laser. | ![Meteors](images/meteor.jpg "Meteor") |
+| Meteor        | Enemy         | Appear randomly on the left of the screen and move in a straight line until going off-screen on the right side. If they hit the rocket, the rocket suffers some damage. Meteors can be destroyed by the laser. | ![Meteors](images/meteor.jpg "Meteor") |
 | Alien ship    | Enemy         | Alien ships appear randomly from any direction off screen, and move randomy on-screen. They drop off missiles in their paths. If the alien ship collides with the rocket, the rocket suffers some damage. Alien ships can be attacked with the laser. | ![Alien Ship](images/alien.jpg "Alien ship") |
 | Missile        | Enemy        | Missiles explode after a certain period of time or if they collide with any other object. They travel in a path that follows the rocket ship. If the missile collides with the rocket, the missile explodes and the rocket loses a life. If the missile collides with any other object, including a laser beam, it explodes. If the radius of their explosions hits the rocket, the rocket suffers damage.  | ![Missile](images/missile.jpg "Missile") |
 | Planet       | Barrier       | Rocket must avoid colliding with planets or else they lose a life. Planets are stationary, as in they only move with the background and not independently. | ![Planets](images/planets.jpg "Two planets") |
