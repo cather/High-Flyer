@@ -9,7 +9,7 @@ The game will be a vertical scroller. The rocket ship will be free to move aroun
 
 #### Preliminary layout
 
-![alt text](http://octodex.github.com/images/Professortocat_v2.png "Storyboarding High Flyer")
+![Layouts](images/layout.jpg "Storyboarding High Flyer")
 
 
 ## Gameplay
@@ -19,12 +19,12 @@ The game will be a vertical scroller. The rocket ship will be free to move aroun
 | Object        | Role          | In gameplay          | Preliminary Appearance |
 |:-------------:|---------------|----------------------|----------------------|
 | Rocket Ship   | Player        | The user controls the rocketship with the keyboard arrows in order to safely guide it through space       |
-| Laser Beam   | Weapon        | Damages enemies. Activated by left-clicking the mouse. The laser shoots (travels) quickly in the direction of the mouse, originating from the rocketship.|
-| Comet        | Enemy         | Appear randomly on the left of the screen and move in a straight line until going off-screen. They can move directly left to right, or may move to the right of the screen on a diagonal path. If they hit the rocket, the rocket suffers some damage |
-| Alien ship    | Enemy         | Alien ships appear randomly from any direction off screen, and move randomy on-screen. They drop off missiles in their paths. If the alien ship collides with the rocket, the rocket suffers some damage. Alien ships can be attacked with the laser. |
-| Missile        | Enemy        | Missiles explode after a certain period of time or if they collide with any other object. They travel in a path that follows the rocket hip. If the radius of their explosions hits the rocket, the rocket suffers damage. If the missile collides with the rocket, the rocket loses a life. If the missile collides with any other object, it is destroyed. If shot by the laser, the missile explodes.|
-| Planet       | Barrier       | Rocket must avoid planets or else they lose a life. Planets are stationary, as in they only move with the background and not independently. |
-| Star        | Collectable   | The rocket ship collects stars for points. Stars are collected when the rocketship collides with them. Stars are stationary in that they only move with the background and not independently. |
+| Laser Beam   | Weapon        | Damages enemies. Activated by left-clicking the mouse. The laser shoots (travels) quickly in the direction of the mouse, originating from the rocketship.| ![Rocket](images/rocket.jpg "Rocket Ship") |
+| Comet        | Enemy         | Appear randomly on the left of the screen and move in a straight line until going off-screen. They can move directly left to right, or may move to the right of the screen on a diagonal path. If they hit the rocket, the rocket suffers some damage | ![Comets](images/comet.jpg "Comet") |
+| Alien ship    | Enemy         | Alien ships appear randomly from any direction off screen, and move randomy on-screen. They drop off missiles in their paths. If the alien ship collides with the rocket, the rocket suffers some damage. Alien ships can be attacked with the laser. | ![Alien Ship](images/alien.jpg "Alien ship") |
+| Missile        | Enemy        | Missiles explode after a certain period of time or if they collide with any other object. They travel in a path that follows the rocket hip. If the radius of their explosions hits the rocket, the rocket suffers damage. If the missile collides with the rocket, the rocket loses a life. If the ![Missile](images/missile.jpg "Missile") | missile collides with any other object, it is destroyed. If shot by the laser, the missile explodes.|
+| Planet       | Barrier       | Rocket must avoid planets or else they lose a life. Planets are stationary, as in they only move with the background and not independently. | ![Planets](images/planet.jpg "Planets") |
+| Star        | Collectable   | The rocket ship collects stars for points. Stars are collected when the rocketship collides with them. Stars are stationary in that they only move with the background and not independently. | ![Star](images/star.jpg "Star") |
 
 ### Controls
 
