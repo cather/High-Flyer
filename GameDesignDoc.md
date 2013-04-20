@@ -1,7 +1,7 @@
 # Game Overview
 The National Aeronautic Space Corporation has just received unprecedented funding for its newest space flight project to travel the universe and see the sights. (Oh and collect data on stars too, I guess). The rocket, named High Flyer, has been built and is ready to launch. Don't let all of NASC's hard work go to waste. Help High Flyer travel to the furthest limits of the galaxy... and beyond!
 
-Pilot High Flyer through outer space as long as possible, collecting stars and avoiding obstacles! Use the arrow keys to move High Flyer and mouse to shoot lasers at enemies.
+Pilot High Flyer through outer space as long as possible, collecting stars and avoiding obstacles! Use the arrow keys to move High Flyer and mouse left-click to shoot lasers at enemies.
 
 ----
 
@@ -25,7 +25,7 @@ The aim of the game is to survive as long as possible. Navigate the rocket to av
 
 ##### In-game
   * Up, down, left, right arrow keys: controls the rocketship's movement
-  * Left click: Shoots a laser from the rocket to the location of the mouse, or if clicking on the pause button, pauses the game
+  * Left click: Shoots a laser from the rocket to the location of the mouse. If left-clicking the pause button, pauses the game
   
 ##### Menus
   * Left click: selects an option, whether to Start, Continue, Restart, go back to the Main home screen, or Quit, depending on whether the user is in the Main screen or the Pause screen menus.
