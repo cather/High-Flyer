@@ -28,7 +28,7 @@ The aim of the game is to survive as long as possible. Navigate the rocket to av
   * Left click: Shoots a laser from the rocket to the location of the mouse. If left-clicking the pause button, pauses the game
   
 ##### Menus
-  * Left click: selects an option, whether to Start, Continue, Restart, go back to the Main home screen, or Quit, depending on whether the user is in the Main screen or the Pause screen menus.
+  * Left click: selects an option, whether to Start, Pause, Continue, Restart, go back to the Main home screen, or Quit, depending on whether the user is in the Main screen or the Pause screen menus.
   * Keyboard: Allows the user to type in his/her name when the name field is on screen
 
 ###  Scoring
