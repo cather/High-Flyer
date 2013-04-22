@@ -4,6 +4,8 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsRectItem>
 
+/*Things can move, detect when touching another Thing, detect when run out of health and detect when off-screen. Things have an x,y position, width, height, pixmapitem, and velocities in x,y*/
+
 class Thing : public QObject, public QGraphicsRectItem{
   public:
     Thing(double nx, double ny, double w, double h, int vx, int vy, int maxHealth );
