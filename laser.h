@@ -6,8 +6,7 @@ class Laser : public Thing {
     Laser();
     ~Laser();
     void move(int x, int y);
-    bool collide(Thing t);
     
   private:
-}
-#endif
+};
+#endif //LASER_H

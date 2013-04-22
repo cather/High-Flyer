@@ -15,16 +15,14 @@
 #include "laser.h"
 #include "mylist.h"
 
-#include <iostream>
-
-using namespace std;
-
-class MainWindow : pubic QWidget{
+class MainWindow : public QWidget{
   Q_OBJECT;
   
   public:
     MainWindow();
     ~MainWindow();
+    
+    void show();
   
   private:
     QGraphicsScene* scene;
@@ -40,6 +38,6 @@ class MainWindow : pubic QWidget{
     MyList<Thing*> thingList;
   
   public slots:
-}
+};
 
 #endif
