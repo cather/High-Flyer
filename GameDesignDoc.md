@@ -32,11 +32,11 @@ Survive as long as possible. Avoid comets, alien ships, missiles, and planets. C
   * Keyboard: Allows the user to type in his/her name when the name field is on screen
 
 ###  Scoring
-Scoring corresponds to the number of seconds the player has been alive. Collecting a star adds an equivalent of 5 seconds to the score. Scores can only increase, never decrease.
+Scoring corresponds to how long the player has been playing. The score increases by 1 point every half-second. Collecting a star adds an equivalent of 5 seconds - 10 points - to the score. Scores can only increase, never decrease.
 
 ### Lives
 The player starts with four lives, three of which are indicated on screen by small icons. The rocketship has a health bar that depletes when hit by commets or alien bombs. When the health bar is depleted, a life is lost. A life is immediately lost when the rocket collides with a planet. When a life is lost, a life icon on screen disappears and the health bar replenishes to indicate that the player has moved on to his or her next life.
-When all three lives are lost, the game ends.
+When all four lives are lost, the game ends.
 
 ## Layout
 The game will be a vertical scroller. The rocket ship will be free to move around the entirety of the screen. The background will appear to scroll down as if the rocketship is moving up in space. The rest of the layout will consist of the following:
