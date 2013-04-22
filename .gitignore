@@ -11,3 +11,10 @@
 *.lai
 *.la
 *.a
+
+#Temporary files
+*~
+
+#Qt files
+moc_mainwindow.cpp
+*.pro
