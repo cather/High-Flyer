@@ -2,6 +2,7 @@
 #define THING_H
 
 #include <QGraphicsPixmapItem>
+#include <QPixmap>
 #include <QGraphicsRectItem>
 
 /*Things can move, detect when touching another Thing, detect when run out of health and detect when off-screen. Things have an x,y position, width, height, pixmapitem, and velocities in x,y*/

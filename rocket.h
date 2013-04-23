@@ -7,6 +7,8 @@
 
 class Rocket : public Thing {
   public:
+  
+    Rocket(double nx, double ny, double w, double h, int vx, int vy, int maxHealth );
     Rocket();
     ~Rocket();
 
