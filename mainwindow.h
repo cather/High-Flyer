@@ -20,8 +20,8 @@
 #include "laser.h"
 #include "mylist.h"
 
-#define WINDOW_MAX_X 250
-#define WINDOW_MAX_Y 250
+#define WINDOW_MAX_X 250*2
+#define WINDOW_MAX_Y 300*2
 
 class MainWindow : public QWidget{
   Q_OBJECT;

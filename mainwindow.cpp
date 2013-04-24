@@ -11,16 +11,16 @@ void MainWindow::triggerTimer() {
     if ( timer->isActive() )
     {
       timer->stop();
-      timerButton->setText("Start");
+      timerButton->setText("Turn timer on");
     }
     else
     {
       timer->start();
-      timerButton->setText("Pause");
+      timerButton->setText("Turn timer off");
     }
 }
 void MainWindow::handleTimer() {
-    rocket->move( WINDOW_MAX_X, WINDOW_MAX_Y );
+ // rocket->move( WINDOW_MAX_X, WINDOW_MAX_Y );
 }
 
 MainWindow::MainWindow(){
@@ -28,25 +28,27 @@ MainWindow::MainWindow(){
   scene = new QGraphicsScene();
   view = new QGraphicsView(scene);
   view->setLayout(layout);
-  view->setFixedSize( WINDOW_MAX_X*2, WINDOW_MAX_Y*2 );
+  view->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y);
   view->setWindowTitle("High Flyer");
 
-  double x, y, width, height, xv, yv;
+  double x, y, width, height, xv, yv, health;
   x = rand()%WINDOW_MAX_X;
   y = rand()%WINDOW_MAX_Y;
-  width = 20.0;
-  height = 20.0;
-  xv = rand()%10;
-  yv = rand()%10;
+  width = 80.0;
+  height = 100.0;
+  xv = 5;
+  yv = 5;
+  health = 100;
+  
 
-  rocket = new Rocket( x, y, width, height, xv, yv, 100 );
+  rocket = new Rocket( x, y, width, height, xv, yv, health );
   
   scene->addItem(rocket);
   
   thingList.push_back(rocket);
   
   timer = new QTimer(this);
-  timerButton = new QPushButton("Start");
+  timerButton = new QPushButton("Trigger Timer");
   timerButton->setGeometry(0,0,100,25);
 
   // Insert button into layout

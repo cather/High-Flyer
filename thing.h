@@ -4,6 +4,7 @@
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
 #include <QGraphicsRectItem>
+#include <QKeyEvent>
 
 /*Things can move, detect when touching another Thing, detect when run out of health and detect when off-screen. Things have an x,y position, width, height, pixmapitem, and velocities in x,y*/
 
@@ -21,9 +22,12 @@ class Thing : public QObject, public QGraphicsRectItem{
     void setY(int y);
     void setVx(int vx);
     void setVy(int vy);
-    void move(int x, int y);
+    void move(int windowMaxX, int windowMaxY);
+    void move();
     void setPic(QGraphicsPixmapItem* pic);
   
+  
+    bool offScreen;
   protected:
     int x_;
     int y_;
@@ -34,7 +38,6 @@ class Thing : public QObject, public QGraphicsRectItem{
     int health_;
     QGraphicsPixmapItem* pic_;
     
-    bool offScreen;
   
   public slots:
   
