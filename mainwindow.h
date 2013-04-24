@@ -49,16 +49,21 @@ class MainWindow : public QWidget{
     
     MyList<Thing*> thingList;
     
-    QTimer* timer;
-    QPushButton* timerButton;
+    QTimer* gameTimer;
+    QPushButton* gameTimerButton;
     QPushButton* stopButton;
     QPushButton* playButton;
     QLabel* message;
+    
+    QTimer* addNewObjectsTimer;
   
   public slots:
-    void handleTimer();
-    void triggerTimer();
+    void handlegameTimer();
+    void triggergameTimer();
     void startGame();
+    
+    void handleaddNewObjectsTimer();
+    void triggeraddNewObjectsTimer();
 };
 
 #endif // MAINWINDOW_H

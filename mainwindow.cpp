@@ -6,25 +6,30 @@ void MainWindow::startGame() {
   rocket->displayHealth(message);
 }
 
-void MainWindow::triggerTimer() {
-    if ( timer->isActive() )
+void MainWindow::triggergameTimer() {
+    if ( gameTimer->isActive() )
     {
-      timer->stop();
-      timerButton->setText("Turn timer on");    
+      gameTimer->stop();
+      gameTimerButton->setText("Start gameTimer");    
       rocket->decrementHealth(10); // testing health
     }
     else
     {
-      timer->start();
-      timerButton->setText("Turn timer off");
+      gameTimer->start();
+      gameTimerButton->setText("Stop gameTimer");
     }
 }
-void MainWindow::handleTimer() {
- // rocket->move( WINDOW_MAX_X, WINDOW_MAX_Y );
- 
+void MainWindow::handlegameTimer() {
   // updates health every clock
   rocket->displayHealth(message);
   
+}
+
+void MainWindow::triggeraddNewObjectsTimer() {
+}
+
+void MainWindow::handleaddNewObjectsTimer() {
+  // add new Things to the screen every clock  
 }
 
 
@@ -50,17 +55,25 @@ MainWindow::MainWindow(){
 
   thingList.push_back(rocket);
   
-  timer = new QTimer(this);
-  timerButton = new QPushButton("Trigger Timer");
-  timerButton->setGeometry(0,0,100,25);
+  gameTimer = new QTimer(this);
+  gameTimerButton = new QPushButton("Trigger gameTimer");
+  gameTimerButton->setGeometry(0,0,100,25);
+  
+  addNewObjectsTimer = new QTimer(this); // timer to add new objects
 
   // Insert button into layout
-  layout->addRow(timerButton);
-  timerButton->show();
+  layout->addRow(gameTimerButton);
+  gameTimerButton->show();
   
-  timer->setInterval(5); // 5 milliseconds
-  connect(timer, SIGNAL(timeout()), this, SLOT(handleTimer()));
-  connect(timerButton, SIGNAL(clicked()), this, SLOT(triggerTimer()));
+  // programming gameTimer
+  gameTimer->setInterval(5); // 1 milliseconds
+  connect(gameTimer, SIGNAL(timeout()), this, SLOT(handlegameTimer()));
+  connect(gameTimerButton, SIGNAL(clicked()), this, SLOT(triggergameTimer()));
+  
+  //programming addNewObjectsTimer
+  addNewObjectsTimer->setInterval(rand()%20);
+  connect(addNewObjectsTimer, SIGNAL(timeout()), this, SLOT(handleaddNewObjectsTimer()));
+  
   
   playButton = new QPushButton("Play");
   layout->addRow(playButton);
