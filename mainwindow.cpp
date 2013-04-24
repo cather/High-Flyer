@@ -3,15 +3,18 @@
 using namespace std;
 
 void MainWindow::startGame() {
-  message = new QLabel("Starting");
-  layout->addRow(message);
+  QString string = "Health: ";
+  string.append(  QString::number(rocket->getHealth()));
+  message->setText(string);
+  message->setHidden(false); 
 }
 
 void MainWindow::triggerTimer() {
     if ( timer->isActive() )
     {
       timer->stop();
-      timerButton->setText("Turn timer on");
+      timerButton->setText("Turn timer on");    
+      rocket->decrementHealth(10); // testing health
     }
     else
     {
@@ -21,7 +24,14 @@ void MainWindow::triggerTimer() {
 }
 void MainWindow::handleTimer() {
  // rocket->move( WINDOW_MAX_X, WINDOW_MAX_Y );
+ 
+  // updates health every clock
+  QString string = "Health: ";
+  string.append(  QString::number(rocket->getHealth()));
+  message->setText(string);
+  
 }
+
 
 MainWindow::MainWindow(){
   layout = new QFormLayout();
@@ -32,19 +42,23 @@ MainWindow::MainWindow(){
   view->setWindowTitle("High Flyer");
 
   double x, y, width, height, xv, yv, health;
-  x = rand()%WINDOW_MAX_X;
-  y = rand()%WINDOW_MAX_Y;
+
   width = 80.0;
   height = 100.0;
+  x = 0;
+  y = 0;
   xv = 5;
   yv = 5;
   health = 100;
   
+  message = new QLabel();
+  layout->addRow(message);
+  message->setHidden(true);
 
   rocket = new Rocket( x, y, width, height, xv, yv, health );
-  
   scene->addItem(rocket);
-  
+  rocket->grabKeyboard();  
+
   thingList.push_back(rocket);
   
   timer = new QTimer(this);
@@ -74,7 +88,6 @@ MainWindow::MainWindow(){
 void MainWindow::show(){
   view->show();
 }
-
 
 MainWindow::~MainWindow(){
   delete scene;

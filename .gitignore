@@ -18,3 +18,5 @@
 #Qt files
 moc_mainwindow.cpp
 *.pro
+Makefile
+game_catherhj

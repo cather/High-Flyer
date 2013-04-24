@@ -1,5 +1,4 @@
 #include "thing.h"
-#include <iostream>
 using namespace std;
 
 // Thing(startX, startY, width, height, velX, velY, maxHealth)
@@ -12,6 +11,12 @@ Thing::Thing(double nx, double ny, double w, double h, int vx, int vy, int maxHe
   velocityX_ = vx;
   velocityY_ = vy;
   offScreen = false;
+  
+// update QRectF displayed
+  QPointF p( x_, y_ );
+  QRectF r( rect() );
+  r.moveTo(p);
+  setRect( r );
 }
 
 Thing::Thing(){
@@ -28,6 +33,10 @@ int Thing::getY(){
   return y_;
 }
 
+int Thing::getHealth(){
+  return health_;
+}
+
 void Thing::setX(int x){
   x_ = x;
 }
@@ -40,6 +49,13 @@ void Thing::setVx(int vx){
 
 void Thing::setVy(int vy){
   velocityY_ = vy;
+}
+
+void Thing::decrementHealth(int num){
+  if (health_ - num < 0)
+    health_ = 0;
+  else
+    health_ -= num;
 }
 
 void Thing::move(){

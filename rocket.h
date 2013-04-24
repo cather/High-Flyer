@@ -11,9 +11,19 @@ class Rocket : public Thing {
     Rocket(double nx, double ny, double w, double h, int vx, int vy, int maxHealth );
     Rocket();
     ~Rocket();
-    void keyPressEvent(QKeyEvent* e);
     
+  protected:
+    void keyPressEvent(QKeyEvent* e);
+    void keyReleaseEvent(QKeyEvent* e);
 
   private:
+  public slots:
+  
+  signals:
+    void upArrow();
+    void downArrow();
+    void leftArrow();
+    void rightArrow();
+    
 };
 #endif //ROCKET_H

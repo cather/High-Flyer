@@ -9,6 +9,7 @@
 #include <QLabel>
 #include <QtGui>
 #include <QFormLayout>
+#include <QString>
 
 #include "thing.h"
 #include "planet.h"
@@ -22,6 +23,8 @@
 
 #define WINDOW_MAX_X 250*2
 #define WINDOW_MAX_Y 300*2
+
+#define speed 5
 
 class MainWindow : public QWidget{
   Q_OBJECT;
@@ -51,8 +54,6 @@ class MainWindow : public QWidget{
     QPushButton* stopButton;
     QPushButton* playButton;
     QLabel* message;
-
-    
   
   public slots:
     void handleTimer();
