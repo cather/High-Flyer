@@ -7,7 +7,8 @@ Thing::Thing(double nx, double ny, double w, double h, int vx, int vy, int maxHe
   y_ = ny;
   width_ = w;
   height_ = h;
-  health_ = maxHealth;
+  maxHealth_ = maxHealth;
+  health_ = maxHealth_;
   velocityX_ = vx;
   velocityY_ = vy;
   offScreen = false;

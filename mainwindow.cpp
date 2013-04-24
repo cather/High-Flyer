@@ -3,10 +3,7 @@
 using namespace std;
 
 void MainWindow::startGame() {
-  QString string = "Health: ";
-  string.append(  QString::number(rocket->getHealth()));
-  message->setText(string);
-  message->setHidden(false); 
+  rocket->displayHealth(message);
 }
 
 void MainWindow::triggerTimer() {
@@ -26,9 +23,7 @@ void MainWindow::handleTimer() {
  // rocket->move( WINDOW_MAX_X, WINDOW_MAX_Y );
  
   // updates health every clock
-  QString string = "Health: ";
-  string.append(  QString::number(rocket->getHealth()));
-  message->setText(string);
+  rocket->displayHealth(message);
   
 }
 
@@ -41,21 +36,15 @@ MainWindow::MainWindow(){
   view->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y);
   view->setWindowTitle("High Flyer");
 
-  double x, y, width, height, xv, yv, health;
+  double width, height, xv, yv, health;
 
-  width = 80.0;
-  height = 100.0;
-  x = 0;
-  y = 0;
-  xv = 5;
-  yv = 5;
-  health = 100;
+  width = 80.0; height = 100.0; xv = 5; yv = 5; health = 20;
   
   message = new QLabel();
   layout->addRow(message);
   message->setHidden(true);
 
-  rocket = new Rocket( x, y, width, height, xv, yv, health );
+  rocket = new Rocket( WINDOW_MAX_X, WINDOW_MAX_Y, width, height, xv, yv, health );
   scene->addItem(rocket);
   rocket->grabKeyboard();  
 

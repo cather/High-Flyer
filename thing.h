@@ -40,6 +40,7 @@ class Thing : public QObject, public QGraphicsRectItem{
     int width_;
     int height_;
     int health_;
+    int maxHealth_;
     QGraphicsPixmapItem* pic_;
     
   
