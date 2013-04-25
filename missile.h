@@ -13,9 +13,8 @@ class Missile : public Thing {
     Missile();
     ~Missile();
     void updateVelocity();
-    
   private:
-    int timeLimit;
     Rocket* rocket;
+    int speed_;
 };
 #endif //MISSILE_H

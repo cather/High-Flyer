@@ -4,13 +4,13 @@ Missile::Missile(int x, int y, int speed, int lifeSpan, Rocket* rocketToChase ) 
   
   x_ = x;
   y_ = y;
-  width_ = 10;
-  height_ = 50;
-  velocityX_ = speed;
-  timeLimit = lifeSpan;
+  width_ = 100;
+  height_ = 500;
+  health_ = lifeSpan;
   rocket = rocketToChase;
-  velocityX_ = ( rocket->getX() - x_ )/abs(( rocket->getX() - x_ )) * velocityX_;
-  velocityY_ = ( rocket->getY() - y_ )/ abs(( rocket->getY() - y_ )) *velocityX_;
+  speed_ = speed;
+  velocityX_ = ( rocket->getX() - x_ )/abs(( rocket->getX() - x_ )) * speed_;
+  velocityY_ = ( rocket->getY() - y_ )/ abs(( rocket->getY() - y_ )) * speed_;
   
   QGraphicsPixmapItem* pic = new QGraphicsPixmapItem(QPixmap("images/missile.jpg"));
   setPic(pic);
@@ -24,7 +24,8 @@ Missile::Missile(){
 Missile::~Missile(){
 }
 
+// this should be checked at every clock
 void Missile::updateVelocity(){
-  velocityX_ = ( rocket->getX() - x_ )/abs(( rocket->getX() - x_ )) * velocityX_;
-  velocityY_ = ( rocket->getY() - y_ )/ abs(( rocket->getY() - y_ )) *velocityX_;
+  velocityX_ = ( rocket->getX() - x_ )/abs(( rocket->getX() - x_ )) * speed_;
+  velocityY_ = ( rocket->getY() - y_ )/ abs(( rocket->getY() - y_ )) * speed_;
 }

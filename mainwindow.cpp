@@ -26,8 +26,6 @@ void MainWindow::handlegameTimer() {
   QString string = "Score: " + QString::number(points);
   score->setText(string);
 
-
-  
 }
 
 void MainWindow::triggeraddNewObjectsTimer() {
@@ -35,6 +33,8 @@ void MainWindow::triggeraddNewObjectsTimer() {
 
 void MainWindow::handleaddNewObjectsTimer() {
   // add new Things to the screen every clock
+  //missile->updateVelocity();
+  //missile->move(WINDOW_MAX_X, WINDOW_MAX_Y);
   
   //meteor->move(WINDOW_MAX_X, WINDOW_MAX_Y); 
 //  addNewObjectsTimer->setInterval(rand()%20);
@@ -53,10 +53,18 @@ MainWindow::MainWindow(){
   points = 0;
   double width, height, xv, yv;
   width = 80.0; height = 100.0; xv = 5; yv = 5;
-  rocket = new Rocket( WINDOW_MAX_X, WINDOW_MAX_Y, width, height, xv, yv, maxRocketLife );
+  rocket = new Rocket( WINDOW_MAX_X, WINDOW_MAX_Y, 10, 20, xv, yv, maxRocketLife );
   scene->addItem(rocket);
   rocket->grabKeyboard();
   thingList.push_back(rocket);
+  
+  /*
+  //missile test
+//  int x, int y, int speed, int lifeSpan, Rocket* rocketToChase
+  missile = new Missile (100, 100, 15, 30, rocket);
+  scene->addItem(missile);
+  thingList.push_back(missile);
+  */
   
   /*
   //meteor test
