@@ -20,6 +20,7 @@ class Rocket : public Thing {
 
   private:
     int lives;
+    bool gameOver;
     
     
 };

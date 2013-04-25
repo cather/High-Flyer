@@ -16,6 +16,7 @@ Rocket::Rocket(int windowMaxX, int windowMaxY, double w, double h, int vx, int v
   health_ = maxHealth;
   velocityX_ = vx;
   velocityY_ = vy;
+  gameOver = false;
   
   QGraphicsPixmapItem* pic = new QGraphicsPixmapItem(QPixmap("images/rocket.jpg"));
   setPic(pic);
@@ -32,30 +33,33 @@ Rocket::~Rocket(){
 
 void Rocket::keyPressEvent(QKeyEvent* e)
 {
-  switch(e->key())
+  if (!gameOver)
   {
-    case Qt::Key_Up:
-      setVx(0);
-      setVy(-speed);
-      move();
-      break;
-    case Qt::Key_Left:
-      setVx(-speed);
-      setVy(0);
-      move();
-      break;
-    case Qt::Key_Right:
-      setVx(speed);
-      setVy(0);
-      move();
-      break;
-    case Qt::Key_Down:
-      setVx(0);
-      setVy(speed);
-      move();
-      break;
-    default:
-      break;
+    switch(e->key())
+    {
+      case Qt::Key_Up:
+        setVx(0);
+        setVy(-speed);
+        move();
+        break;
+      case Qt::Key_Left:
+        setVx(-speed);
+        setVy(0);
+        move();
+        break;
+      case Qt::Key_Right:
+        setVx(speed);
+        setVy(0);
+        move();
+        break;
+      case Qt::Key_Down:
+        setVx(0);
+        setVy(speed);
+        move();
+        break;
+      default:
+        break;
+    }
   }
 }
 
@@ -74,6 +78,7 @@ void Rocket::displayHealth(QLabel* label){
   // if on last life and dead, game over
   else if (Thing::dead() && lives == 0)
   {
+    gameOver = true;
     string.clear();  
     string = "Game over";
   }
