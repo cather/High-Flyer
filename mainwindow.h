@@ -51,11 +51,12 @@ class MainWindow : public QWidget{
     
     QTimer* gameTimer;
     QPushButton* gameTimerButton;
+    QTimer* addNewObjectsTimer;
     QPushButton* stopButton;
     QPushButton* playButton;
     QLabel* message;
-    
-    QTimer* addNewObjectsTimer;
+    QLabel* score;
+    int points;
   
   public slots:
     void handlegameTimer();

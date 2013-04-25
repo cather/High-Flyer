@@ -5,6 +5,7 @@
 #include <QPixmap>
 #include <QGraphicsRectItem>
 #include <QKeyEvent>
+#include <QBrush>
 
 #include <iostream>
 

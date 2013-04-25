@@ -66,7 +66,7 @@ void Rocket::keyPressEvent(QKeyEvent* e)
 void Rocket::displayHealth(QLabel* label){
   QString string = "Health: ";
   string.append(  QString::number(health_) );
-  string.append("Lives: ");
+  string.append(" Lives: ");
   string.append(  QString::number(lives) );
   
   // if health goes to zero, decrement number of lives and replenish health bar
