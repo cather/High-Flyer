@@ -4,7 +4,6 @@ using namespace std;
 
 void MainWindow::startGame() {
   rocket->displayHealth(message);
-  points = 0;
   rocket->decrementHealth(10); // testing health
 }
 
@@ -33,8 +32,11 @@ void MainWindow::triggeraddNewObjectsTimer() {
 }
 
 void MainWindow::handleaddNewObjectsTimer() {
-  // add new Things to the screen every clock  
-  addNewObjectsTimer->setInterval(rand()%20);
+  // add new Things to the screen every clock
+  
+  //testing meteor movement
+  meteor->move(WINDOW_MAX_X, WINDOW_MAX_Y); 
+//  addNewObjectsTimer->setInterval(rand()%20);
 }
 
 
@@ -46,6 +48,7 @@ MainWindow::MainWindow(){
   view->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y);
   view->setWindowTitle("High Flyer");
   
+  // creates rocket
   points = 0;
   double width, height, xv, yv, health;
   width = 80.0; height = 100.0; xv = 5; yv = 5; health = 20;
@@ -53,6 +56,11 @@ MainWindow::MainWindow(){
   scene->addItem(rocket);
   rocket->grabKeyboard();
   thingList.push_back(rocket);
+  
+  //create test meteor
+  meteor = new Meteor (WINDOW_MAX_Y/2, 100, 100, 5, 0, 10);
+  scene->addItem(meteor);
+  thingList.push_back(meteor);
   
   // qlabel for displaying health and lives
   message = new QLabel();
@@ -75,7 +83,9 @@ MainWindow::MainWindow(){
   // timer to add new objects
   addNewObjectsTimer = new QTimer(this);  
   //programming addNewObjectsTimer
-  addNewObjectsTimer->setInterval(rand()%20);
+  addNewObjectsTimer->setInterval(10);
+  //addNewObjectsTimer->setInterval(rand()%20);
+  addNewObjectsTimer->start();
   connect(addNewObjectsTimer, SIGNAL(timeout()), this, SLOT(handleaddNewObjectsTimer()));
   
   playButton = new QPushButton("Hurt me test");
@@ -96,5 +106,7 @@ void MainWindow::show(){
 MainWindow::~MainWindow(){
   delete scene;
   delete view;
+  for (int i = 0, n = thingList.size(); i<n; i++)
+    delete thingList[i];
 }
 

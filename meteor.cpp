@@ -7,7 +7,8 @@ Meteor::Meteor(int y, double w, double h, int vx, int vy, int maxHealth ): Thing
   height_ = h;
   health_ = maxHealth;
   velocityX_ = vx;
-  velocityY_ = vy;
+  velocityY_ = 0;
+  hit = false;
   
   QGraphicsPixmapItem* pic = new QGraphicsPixmapItem(QPixmap("images/meteor.jpg"));
   setPic(pic);
@@ -29,11 +30,5 @@ Meteor::~Meteor(){
 }
 
 void Meteor::die(){
-  if (dead())
-    delete this;
+  delete this;
 }
-
-/*
-void Meteor::move() : Thing:move(1,0){
-}
-*/

@@ -11,10 +11,10 @@ class Meteor : public Thing {
     Meteor(int y, double w, double h, int vx, int vy, int maxHealth);
     Meteor();
     ~Meteor();
-    void move();
     void die();
     
   private:
+    bool hit;
 };
 #endif //METEOR_H
 
