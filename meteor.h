@@ -8,7 +8,7 @@
 
 class Meteor : public Thing {
   public:
-    Meteor(int y, double w, double h, int vx, int vy, int maxHealth);
+    Meteor(int y, double w, double h, int vx, int maxHealth);
     Meteor();
     ~Meteor();
     void die();

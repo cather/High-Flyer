@@ -1,7 +1,7 @@
 #include "rocket.h"
 #include <QBrush>
 
-#define speed 5
+#define rocketSpeed 5
 using namespace std;
 
 Rocket::Rocket(int windowMaxX, int windowMaxY, double w, double h, int vx, int vy, int maxHealth ) : Thing(windowMaxX, windowMaxY, w, h, vx, vy, maxHealth) {
@@ -39,22 +39,22 @@ void Rocket::keyPressEvent(QKeyEvent* e)
     {
       case Qt::Key_Up:
         setVx(0);
-        setVy(-speed);
+        setVy(-rocketSpeed);
         move();
         break;
       case Qt::Key_Left:
-        setVx(-speed);
+        setVx(-rocketSpeed);
         setVy(0);
         move();
         break;
       case Qt::Key_Right:
-        setVx(speed);
+        setVx(rocketSpeed);
         setVy(0);
         move();
         break;
       case Qt::Key_Down:
         setVx(0);
-        setVy(speed);
+        setVy(rocketSpeed);
         move();
         break;
       default:

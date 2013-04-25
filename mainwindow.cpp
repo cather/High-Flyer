@@ -25,6 +25,8 @@ void MainWindow::handlegameTimer() {
   points++;
   QString string = "Score: " + QString::number(points);
   score->setText(string);
+
+
   
 }
 
@@ -34,8 +36,7 @@ void MainWindow::triggeraddNewObjectsTimer() {
 void MainWindow::handleaddNewObjectsTimer() {
   // add new Things to the screen every clock
   
-  //testing meteor movement
-  meteor->move(WINDOW_MAX_X, WINDOW_MAX_Y); 
+  //meteor->move(WINDOW_MAX_X, WINDOW_MAX_Y); 
 //  addNewObjectsTimer->setInterval(rand()%20);
 }
 
@@ -50,17 +51,32 @@ MainWindow::MainWindow(){
   
   // creates rocket
   points = 0;
-  double width, height, xv, yv, health;
-  width = 80.0; height = 100.0; xv = 5; yv = 5; health = 20;
-  rocket = new Rocket( WINDOW_MAX_X, WINDOW_MAX_Y, width, height, xv, yv, health );
+  double width, height, xv, yv;
+  width = 80.0; height = 100.0; xv = 5; yv = 5;
+  rocket = new Rocket( WINDOW_MAX_X, WINDOW_MAX_Y, width, height, xv, yv, maxRocketLife );
   scene->addItem(rocket);
   rocket->grabKeyboard();
   thingList.push_back(rocket);
   
-  //create test meteor
-  meteor = new Meteor (WINDOW_MAX_Y/2, 100, 100, 5, 0, 10);
+  /*
+  //meteor test
+  double y = rand()%WINDOW_MAX_Y, w = 100, h = 100, velocity = 15, hEalth = 10;
+  meteor = new Meteor (y, w, h, velocity, hEalth);
   scene->addItem(meteor);
   thingList.push_back(meteor);
+  
+  if (meteor->collide(laser))
+  {
+    meteor->die();
+    laser->die();
+  }
+  else if (meteor->collide(rocket))
+  {
+    rocket->decrementHealth(meteorDamage);
+    meteor->die();
+  }
+  */
+  
   
   // qlabel for displaying health and lives
   message = new QLabel();
@@ -83,7 +99,7 @@ MainWindow::MainWindow(){
   // timer to add new objects
   addNewObjectsTimer = new QTimer(this);  
   //programming addNewObjectsTimer
-  addNewObjectsTimer->setInterval(10);
+  addNewObjectsTimer->setInterval(100);
   //addNewObjectsTimer->setInterval(rand()%20);
   addNewObjectsTimer->start();
   connect(addNewObjectsTimer, SIGNAL(timeout()), this, SLOT(handleaddNewObjectsTimer()));

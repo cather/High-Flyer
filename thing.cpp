@@ -34,7 +34,7 @@ int Thing::getY(){
   return y_;
 }
 
-int Thing::getHealth(){
+int Thing::getHealth(){  
   return health_;
 }
 
@@ -86,6 +86,9 @@ void Thing::move(int windowMaxX, int windowMaxY){
     r.moveTo(p);
     setRect( r );
   }
+  //destroy once off screen
+  else
+    delete this;
 }
 
 void Thing::setPic(QGraphicsPixmapItem* pic){
@@ -97,6 +100,10 @@ bool Thing::dead(){
     return true;
   else
     return false;
+}
+
+void Thing::die(){
+  delete this;
 }
 
 bool Thing::collide(Thing* t){

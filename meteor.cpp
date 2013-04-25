@@ -1,6 +1,6 @@
 #include "meteor.h"
 
-Meteor::Meteor(int y, double w, double h, int vx, int vy, int maxHealth ): Thing(0, y, w, h, vx, vy, maxHealth) {
+Meteor::Meteor(int y, double w, double h, int vx, int maxHealth ): Thing(0, y, w, h, vx, 0, maxHealth) {
   x_ = 0;
   y_ = y;
   width_ = w;

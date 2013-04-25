@@ -30,6 +30,7 @@ class Thing : public QObject, public QGraphicsRectItem{
     void setPic(QGraphicsPixmapItem* pic);
     int getHealth();
     void decrementHealth(int num);
+    void die();
   
   
     bool offScreen;

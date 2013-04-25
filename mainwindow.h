@@ -24,7 +24,12 @@
 #define WINDOW_MAX_X 250*2
 #define WINDOW_MAX_Y 300*2
 
-#define speed 5
+#define maxRocketLife 100
+#define meteorDamage maxRocketLife/5
+#define missileHitDamage maxRocketLife
+#define missileRadiusDamage maxRocketLife/5
+#define alienDamage maxRocketLife/2
+#define planetDamage maxRocketLife
 
 class MainWindow : public QWidget{
   Q_OBJECT;
