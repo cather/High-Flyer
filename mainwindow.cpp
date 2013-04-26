@@ -45,7 +45,6 @@ void MainWindow::startGame() {
   playButton->setText("Pause");
 }
 
-
 void MainWindow::resetGame(){
   enteredName = false;
   nameButton->show();
@@ -55,12 +54,20 @@ void MainWindow::resetGame(){
   playButton->setText("Play");
   points = 0;
   counter = 0;
+  
+  //delete everything
+  while (!thingList.empty())
+  {
+    thingList.peek_front()->hide();
+    thingList.pop_front();
+  }
+  
+  //make a new rocket
+  rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketWidth, rocketHeight, rocketSpeed, rocketMaxLife);
+  gameScene->addItem(rocket);
+  rocket->setZValue(100);
   rocket->hide();
-
-  // keep rocket, delete everything else
-
-  for (int i = 1; i < thingList.size(); i++)
-    thingList[i]->hide();
+  thingList.push_back(rocket);
      
   message->setText("Health: ---  Lives: -");
   score->setText("Score: -");
@@ -75,7 +82,8 @@ void MainWindow::handleTimer() {
     thingList.push_back(planet);
   }
   
-  if (counter > 0 && counter%3 == 0)
+  // add alien every 35 ticks
+  if (counter > 0 && counter%10 == 0)
   {
     alien = new Alien(alienPic, rand()%100, 10);
     gameScene->addItem(alien);
@@ -95,6 +103,7 @@ void MainWindow::handleTimer() {
     thingList[i]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
     if(thingList[i]->offScreen)
     {
+      thingList[i]->hide();
       thingList.pop(i);
       i--;
     }
