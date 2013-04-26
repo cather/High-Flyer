@@ -115,7 +115,10 @@ bool Thing::collide(Thing* t){
   rangeY = y_ + height_;
   
   if (t->getX() < rangeX && t->getX() > x_ && t->getY() < rangeY && t->getY() > y_)
+  {
+    cout << "Thing collision"<<endl;
     return true;
+  }
   else
     return false;  
 }
