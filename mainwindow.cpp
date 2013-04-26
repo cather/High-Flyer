@@ -94,10 +94,10 @@ void MainWindow::triggerTimer() {
 }
 
 void MainWindow::handleTimer() {
-  // add star every 5 ticks
-  if (counter > 0 && counter % 5 == 0)
+  // add star every 25 ticks
+  if (counter > 0 && counter % 25 == 0)
   {  
-    star = new Star(starPic, 100, 0);
+    star = new Star(starPic, rand()%GAME_WINDOW_MAX_X, rand()%GAME_WINDOW_MAX_Y);
     gameScene->addItem(star);
     thingList.push_back(star);
   }
