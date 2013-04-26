@@ -8,7 +8,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e){
   emit shootLaser(mousePoint.x(), mousePoint.y());
 }
 
-
 void MainWindow::startGame() {
   enteredName = true;
   QString n = enterName->toPlainText();
@@ -94,15 +93,14 @@ void MainWindow::triggerTimer() {
   }
 }
 
-
 void MainWindow::handleTimer() {
-  if (counter > 0 && counter % 15 == 0)
+  
+  //add planet every 15 ticks
+  if (counter > 0 && counter % 10 == 0)
   {  
-    //add planet every 15 ticks
     planet = new Planet(planetPic, 100, 0, 20, 30);
     gameScene->addItem(planet);
     thingList.push_back(planet);
-    endGame();
   }
   
   // add alien every 35 ticks
@@ -131,6 +129,9 @@ void MainWindow::handleTimer() {
       thingList.pop(i);
       i--;
     }
+    if (thingList[i]->collide(rocket) && i != 0)
+      cout << "COLLIDE"<<endl;
+      
   }
   
   // Update info
@@ -138,6 +139,8 @@ void MainWindow::handleTimer() {
   points++; // update score
   score->setText("Score: " + QString::number(points)); // update score
   counter++; // update timer counter
+  if (rocket->getHealth() == 0)
+    endGame();
 }
 
 
