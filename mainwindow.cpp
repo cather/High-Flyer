@@ -8,24 +8,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e){
   emit shootLaser(mousePoint.x(), mousePoint.y());
 }
 
-void MainWindow::triggerTimer() {
-
-  if (enteredName)
-  {
-    if ( gameTimer->isActive() )
-    {
-      gameTimer->stop();
-      playButton->setText("Play");
-      rocket->pause = true;
-    }
-    else
-    {
-      gameTimer->start();
-      playButton->setText("Pause");
-      rocket->pause = false;
-    }
-  }
-}
 
 void MainWindow::startGame() {
   enteredName = true;
@@ -47,10 +29,13 @@ void MainWindow::startGame() {
 }
 
 void MainWindow::resetGame(){
+  connect(nameButton, SIGNAL(clicked()), this, SLOT(startGame()));
   enteredName = false;
   nameButton->show();
+    nameButton->setText("Welcome abord!");
   enterName->show();
   nameMenuLabel->show();
+    nameMenuLabel->setText("Enter your name");
   starting = true;
   gameTimer->stop();
   playButton->setText("Play");
@@ -75,6 +60,41 @@ void MainWindow::resetGame(){
   score->setText("Score: -");
 }
 
+void MainWindow::endGame(){
+  
+  nameButton->show();
+  nameButton->setText("Fly again");
+    connect(nameButton, SIGNAL(clicked()), this, SLOT(resetGame()));
+  nameMenuLabel->show();
+  nameMenuLabel->setText(name->text() + "'s score: " + QString::number(points) );
+  while (!thingList.empty())
+  {
+    thingList.peek_front()->hide();
+    thingList.pop_front();
+  }
+  
+}
+
+void MainWindow::triggerTimer() {
+
+  if (enteredName)
+  {
+    if ( gameTimer->isActive() )
+    {
+      gameTimer->stop();
+      playButton->setText("Play");
+      rocket->pause = true;
+    }
+    else
+    {
+      gameTimer->start();
+      playButton->setText("Pause");
+      rocket->pause = false;
+    }
+  }
+}
+
+
 void MainWindow::handleTimer() {
   if (counter > 0 && counter % 15 == 0)
   {  
@@ -82,10 +102,11 @@ void MainWindow::handleTimer() {
     planet = new Planet(planetPic, 100, 0, 20, 30);
     gameScene->addItem(planet);
     thingList.push_back(planet);
+    endGame();
   }
   
   // add alien every 35 ticks
-  if (counter > 0 && counter%10 == 0)
+  if (counter > 0 && counter%1111135 == 0)
   {
     alien = new Alien(alienPic, rand()%100, 10);
     gameScene->addItem(alien);
@@ -100,6 +121,7 @@ void MainWindow::handleTimer() {
     gameTimer->setInterval(clockTime);
   }
   
+  // move every Thing, deleting those off-screen
   for (int i = 0; i < thingList.size(); i++)
   {
     thingList[i]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
@@ -141,12 +163,11 @@ MainWindow::MainWindow(){
   bigView = new QGraphicsView(bigScene);
   gameScene = new QGraphicsScene();
   gameView = new QGraphicsView(gameScene);
-  bigView->setLayout(layout);
-  gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
-  cout << GAME_WINDOW_MAX_X << " " << GAME_WINDOW_MAX_Y << endl;
-  gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
-  bigView->setWindowTitle("High Flyer");
-  
+    bigView->setLayout(layout);
+    gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
+    cout << GAME_WINDOW_MAX_X << " " << GAME_WINDOW_MAX_Y << endl;
+    gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
+
   setMouseTracking(true);  // use this later for missile????
 
   // buttons

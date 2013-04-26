@@ -95,6 +95,7 @@ class MainWindow : public QWidget{
     void triggerTimer();
     void resetGame();
     void startGame();
+    void endGame();
     
   signals:
     void clicked();
