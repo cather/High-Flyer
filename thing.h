@@ -1,9 +1,8 @@
 #ifndef THING_H
 #define THING_H
 
-#include <QGraphicsPixmapItem>
 #include <QPixmap>
-#include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 #include <QKeyEvent>
 #include <QBrush>
 
@@ -11,9 +10,9 @@
 
 /*Things can move, detect when touching another Thing, detect when run out of health and detect when off-screen. Things have an x,y position, width, height, pixmapitem, and velocities in x,y*/
 
-class Thing : public QObject, public QGraphicsRectItem{
+class Thing : public QObject, public QGraphicsPixmapItem{
   public:
-    Thing(double nx, double ny, double w, double h, int vx, int vy, int maxHealth );
+    Thing(QPixmap* pix, double nx, double ny, double w, double h, int vx, int vy, int maxHealth );
     Thing();
     ~Thing();
     bool collide(Thing* t);
@@ -27,7 +26,7 @@ class Thing : public QObject, public QGraphicsRectItem{
     void setVy(int vy);
     void move(int windowMaxX, int windowMaxY);
     void move();
-    void setPic(QGraphicsPixmapItem* pic);
+    
     int getHealth();
     void decrementHealth(int num);
     void die();
@@ -44,7 +43,7 @@ class Thing : public QObject, public QGraphicsRectItem{
     int height_;
     int health_;
     int maxHealth_;
-    QGraphicsPixmapItem* pic_;
+    QPixmap* pic_;
     
   
     bool onScreen;

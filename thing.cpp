@@ -2,7 +2,7 @@
 using namespace std;
 
 // Thing(startX, startY, width, height, velX, velY, maxHealth)
-Thing::Thing(double nx, double ny, double w, double h, int vx, int vy, int maxHealth ) : QGraphicsRectItem(nx, ny, w, h) {
+Thing::Thing(QPixmap* pic, double nx, double ny, double w, double h, int vx, int vy, int maxHealth ) : QGraphicsPixmapItem(*pic) {
   x_ = nx;
   y_ = ny;
   width_ = w;
@@ -11,13 +11,11 @@ Thing::Thing(double nx, double ny, double w, double h, int vx, int vy, int maxHe
   health_ = maxHealth_;
   velocityX_ = vx;
   velocityY_ = vy;
+  pic_ = pic;
+  
   onScreen = true;
   
-// update QRectF displayed
-  QPointF p( x_, y_ );
-  QRectF r( rect() );
-  r.moveTo(p);
-  setRect( r );
+  setPos(x_,y_);
 }
 
 Thing::Thing(){
@@ -74,11 +72,7 @@ void Thing::move(){
   cout << endl;
 */
 
-  // update QRectF displayed
-  QPointF p( x_, y_ );
-  QRectF r( rect() );
-  r.moveTo(p);
-  setRect( r );
+  setPos(x_,y_);
 }
 
 void Thing::move(int windowMaxX, int windowMaxY){
@@ -91,11 +85,7 @@ void Thing::move(int windowMaxX, int windowMaxY){
     if ( ((x_+width_) < 0 || (y_+height_) < 0 )|| (x_ > windowMaxX || y_ > windowMaxY))
       onScreen = false;
    
-    // update QRectF displayed
-    QPointF p( x_, y_ );
-    QRectF r( rect() );
-    r.moveTo(p);
-    setRect( r );
+    setPos(x_,y_);
   }
   //destroy once off screen
   else
@@ -104,10 +94,6 @@ void Thing::move(int windowMaxX, int windowMaxY){
 
 void Thing::offScreen(){
   delete this;
-}
-
-void Thing::setPic(QGraphicsPixmapItem* pic){
-  pic_ = pic;
 }
 
 bool Thing::dead(){
