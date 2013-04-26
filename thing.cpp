@@ -109,7 +109,7 @@ void Thing::move(int windowMaxX, int windowMaxY){
 }
 
 void Thing::offScreen(){
-  delete this;
+  //delete this;
 }
 
 bool Thing::dead(){
