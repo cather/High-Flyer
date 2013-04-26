@@ -10,7 +10,7 @@ Star::~Star(){
 }
 
 void Star::collide(Thing* rocket){
-  if (Thing::collide(rocket) && rocket->identifier == "rocket")
+  if (Thing::collide(rocket)  == "rocket")
   {
    //addPoints(rocket);
   }

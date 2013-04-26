@@ -112,7 +112,7 @@ void Thing::die(){
   offScreen = true;
 }
 
-bool Thing::collide(Thing* t){
+string Thing::collide(Thing* t){
 
   int rangeX, rangeY;
   rangeX = x_ + width_;
@@ -120,12 +120,11 @@ bool Thing::collide(Thing* t){
   
   if (t->getX() < rangeX && t->getX() > x_ && t->getY() < rangeY && t->getY() > y_)
   {
-    cout << "Thing collision"<<endl;
-    decrementHealth(1);
-    return true;
+    cout << t->identifier<<endl;
+    return t->identifier;
   }
   else
-    return false;  
+    return "";  
 }
 
 void Thing::setPos(int x, int y){

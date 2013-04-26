@@ -29,7 +29,8 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     Thing(QPixmap* pix, double nx, double ny, int vx, int vy, int maxHealth );
     Thing();
     ~Thing();
-    bool collide(Thing* t);
+
+    std::string collide(Thing* t);
     bool dead();
     
     int getX();
@@ -53,7 +54,7 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     int getMaxHealth();
     
     bool offScreen;
-    char* identifier;
+    std::string identifier;
   
   protected:
     int x_;
