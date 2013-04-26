@@ -126,14 +126,6 @@ void MainWindow::handleTimer() {
     thingList.push_back(alien);
   }
   
-  // level up every 30 ticks
-  if (counter > 0 && counter % 50 == 0)
-  {
-    cout << "Level up"<<endl;
-    clockTime += clockTime;
-    gameTimer->setInterval(clockTime);
-  }
-  
   // move every Thing, deleting those off-screen
   for (int i = 0; i < thingList.size(); i++)
   {
@@ -154,6 +146,20 @@ void MainWindow::handleTimer() {
   counter++; // update timer counter
   if (rocket->getHealth() == 0)
     endGame();
+    
+      
+  // level up every 100 ticks
+  if (counter > 0 && counter % 100 == 0)
+  {
+    cout << "Level up"<<endl;
+    clockTime += clockTime;
+    gameTimer->setInterval(clockTime);
+    while(1 < thingList.size())
+    {
+      thingList[1]->hide();
+      thingList.pop(1);
+    }
+  }
 }
 
 
