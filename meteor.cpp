@@ -1,6 +1,6 @@
 #include "meteor.h"
 
-Meteor::Meteor(int y, double w, double h, int vx, int maxHealth ): Thing(0, y, w, h, vx, 0, maxHealth) {
+Meteor::Meteor(QPixmap* pic, int y, double w, double h, int vx, int maxHealth ): Thing(pic, 0, y, w, h, vx, 0, maxHealth) {
   x_ = 0;
   y_ = y;
   width_ = w;
@@ -9,11 +9,6 @@ Meteor::Meteor(int y, double w, double h, int vx, int maxHealth ): Thing(0, y, w
   velocityX_ = vx;
   velocityY_ = 0;
   hit = false;
-  
-  QGraphicsPixmapItem* pic = new QGraphicsPixmapItem(QPixmap("images/meteor.jpg"));
-  setPic(pic);
-  //since pic isn't working right now
-  setBrush(Qt::blue);
 }
 
 Meteor::Meteor(){

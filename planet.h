@@ -8,7 +8,7 @@
 
 class Planet : public Thing {
   public:
-    Planet(int x, int y, double w, double h);
+    Planet(QPixmap* pic, int x, int y, double w, double h);
     Planet();
     ~Planet();
     void collide(Rocket* rocket);

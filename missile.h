@@ -9,7 +9,7 @@
 
 class Missile : public Thing {
   public:
-    Missile(int x, int y, int speed, int lifeSpan, Rocket* rocket );
+    Missile(QPixmap* pic, int x, int y, int speed, int lifeSpan, Rocket* rocket );
     Missile();
     ~Missile();
     void updateVelocity();
