@@ -90,15 +90,15 @@ void MainWindow::handleTimer() {
     gameTimer->setInterval(clockTime);
   }
   
-  for (int i = 1; i < thingList.size(); i++)
+  for (int i = 0; i < thingList.size(); i++)
   {
     thingList[i]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
+    if(thingList[i]->offScreen)
+    {
+      thingList.pop(i);
+      i--;
+    }
   }
-  
-  /*
-  if (planet != NULL)
-    planet->collide(rocket); // checking if planet collides with rocket
-  */
   
   // Update info
   rocket->displayHealth(message); // update health

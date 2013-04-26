@@ -49,9 +49,10 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     int getHealth();
     void decrementHealth(int num);
     void die();
-    void offScreen();
     
     int getMaxHealth();
+    
+    bool offScreen;
   
   protected:
     int x_;
@@ -64,10 +65,6 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     int maxHealth_;
     QPixmap* pic_;
     
-  
-    bool onScreen;
-    
-  
   public slots:
   
   signals:

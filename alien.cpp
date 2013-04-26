@@ -6,7 +6,7 @@ Alien::Alien(QPixmap* pic, int rf, int onScreenFor ) : Thing(pic, 0, 0, alienWid
   // velocities are random 
   randFactor_ = rf;
   lifeTime_ = onScreenFor; // decrement every_time it moves
-  onScreen = true;
+  offScreen = false;
 }
 
 Alien::Alien(){
@@ -19,16 +19,16 @@ void Alien::move(int windowMaxX, int windowMaxY){
   x_ += velocityX_;
   y_ += velocityY_;
 
-  if (onScreen && lifeTime_ != 0)
+  if (!offScreen && lifeTime_ != 0)
   {
     if ( x_< 0 )
-      onScreen = false;
+      offScreen = true;
     if ( y_< 0 )
-      onScreen = false;
+      offScreen = true;
     if ( (x_+width_) > windowMaxX )
-      onScreen = false;
+      offScreen = true;
     if ( (y_+height_) > windowMaxY )
-      onScreen = false;
+      offScreen = true;
 
     setVx(rand()%randFactor_);
     setVy(rand()%randFactor_);

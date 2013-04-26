@@ -20,7 +20,7 @@ Thing::Thing(QPixmap* pic, double nx, double ny, double w, double h, int vx, int
   velocityY_ = vy;
   pic_ = pic;
   
-  onScreen = true;
+  offScreen = false;
   
   setPos(x_,y_);
 }
@@ -93,23 +93,16 @@ void Thing::move(){
 
 void Thing::move(int windowMaxX, int windowMaxY){
   
-  if (onScreen)
+  if (!offScreen)
   {
     x_ += velocityX_;
     y_ += velocityY_;
     
     if ( ((x_+width_) < 0 || (y_+height_) < 0 )|| (x_ > windowMaxX || y_ > windowMaxY))
-      onScreen = false;
+      offScreen = true;
    
     setPos(x_,y_);
   }
-  //destroy once off screen
-  else
-    offScreen();
-}
-
-void Thing::offScreen(){
-  //delete this;
 }
 
 bool Thing::dead(){
