@@ -1,14 +1,6 @@
 #include "thing.h"
-
-
-
-
 using namespace std;
 
-
-
-
-// Thing(startX, startY, width, height, velX, velY, maxHealth)
 Thing::Thing(QPixmap* pic, double nx, double ny, int vx, int vy, int maxHealth ) : QGraphicsPixmapItem(*pic) {
   x_ = nx;
   y_ = ny;
@@ -122,19 +114,10 @@ bool Thing::collide(Thing* t){
   rangeX = x_ + width_;
   rangeY = y_ + height_;
   
-  
-  if (t->getX() < rangeX && t->getX() > (x_+width_) && t->getY() < rangeY && t->getY() > (y_+width_))
-  {
-    cout<<"coliide"<<endl;
+  if (t->getX() < rangeX && t->getX() > x_ && t->getY() < rangeY && t->getY() > y_)
     return true;
-  }
   else
-  { 
-    cout << " X range:" << x_  << " to " << rangeX << " while t's x: " << t->getX() <<endl;
-    cout << " Y range:" << y_ << " to " << rangeY << " while t's y: " <<  t->getY()<<endl;
-    
     return false;  
-  }
 }
 
 void Thing::setPos(int x, int y){
