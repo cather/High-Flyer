@@ -26,7 +26,7 @@
 
 class Thing : public QObject, public QGraphicsPixmapItem{
   public:
-    Thing(QPixmap* pix, double nx, double ny, double w, double h, int vx, int vy, int maxHealth );
+    Thing(QPixmap* pix, double nx, double ny, int vx, int vy, int maxHealth );
     Thing();
     ~Thing();
     bool collide(Thing* t);

@@ -49,7 +49,7 @@ void MainWindow::resetGame(){
   }
   
   //make a new rocket
-  rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketWidth, rocketHeight, rocketSpeed, rocketMaxLife);
+  rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketSpeed, rocketMaxLife);
   gameScene->addItem(rocket);
   rocket->setZValue(100);
   rocket->hide();
@@ -98,7 +98,7 @@ void MainWindow::handleTimer() {
   //add planet every 15 ticks
   if (counter > 0 && counter % 10 == 0)
   {  
-    planet = new Planet(planetPic, 100, 0, 20, 30);
+    planet = new Planet(planetPic, 100, 0);
     gameScene->addItem(planet);
     thingList.push_back(planet);
   }
@@ -160,6 +160,8 @@ MainWindow::MainWindow(){
   missilePic = new QPixmap("images/missile.jpg");
   alienPic = new QPixmap("images/alien.jpg");
   laserPic = new QPixmap("images/laser.jpg");
+  rocketPic->scaledToHeight(10, Qt::FastTransformation);
+  planetPic->scaledToHeight(25, Qt::SmoothTransformation);
 
   // construct layout
   layout = new QGridLayout();
@@ -215,7 +217,7 @@ MainWindow::MainWindow(){
   
   // creates rocket
   points = 0;
-  rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketWidth, rocketHeight, rocketSpeed, rocketMaxLife);
+  rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketSpeed, rocketMaxLife);
   gameScene->addItem(rocket);
   rocket->setZValue(100);
   rocket->hide();

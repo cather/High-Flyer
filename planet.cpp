@@ -2,8 +2,9 @@
 
 using namespace std;
 
-Planet::Planet(QPixmap* pic, int x, int y, double w, double h) : Thing(pic, x, y, w, h, 0, 0, 1) {
+Planet::Planet(QPixmap* pic, int x, int y) : Thing(pic, x, y, 0, 0, 1) {
   // velocity is always 0 -- this item doesn't move
+  //maxhealth is just 1
 }
 
 

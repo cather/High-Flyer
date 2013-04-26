@@ -1,6 +1,6 @@
 #include "laser.h"
 using namespace std;
-Laser::Laser(QPixmap* pic, int w, int h, int vx, int vy, Rocket* rocket ) : Thing(pic, rocket->getWidth()/2, rocket->getY(), w, h, vx, vy, 1 ){
+Laser::Laser(QPixmap* pic, int vx, int vy, Rocket* rocket ) : Thing(pic, rocket->getWidth()/2, rocket->getY(), vx, vy, 1 ){
 
   rocket_ = rocket;
 }

@@ -1,6 +1,6 @@
 #include "missile.h"
 
-Missile::Missile(QPixmap* pic, int x, int y, int speed, int lifeSpan, Rocket* rocketToChase ) : Thing(pic, x, y, 100, 500, 
+Missile::Missile(QPixmap* pic, int x, int y, int speed, int lifeSpan, Rocket* rocketToChase ) : Thing(pic, x, y,
   ( rocket->getX() - x_ )/abs(( rocket->getX() - x_ )), 
   ( rocket->getY() - y_ )/ abs(( rocket->getY() - y_ )), lifeSpan) {
  

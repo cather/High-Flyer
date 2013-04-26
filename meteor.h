@@ -8,7 +8,7 @@
 
 class Meteor : public Thing {
   public:
-    Meteor(QPixmap* pic, int y, double w, double h, int vx, int maxHealth);
+    Meteor(QPixmap* pic, int y, int vx, int maxHealth);
     Meteor();
     ~Meteor();
     void die();

@@ -1,6 +1,6 @@
 #include "alien.h"
 
-Alien::Alien(QPixmap* pic, int rf, int onScreenFor ) : Thing(pic, 0, 0, alienWidth, alienHeight, rand()%rf, rand()%rf, 3)
+Alien::Alien(QPixmap* pic, int rf, int onScreenFor ) : Thing(pic, 0, 0, rand()%rf, rand()%rf, 3)
 {
   // maxHealth is 3
   // velocities are random 

@@ -9,7 +9,7 @@
 class Rocket : public Thing {
   public:
   
-    Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, double w, double h, int speed, int maxHealth);
+    Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, int speed, int maxHealth);
     Rocket();
     ~Rocket();
     void dead();

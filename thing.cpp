@@ -9,17 +9,17 @@ using namespace std;
 
 
 // Thing(startX, startY, width, height, velX, velY, maxHealth)
-Thing::Thing(QPixmap* pic, double nx, double ny, double w, double h, int vx, int vy, int maxHealth ) : QGraphicsPixmapItem(*pic) {
+Thing::Thing(QPixmap* pic, double nx, double ny, int vx, int vy, int maxHealth ) : QGraphicsPixmapItem(*pic) {
   x_ = nx;
   y_ = ny;
-  width_ = w;
-  height_ = h;
-  maxHealth_ = maxHealth;
-  health_ = maxHealth_;
   velocityX_ = vx;
   velocityY_ = vy;
-  pic_ = pic;
-  
+  maxHealth_ = maxHealth;
+  health_ = maxHealth_;
+  pic_ = pic;  
+
+  width_ = pic_->width();
+  height_ = pic_->height();
   offScreen = false;
   
   setPos(x_,y_);
@@ -117,10 +117,11 @@ void Thing::die(){
 }
 
 bool Thing::collide(Thing* t){
-  int rangeX = width_ - x_;
-  int rangeY = height_ - y_;
-  rangeX+=x_;
-  rangeY+=y_;
+
+  int rangeX, rangeY;
+  rangeX = x_ + width_;
+  rangeY = y_ + height_;
+  
   
   if (t->getX() < rangeX && t->getX() > (x_+width_) && t->getY() < rangeY && t->getY() > (y_+width_))
   {
@@ -128,10 +129,10 @@ bool Thing::collide(Thing* t){
     return true;
   }
   else
-  { /*
+  { 
     cout << " X range:" << x_  << " to " << rangeX << " while t's x: " << t->getX() <<endl;
     cout << " Y range:" << y_ << " to " << rangeY << " while t's y: " <<  t->getY()<<endl;
-    */
+    
     return false;  
   }
 }

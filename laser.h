@@ -8,7 +8,7 @@
 
 class Laser : public Thing {
   public:
-    Laser(QPixmap* pic, int w, int h, int vx, int vy, Rocket* rocket);
+    Laser(QPixmap* pic, int vx, int vy, Rocket* rocket);
     Laser();
     ~Laser();
     void findStartingPoint();
