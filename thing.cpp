@@ -1,5 +1,12 @@
 #include "thing.h"
+
+
+
+
 using namespace std;
+
+
+
 
 // Thing(startX, startY, width, height, velX, velY, maxHealth)
 Thing::Thing(QPixmap* pic, double nx, double ny, double w, double h, int vx, int vy, int maxHealth ) : QGraphicsPixmapItem(*pic) {

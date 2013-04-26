@@ -2,11 +2,6 @@
 
 using namespace std;
 
-#define rocketWidth 50
-#define rocketHeight 100
-#define rocketSpeed 5
-#define rocketMaxLife 100
-
 void MainWindow::mouseMoveEvent(QMouseEvent *e){
   cout << "mouse"<<endl;
   mousePoint = e->pos();
@@ -74,23 +69,38 @@ void MainWindow::resetGame(){
 void MainWindow::handleTimer() {
   if (counter > 0 && counter % 15 == 0)
   {  
-    //planet
+    //add planet every 15 ticks
     planet = new Planet(planetPic, 100, 0, 20, 30);
     gameScene->addItem(planet);
     thingList.push_back(planet);
-   }
+  }
   
-  // clockTime starts at 500 ms => level up after 10 seconds -> clockTime = 5000
+  if (counter > 0 && counter%3 == 0)
+  {
+    alien = new Alien(alienPic, rand()%100, 10);
+    gameScene->addItem(alien);
+    thingList.push_back(alien);
+  }
+  
+  // level up every 30 ticks
   if (counter > 0 && counter % 30 == 0)
   {
     cout << "Level up"<<endl;
     clockTime += clockTime;
     gameTimer->setInterval(clockTime);
   }
-
+  
+  for (int i = 1; i < thingList.size(); i++)
+  {
+    thingList[i]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
+  }
+  
+  /*
   if (planet != NULL)
     planet->collide(rocket); // checking if planet collides with rocket
-
+  */
+  
+  // Update info
   rocket->displayHealth(message); // update health
   points++; // update score
   score->setText("Score: " + QString::number(points)); // update score
