@@ -14,9 +14,10 @@ class Rocket : public Thing {
     ~Rocket();
     void dead();
     void displayHealth(QLabel* label);
+    int getStars();
     void offScreen(); // override offScreen
-    
     bool pause;
+    void addStar();
     
   protected:
     void keyPressEvent(QKeyEvent* e);
@@ -25,5 +26,6 @@ class Rocket : public Thing {
     int lives;
     bool gameOver;
     int speed_;
+    int starsCollected_;
 };
 #endif //ROCKET_H

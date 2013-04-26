@@ -8,6 +8,7 @@ Rocket::Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, int speed, int maxH
   gameOver = false;
   pause = true;
   speed_ = speed;
+  starsCollected_ = 0;
 }
 
 Rocket::Rocket(){
@@ -71,10 +72,18 @@ void Rocket::displayHealth(QLabel* label){
   label->setText(string);
 }
 
+int Rocket::getStars(){
+  return (starsCollected_*50);
+}
+
 void Rocket::offScreen(){
   x_ -= velocityX_;
   y_ -= velocityY_;
   cout <<"Off screen"<<endl;
 
   setPos(x_,y_);
+}
+
+void Rocket::addStar(){
+  starsCollected_ + 1;
 }

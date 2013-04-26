@@ -94,9 +94,16 @@ void MainWindow::triggerTimer() {
 }
 
 void MainWindow::handleTimer() {
+  // add star every 5 ticks
+  if (counter > 0 && counter % 5 == 0)
+  {  
+    star = new Star(starPic, 100, 0);
+    gameScene->addItem(star);
+    thingList.push_back(star);
+  }
   
   //add planet every 15 ticks
-  if (counter > 0 && counter % 10 == 0)
+  if (counter > 0 && counter % 1000 == 0)
   {  
     planet = new Planet(planetPic, 100, 0);
     gameScene->addItem(planet);
@@ -134,7 +141,7 @@ void MainWindow::handleTimer() {
   
   // Update info
   rocket->displayHealth(message); // update health
-  points++; // update score
+  points = points+1+rocket->getStars(); // update score
   score->setText("Score: " + QString::number(points)); // update score
   counter++; // update timer counter
   if (rocket->getHealth() == 0)
