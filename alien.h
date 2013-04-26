@@ -2,7 +2,6 @@
 #define ALIEN_H
 
 #include "thing.h"
-#include "thing.h"
 /* Alien moves around on the screen randomly. Starting position is random direction off-screen*/
 
 class Alien : public Thing {

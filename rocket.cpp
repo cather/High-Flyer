@@ -9,14 +9,21 @@ Rocket::Rocket(int windowMaxX, int windowMaxY, double w, double h, int vx, int v
   lives = 4; // start with 4 lives
   
   // SHOULD BE starting the rocket in the center bottom of screen. But isn't.
-  x_ = (windowMaxX-w)/2;
+  //x_ = (windowMaxX-w);
+  //cout << x_ << " " << y_<<endl;
+/*
   y_ = windowMaxY-h;
   width_ = w;
   height_ = h;
   health_ = maxHealth;
   velocityX_ = vx;
   velocityY_ = vy;
+*/
   gameOver = false;
+  speedX = vx;
+  speedY = vy;
+  velocityX_ = 0;
+  velocityY_ = 0;
   
   QGraphicsPixmapItem* pic = new QGraphicsPixmapItem(QPixmap("images/rocket.jpg"));
   setPic(pic);
@@ -30,13 +37,14 @@ Rocket::Rocket(){
 
 Rocket::~Rocket(){
 }
-
+ 
+// need some way to pass in (int windowMaxX, int windowMaxY) to stop rocket from moving off screen
 void Rocket::keyPressEvent(QKeyEvent* e)
 {
   if (!gameOver)
   {
     switch(e->key())
-    {
+    { 
       case Qt::Key_Up:
         setVx(0);
         setVy(-rocketSpeed);
@@ -87,3 +95,12 @@ void Rocket::displayHealth(QLabel* label){
   label->setHidden(false); 
 }
 
+void Rocket::offScreen(){
+  x_ -= velocityX_;
+  y_ -= velocityY_;
+  cout <<" D"<<endl;
+  QPointF p( x_, y_ );
+  QRectF r( rect() );
+  r.moveTo(p);
+  setRect( r );
+}

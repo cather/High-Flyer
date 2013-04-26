@@ -31,9 +31,10 @@ class Thing : public QObject, public QGraphicsRectItem{
     int getHealth();
     void decrementHealth(int num);
     void die();
+    void offScreen();
+    
+    int getMaxHealth();
   
-  
-    bool offScreen;
   protected:
     int x_;
     int y_;
@@ -44,6 +45,9 @@ class Thing : public QObject, public QGraphicsRectItem{
     int health_;
     int maxHealth_;
     QGraphicsPixmapItem* pic_;
+    
+  
+    bool onScreen;
     
   
   public slots:

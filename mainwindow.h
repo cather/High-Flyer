@@ -8,7 +8,8 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QtGui>
-#include <QFormLayout>
+#include <QGridLayout>
+#include <QBoxLayout>
 #include <QString>
 
 #include "thing.h"
@@ -41,7 +42,9 @@ class MainWindow : public QWidget{
     void show();
   
   private:
-    QFormLayout* layout;
+    QGridLayout* layout;
+    QHBoxLayout* menuLayout;
+    
     QGraphicsScene* scene;
     QGraphicsView* view;
     Rocket* rocket;
@@ -55,8 +58,7 @@ class MainWindow : public QWidget{
     MyList<Thing*> thingList;
     
     QTimer* gameTimer;
-    QPushButton* gameTimerButton;
-    QTimer* addNewObjectsTimer;
+    QPushButton* timerButton;
     QPushButton* stopButton;
     QPushButton* playButton;
     QLabel* message;
@@ -64,12 +66,9 @@ class MainWindow : public QWidget{
     int points;
   
   public slots:
-    void handlegameTimer();
-    void triggergameTimer();
+    void handleTimer();
+    void triggerTimer();
     void startGame();
-    
-    void handleaddNewObjectsTimer();
-    void triggeraddNewObjectsTimer();
 };
 
 #endif // MAINWINDOW_H

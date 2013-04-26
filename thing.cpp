@@ -11,7 +11,7 @@ Thing::Thing(double nx, double ny, double w, double h, int vx, int vy, int maxHe
   health_ = maxHealth_;
   velocityX_ = vx;
   velocityY_ = vy;
-  offScreen = false;
+  onScreen = true;
   
 // update QRectF displayed
   QPointF p( x_, y_ );
@@ -38,6 +38,10 @@ int Thing::getHealth(){
   return health_;
 }
 
+int Thing::getMaxHealth(){  
+  return maxHealth_;
+}
+
 void Thing::setX(int x){
   x_ = x;
 }
@@ -60,8 +64,15 @@ void Thing::decrementHealth(int num){
 }
 
 void Thing::move(){
+
   x_ += velocityX_;
   y_ += velocityY_;
+
+/*
+  cout <<"v's: " << velocityX_ << " "<<velocityY_ << endl;
+  cout << x_ << " " << y_<<endl;
+  cout << endl;
+*/
 
   // update QRectF displayed
   QPointF p( x_, y_ );
@@ -72,14 +83,14 @@ void Thing::move(){
 
 void Thing::move(int windowMaxX, int windowMaxY){
   
-  if (!offScreen)
+  if (onScreen)
   {
     x_ += velocityX_;
     y_ += velocityY_;
     
     if ( ((x_+width_) < 0 || (y_+height_) < 0 )|| (x_ > windowMaxX || y_ > windowMaxY))
-      offScreen = true;
-    
+      onScreen = false;
+   
     // update QRectF displayed
     QPointF p( x_, y_ );
     QRectF r( rect() );
@@ -88,7 +99,11 @@ void Thing::move(int windowMaxX, int windowMaxY){
   }
   //destroy once off screen
   else
-    delete this;
+    offScreen();
+}
+
+void Thing::offScreen(){
+  delete this;
 }
 
 void Thing::setPic(QGraphicsPixmapItem* pic){
@@ -111,7 +126,10 @@ bool Thing::collide(Thing* t){
   int rangeY = height_ - y_;
   
   if (t->getX() < rangeX && t->getX() > x_ && t->getY() < rangeY && t->getY() > y_)
+  {
     return true;
+    cout<<"coliide"<<endl;
+  }
   else
     return false;
 }

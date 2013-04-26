@@ -14,6 +14,7 @@ class Rocket : public Thing {
     ~Rocket();
     void dead();
     void displayHealth(QLabel* label);
+    void offScreen(); // override offScreen
     
   protected:
     void keyPressEvent(QKeyEvent* e);
@@ -21,6 +22,8 @@ class Rocket : public Thing {
   private:
     int lives;
     bool gameOver;
+    int speedX;
+    int speedY;
     
     
 };
