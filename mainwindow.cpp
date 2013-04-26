@@ -7,6 +7,12 @@ using namespace std;
 #define rocketSpeed 5
 #define rocketMaxLife 100
 
+void MainWindow::mouseMoveEvent(QMouseEvent *e){
+  cout << "mouse"<<endl;
+  mousePoint = e->pos();
+  emit shootLaser(mousePoint.x(), mousePoint.y());
+}
+
 void MainWindow::triggerTimer() {
 
   if (enteredName)
@@ -69,7 +75,7 @@ void MainWindow::handleTimer() {
   if (counter > 0 && counter % 15 == 0)
   {  
     //planet
-    planet = new Planet(planetPic, 100,0,20,30);
+    planet = new Planet(planetPic, 100, 0, 20, 30);
     gameScene->addItem(planet);
     thingList.push_back(planet);
    }
@@ -96,7 +102,7 @@ MainWindow::MainWindow(){
 
   enteredName = false;
   starting = true;
-  clockTime = 500;
+  clockTime = 200;
   counter = 0;
   
   // storing graphics  
@@ -117,6 +123,9 @@ MainWindow::MainWindow(){
   gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
   cout << GAME_WINDOW_MAX_X << " " << GAME_WINDOW_MAX_Y << endl;
   gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
+  
+  setMouseTracking(true);
+  
   bigView->setWindowTitle("High Flyer");
 
   // buttons
@@ -124,7 +133,6 @@ MainWindow::MainWindow(){
   stopButton = new QPushButton("Quit");
   resetButton = new QPushButton("Restart");
   nameButton = new QPushButton("Enter");
-
   
   // Timer to keep track of score, health, etc
   gameTimer = new QTimer(this);
@@ -165,7 +173,7 @@ MainWindow::MainWindow(){
   message->setText("Health: ---  Lives: -");
   score->setText("Score: -"); // update score
   
-  // connections  
+  // connections
   connect(gameTimer, SIGNAL(timeout()), this, SLOT(handleTimer()));
   connect(nameButton, SIGNAL(clicked()), this, SLOT(startGame()));
   connect(playButton, SIGNAL(clicked()), this, SLOT(triggerTimer()));

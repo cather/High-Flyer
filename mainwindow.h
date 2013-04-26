@@ -12,6 +12,7 @@
 #include <QBoxLayout>
 #include <QString>
 #include <QTextEdit>
+#include <QMouseEvent>
 
 #include "thing.h"
 #include "planet.h"
@@ -45,6 +46,9 @@ class MainWindow : public QWidget{
     void show();
   
   private:
+  
+    void mouseMoveEvent(QMouseEvent *e);
+  
     QGridLayout* layout;
     
     QGraphicsScene* gameScene;
@@ -76,6 +80,7 @@ class MainWindow : public QWidget{
     int points;
     int counter;
     int clockTime;
+    QPoint mousePoint;
     
     QPixmap* rocketPic;
     QPixmap* planetPic;
@@ -89,6 +94,10 @@ class MainWindow : public QWidget{
     void triggerTimer();
     void resetGame();
     void startGame();
+    
+  signals:
+    void clicked();
+    void shootLaser(int, int);
 };
 
 #endif // MAINWINDOW_H

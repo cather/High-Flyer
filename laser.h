@@ -11,9 +11,12 @@ class Laser : public Thing {
     Laser(QPixmap* pic, int w, int h, int vx, int vy, Rocket* rocket);
     Laser();
     ~Laser();
-    void move(int x, int y);
+    void findStartingPoint();
     
   private:
     Rocket* rocket_;
+    
+  public slots:
+    void  shootLaser(int,int);
 };
 #endif //LASER_H
