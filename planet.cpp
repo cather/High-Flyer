@@ -1,9 +1,9 @@
 #include "planet.h"
 
+using namespace std;
 
 Planet::Planet(QPixmap* pic, int x, int y, double w, double h) : Thing(pic, x, y, w, h, 0, 0, 1) {
-  //just need to set position and dimensions
-
+  // velocity is always 0 -- this item doesn't move
 }
 
 
@@ -17,6 +17,7 @@ Planet::~Planet(){
 void Planet::collide(Rocket* rocket){
   if (Thing::collide(rocket))
   {
+    cout << "Touching"<<endl;
     rocket->decrementHealth(rocket->getMaxHealth());
     decrementHealth(1);
   }  

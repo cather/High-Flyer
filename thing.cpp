@@ -32,6 +32,15 @@ int Thing::getY(){
   return y_;
 }
 
+
+int Thing::getWidth(){
+  return width_;
+}
+
+int Thing::getHeight(){
+  return height_;
+}
+
 int Thing::getHealth(){  
   return health_;
 }
@@ -118,4 +127,11 @@ bool Thing::collide(Thing* t){
   }
   else
     return false;
+}
+
+void Thing::setPos(int x, int y){
+  x_ = x;
+  y_ = y;
+  
+  QGraphicsPixmapItem::setPos(x,y);
 }

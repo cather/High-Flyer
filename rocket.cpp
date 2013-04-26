@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Rocket::Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, double w, double h, int speed, int maxHealth) : Thing(pic, windowMaxX/2, windowMaxY, w, h, 0, 0, maxHealth) {
+Rocket::Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, double w, double h, int speed, int maxHealth) : Thing(pic, (windowMaxX-w)/2, windowMaxY-h, w, h, 0, 0, maxHealth) {
 
   cout << x_ << " " << y_ << endl;
   lives = 4; // start with 4 lives
@@ -53,10 +53,8 @@ void Rocket::keyPressEvent(QKeyEvent* e)
 }
 
 void Rocket::displayHealth(QLabel* label){
-  QString string = "Health: ";
-  string.append(  QString::number(health_) );
-  string.append(" Lives: ");
-  string.append(  QString::number(lives) );
+  QString string = "Health: " + QString::number(health_);
+  string.append(" Lives: " + QString::number(lives) );
   
   // if health goes to zero, decrement number of lives and replenish health bar
   if (Thing::dead() && lives > 0) 

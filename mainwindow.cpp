@@ -8,13 +8,7 @@ using namespace std;
 #define rocketMaxLife 100
 
 void MainWindow::triggerTimer() {
-  if (starting)
-  {
-    rocket->show();
-    rocket->pause = false;
-    rocket->grabKeyboard();
-    starting = false;
-  }
+
   if ( gameTimer->isActive() )
   {
     gameTimer->stop();
@@ -23,6 +17,14 @@ void MainWindow::triggerTimer() {
   }
   else
   {
+    if (starting)
+    {
+      rocket->show();
+      rocket->setPos((GAME_WINDOW_MAX_X-(rocket->getWidth()))/2, GAME_WINDOW_MAX_Y);
+      rocket->pause = false;
+      rocket->grabKeyboard();
+      starting = false;
+    }
     gameTimer->start();
     playButton->setText("Pause");
     rocket->pause = false;
@@ -36,11 +38,12 @@ void MainWindow::resetGame(){
   points = 0;
   counter = 0;
   rocket->hide();
-  rocket->setPos(100,0);
+
   // keep rocket, delete everything else
-  for (int i = thingList.size()-1; i > 1; i++)
-    delete thingList[i];
-    
+
+  for (int i = 1; i < thingList.size(); i++)
+    thingList[i]->hide();
+     
   message->setText("Health: ---  Lives: -");
   score->setText("Score: -");
 }
@@ -101,13 +104,13 @@ void MainWindow::handleTimer() {
 
 MainWindow::MainWindow(){
 
-  bool starting = true;
+  starting = true;
   rocketPic = new QPixmap("images/rocket.jpg");
   planetPic = new QPixmap("images/planets.jpg");
-  starPic;
-  missilePic;
-  alienPic;
-  laserPic;
+  starPic = new QPixmap("images/stars.jpg");
+  missilePic = new QPixmap("images/missile.jpg");
+  alienPic = new QPixmap("images/alien.jpg");
+  laserPic = new QPixmap("images/laser.jpg");
 
   clockTime = 500;
   counter = 0;
@@ -146,15 +149,14 @@ MainWindow::MainWindow(){
   
   // creates rocket
   points = 0;
-  rocket = new Rocket(rocketPic, 100,0, rocketWidth, rocketHeight, rocketSpeed, rocketMaxLife);
+  rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketWidth, rocketHeight, rocketSpeed, rocketMaxLife);
   gameScene->addItem(rocket);
+  rocket->setZValue(100);
   rocket->hide();
   thingList.push_back(rocket);
   message->setText("Health: ---  Lives: -");
   score->setText("Score: -"); // update score
   
-
-
   // connections (eventually combine startGame and triggerTime, get rid of resetButton, add restart button)
   connect(gameTimer, SIGNAL(timeout()), this, SLOT(handleTimer()));
   connect(playButton, SIGNAL(clicked()), this, SLOT(triggerTimer()));
@@ -169,7 +171,7 @@ void MainWindow::show(){
 MainWindow::~MainWindow(){
   delete gameScene;
   delete gameView;
-  for (int i = 0, n = thingList.size(); i<n; i++)
+  for (int i = 0; i < thingList.size(); i++)
     delete thingList[i];
 }
 
