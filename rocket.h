@@ -9,12 +9,14 @@
 class Rocket : public Thing {
   public:
   
-    Rocket(int windowMaxX, int windowMaxY, double w, double h, int vx, int vy, int maxHealth );
+    Rocket(int windowMaxX, int windowMaxY, double w, double h, int speed, int maxHealth);
     Rocket();
     ~Rocket();
     void dead();
     void displayHealth(QLabel* label);
     void offScreen(); // override offScreen
+    
+    bool pause;
     
   protected:
     void keyPressEvent(QKeyEvent* e);
@@ -22,9 +24,6 @@ class Rocket : public Thing {
   private:
     int lives;
     bool gameOver;
-    int speedX;
-    int speedY;
-    
-    
+    int speed_;
 };
 #endif //ROCKET_H

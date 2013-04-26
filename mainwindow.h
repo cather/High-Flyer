@@ -22,10 +22,12 @@
 #include "laser.h"
 #include "mylist.h"
 
-#define WINDOW_MAX_X 250*2
-#define WINDOW_MAX_Y 300*2
+#define BIG_WINDOW_MAX_X 500
+#define BIG_WINDOW_MAX_Y 600
 
-#define maxRocketLife 100
+#define GAME_WINDOW_MAX_X BIG_WINDOW_MAX_X*3/4
+#define GAME_WINDOW_MAX_Y BIG_WINDOW_MAX_Y*3/4
+
 #define meteorDamage maxRocketLife/5
 #define missileHitDamage maxRocketLife
 #define missileRadiusDamage maxRocketLife/5
@@ -59,17 +61,20 @@ class MainWindow : public QWidget{
     MyList<Thing*> thingList;
     
     QTimer* gameTimer;
-    QPushButton* timerButton;
+    QPushButton* resetButton;
     QPushButton* stopButton;
     QPushButton* playButton;
     QLabel* message;
     QLabel* score;
     int points;
+    
+    bool starting;
+    int counter;
   
   public slots:
     void handleTimer();
     void triggerTimer();
-    void startGame();
+    void resetGame();
 };
 
 #endif // MAINWINDOW_H

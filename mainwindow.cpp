@@ -2,88 +2,51 @@
 
 using namespace std;
 
-void MainWindow::startGame() {
-  rocket->displayHealth(message);
-  rocket->decrementHealth(10); // testing health
-}
+#define rocketWidth 10
+#define rocketHeight 20
+#define rocketSpeed 5
+#define rocketMaxLife 100
 
 void MainWindow::triggerTimer() {
     if ( gameTimer->isActive() )
     {
       gameTimer->stop();
-      playButton->setText("Play");  
+      rocket->pause = true;
+      playButton->setText("Play");
     }
     else
     {
       gameTimer->start();
       playButton->setText("Pause");
+      if (starting)
+      {
+        gameScene->addItem(rocket);
+        rocket->grabKeyboard();
+        starting = false;
+      }
+      rocket->pause = false;
     }
 }
-void MainWindow::handleTimer() {
 
-  planet->collide(rocket); // checking if planet collides with rocket
-
-  rocket->displayHealth(message); // update health
-  points++; // update score
-  score->setText("Score: " + QString::number(points)); // update score
-
+void MainWindow::resetGame(){
+  starting = true;
+  playButton->setText("Play");
+  points = -1;
+  counter = 0;
+  
+  // keep rocket, delete everything else
+  for (int i = thingList.size()-1; i > 1; i++)
+    delete thingList[i];
 }
 
-
-MainWindow::MainWindow(){
-  layout = new QGridLayout();
-  
-  bigScene = new QGraphicsScene();
-  bigView = new QGraphicsView(bigScene);
-  gameScene = new QGraphicsScene();
-  gameView = new QGraphicsView(gameScene);
-  bigView->setLayout(layout);
-  
-  //gameView->setLayout(layout);
-  gameScene->setSceneRect(0,0,WINDOW_MAX_X*3/4, WINDOW_MAX_Y*3/4);
-  gameView->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y);
-  gameView->setWindowTitle("High Flyer");
-   
-  // buttons
-  playButton = new QPushButton("Play");
-  stopButton = new QPushButton("Quit");
-  timerButton = new QPushButton("Decrement health test");
-  
-  // Timer to keep track of score, health, etc
-  gameTimer = new QTimer(this);
-  gameTimer->setInterval(500); // half a second
-
-  // qlabel for displaying health and lives
-  message = new QLabel();
-  score = new QLabel();
-
-  layout->addWidget(playButton, 1, 1);
-  layout->addWidget(stopButton, 1, 2);
-  layout->addWidget(timerButton, 1, 3);
-  layout->setRowMinimumHeight(1, 50);
-  layout->addWidget(gameView, 2, 1, 1, -1); // need to put gameview at r2c1
-  
-  timerButton->show();
-  
-  //add this stuff below menu bar
-  layout->addWidget(message, 3, 1, 1, 3);
-  layout->addWidget(score,3 , 3);
-  
-  
-   
-  // creates rocket
-  points = 0;
-  double width, height, xv, yv;
-  width = 80.0; height = 100.0; xv = 5; yv = 5;
-  rocket = new Rocket( WINDOW_MAX_X*3/4, WINDOW_MAX_Y*3/4, 10, 20, xv, yv, maxRocketLife );
-  gameScene->addItem(rocket);
-  rocket->grabKeyboard();
-  thingList.push_back(rocket);
-  
-  //planet
-  planet = new Planet(100,0,20,30);
-  gameScene->addItem(planet);
-  thingList.push_back(planet);
+void MainWindow::handleTimer() {
+  if (counter % 20 == 0)
+  {  
+    //planet
+    planet = new Planet(100,0,20,30);
+    gameScene->addItem(planet);
+    thingList.push_back(planet);
+ }
   
   /*
   //missile test
@@ -112,16 +75,62 @@ MainWindow::MainWindow(){
   }
   */
 
-  
-  
+  if (planet != NULL)
+    planet->collide(rocket); // checking if planet collides with rocket
 
+  rocket->displayHealth(message); // update health
+  points++; // update score
+  score->setText("Score: " + QString::number(points)); // update score
+  counter++; // update timer counter
+}
+
+
+MainWindow::MainWindow(){
+  counter = 0;
+  starting = false;
+  layout = new QGridLayout();
+  bigScene = new QGraphicsScene();
+  bigView = new QGraphicsView(bigScene);
+  gameScene = new QGraphicsScene();
+  gameView = new QGraphicsView(gameScene);
+  bigView->setLayout(layout);
   
+  gameScene->setSceneRect(0,0,GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
+  gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
+  bigView->setWindowTitle("High Flyer");
+   
+  // buttons
+  playButton = new QPushButton("Play");
+  stopButton = new QPushButton("Quit");
+  resetButton = new QPushButton("Restart");
   
+  // Timer to keep track of score, health, etc
+  gameTimer = new QTimer(this);
+  gameTimer->setInterval(500); // half a second
+
+  // qlabel for displaying health and lives
+  message = new QLabel();
+  score = new QLabel();
+
+  // add everything to layout
+  layout->addWidget(playButton, 1, 1);
+  layout->addWidget(stopButton, 1, 2);
+  layout->addWidget(resetButton, 1, 3);
+  layout->setRowMinimumHeight(1, 50);
+    layout->addWidget(gameView, 2, 1, 1, -1);
+  layout->addWidget(message, 3, 1, 1, 3);
+  layout->addWidget(score,3 , 3);
   
-  // connections (eventually combine startGame and triggerTime, get rid of timerButton)
+  // creates rocket
+  points = -1;
+  rocket = new Rocket(100,0, rocketWidth, rocketHeight, rocketSpeed, rocketMaxLife);
+  thingList.push_back(rocket);
+
+
+  // connections (eventually combine startGame and triggerTime, get rid of resetButton, add restart button)
   connect(gameTimer, SIGNAL(timeout()), this, SLOT(handleTimer()));
   connect(playButton, SIGNAL(clicked()), this, SLOT(triggerTimer()));
-  connect(timerButton, SIGNAL(clicked()), this, SLOT(startGame())); // decrement health
+  connect(resetButton, SIGNAL(clicked()), this, SLOT(resetGame()));
   connect(stopButton, SIGNAL(clicked()), qApp, SLOT(quit()));
 }
 

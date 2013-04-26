@@ -1,29 +1,13 @@
 #include "rocket.h"
 #include <QBrush>
 
-#define rocketSpeed 5
 using namespace std;
 
-Rocket::Rocket(int windowMaxX, int windowMaxY, double w, double h, int vx, int vy, int maxHealth ) : Thing(windowMaxX, windowMaxY, w, h, vx, vy, maxHealth) {
+Rocket::Rocket(int windowMaxX, int windowMaxY, double w, double h, int speed, int maxHealth) : Thing(windowMaxX, windowMaxY, w, h, 0, 0, maxHealth) {
 
   lives = 4; // start with 4 lives
-  
-  // SHOULD BE starting the rocket in the center bottom of screen. But isn't.
-  //x_ = (windowMaxX-w);
-  //cout << x_ << " " << y_<<endl;
-/*
-  y_ = windowMaxY-h;
-  width_ = w;
-  height_ = h;
-  health_ = maxHealth;
-  velocityX_ = vx;
-  velocityY_ = vy;
-*/
-  gameOver = false;
-  speedX = vx;
-  speedY = vy;
-  velocityX_ = 0;
-  velocityY_ = 0;
+  gameOver = false; pause = false;
+  speed_ = speed;
   
   QGraphicsPixmapItem* pic = new QGraphicsPixmapItem(QPixmap("images/rocket.jpg"));
   setPic(pic);
@@ -41,28 +25,28 @@ Rocket::~Rocket(){
 // need some way to pass in (int windowMaxX, int windowMaxY) to stop rocket from moving off screen
 void Rocket::keyPressEvent(QKeyEvent* e)
 {
-  if (!gameOver)
+  if (!gameOver && pause == false)
   {
     switch(e->key())
     { 
       case Qt::Key_Up:
         setVx(0);
-        setVy(-rocketSpeed);
+        setVy(-speed_);
         move();
         break;
       case Qt::Key_Left:
-        setVx(-rocketSpeed);
+        setVx(-speed_);
         setVy(0);
         move();
         break;
       case Qt::Key_Right:
-        setVx(rocketSpeed);
+        setVx(speed_);
         setVy(0);
         move();
         break;
       case Qt::Key_Down:
         setVx(0);
-        setVy(rocketSpeed);
+        setVy(speed_);
         move();
         break;
       default:
@@ -97,7 +81,7 @@ void Rocket::displayHealth(QLabel* label){
 void Rocket::offScreen(){
   x_ -= velocityX_;
   y_ -= velocityY_;
-  cout <<" D"<<endl;
+  cout <<"Off screen"<<endl;
   QPointF p( x_, y_ );
   QRectF r( rect() );
   r.moveTo(p);
