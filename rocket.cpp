@@ -5,7 +5,9 @@ using namespace std;
 
 Rocket::Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, double w, double h, int speed, int maxHealth) : Thing(pic, (windowMaxX-w)/2, windowMaxY-h, w, h, 0, 0, maxHealth) {
 
+  cout << windowMaxX << " " << windowMaxY << endl;
   cout << x_ << " " << y_ << endl;
+  cout << (windowMaxX-w)/2 << " " << windowMaxY-h << endl;
   lives = 4; // start with 4 lives
   gameOver = false;
   pause = true;

@@ -11,6 +11,7 @@
 #include <QGridLayout>
 #include <QBoxLayout>
 #include <QString>
+#include <QTextEdit>
 
 #include "thing.h"
 #include "planet.h"
@@ -25,8 +26,8 @@
 #define BIG_WINDOW_MAX_X 500
 #define BIG_WINDOW_MAX_Y 600
 
-#define GAME_WINDOW_MAX_X BIG_WINDOW_MAX_X*3/4
-#define GAME_WINDOW_MAX_Y BIG_WINDOW_MAX_Y*3/4
+#define GAME_WINDOW_MAX_X BIG_WINDOW_MAX_X*3/6
+#define GAME_WINDOW_MAX_Y BIG_WINDOW_MAX_Y*3/6
 
 #define meteorDamage maxRocketLife/5
 #define missileHitDamage maxRocketLife
@@ -64,11 +65,15 @@ class MainWindow : public QWidget{
     QPushButton* resetButton;
     QPushButton* stopButton;
     QPushButton* playButton;
+    QPushButton* nameButton;
     QLabel* message;
     QLabel* score;
-    int points;
+    QLabel* name;
+    QTextEdit* enterName;
     
+    bool enteredName;
     bool starting;
+    int points;
     int counter;
     int clockTime;
     
@@ -83,6 +88,7 @@ class MainWindow : public QWidget{
     void handleTimer();
     void triggerTimer();
     void resetGame();
+    void startGame();
 };
 
 #endif // MAINWINDOW_H

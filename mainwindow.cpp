@@ -2,36 +2,53 @@
 
 using namespace std;
 
-#define rocketWidth 10
-#define rocketHeight 20
+#define rocketWidth 50
+#define rocketHeight 100
 #define rocketSpeed 5
 #define rocketMaxLife 100
 
 void MainWindow::triggerTimer() {
 
-  if ( gameTimer->isActive() )
+  if (enteredName)
   {
-    gameTimer->stop();
-    playButton->setText("Play");
-    rocket->pause = true;
-  }
-  else
-  {
-    if (starting)
+    if ( gameTimer->isActive() )
     {
-      rocket->show();
-      rocket->setPos((GAME_WINDOW_MAX_X-(rocket->getWidth()))/2, GAME_WINDOW_MAX_Y);
-      rocket->pause = false;
-      rocket->grabKeyboard();
-      starting = false;
+      gameTimer->stop();
+      playButton->setText("Play");
+      rocket->pause = true;
     }
-    gameTimer->start();
-    playButton->setText("Pause");
-    rocket->pause = false;
+    else
+    {
+      gameTimer->start();
+      playButton->setText("Pause");
+      rocket->pause = false;
+    }
   }
 }
 
+void MainWindow::startGame() {
+  enteredName = true;
+  QString n = enterName->toPlainText();
+  
+  name->setText(n);
+  nameButton->hide();
+  enterName->hide();
+
+  starting = false;
+  rocket->show();
+  rocket->setPos((GAME_WINDOW_MAX_X-(rocket->getWidth()))/2, GAME_WINDOW_MAX_Y);
+  rocket->pause = false;
+  rocket->grabKeyboard();
+
+  gameTimer->start();
+  playButton->setText("Pause");
+}
+
+
 void MainWindow::resetGame(){
+  enteredName = false;
+  nameButton->show();
+  enterName->show();
   starting = true;
   gameTimer->stop();
   playButton->setText("Play");
@@ -57,33 +74,6 @@ void MainWindow::handleTimer() {
     thingList.push_back(planet);
    }
   
-  /*
-  //missile test
-//  int x, int y, int speed, int lifeSpan, Rocket* rocketToChase
-  missile = new Missile (100, 100, 15, 30, rocket);
-  gameScene->addItem(missile);
-  thingList.push_back(missile);
-  */
-  
-  /*
-  //meteor test
-  double y = rand()%WINDOW_MAX_Y, w = 100, h = 100, velocity = 15, hEalth = 10;
-  meteor = new Meteor (y, w, h, velocity, hEalth);
-  gameScene->addItem(meteor);
-  thingList.push_back(meteor);
-  
-  if (meteor->collide(laser))
-  {
-    meteor->die();
-    laser->die();
-  }
-  else if (meteor->collide(rocket))
-  {
-    rocket->decrementHealth(meteorDamage);
-    meteor->die();
-  }
-  */
-
   // clockTime starts at 500 ms => level up after 10 seconds -> clockTime = 5000
   if (counter > 0 && counter % 30 == 0)
   {
@@ -104,7 +94,12 @@ void MainWindow::handleTimer() {
 
 MainWindow::MainWindow(){
 
+  enteredName = false;
   starting = true;
+  clockTime = 500;
+  counter = 0;
+  
+  // storing graphics  
   rocketPic = new QPixmap("images/rocket.jpg");
   planetPic = new QPixmap("images/planets.jpg");
   starPic = new QPixmap("images/stars.jpg");
@@ -112,23 +107,24 @@ MainWindow::MainWindow(){
   alienPic = new QPixmap("images/alien.jpg");
   laserPic = new QPixmap("images/laser.jpg");
 
-  clockTime = 500;
-  counter = 0;
+  // construct layout
   layout = new QGridLayout();
   bigScene = new QGraphicsScene();
   bigView = new QGraphicsView(bigScene);
   gameScene = new QGraphicsScene();
   gameView = new QGraphicsView(gameScene);
   bigView->setLayout(layout);
-  
-  gameScene->setSceneRect(0,0,GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
+  gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
+  cout << GAME_WINDOW_MAX_X << " " << GAME_WINDOW_MAX_Y << endl;
   gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
   bigView->setWindowTitle("High Flyer");
-   
+
   // buttons
   playButton = new QPushButton("Play");
   stopButton = new QPushButton("Quit");
   resetButton = new QPushButton("Restart");
+  nameButton = new QPushButton("Enter");
+
   
   // Timer to keep track of score, health, etc
   gameTimer = new QTimer(this);
@@ -137,15 +133,27 @@ MainWindow::MainWindow(){
   // qlabel for displaying health and lives
   message = new QLabel();
   score = new QLabel();
+  name = new QLabel();
   
+  //qtextedit for name
+  enterName = new QTextEdit();
+    enterName->setFixedSize(100, 25);
+    enterName->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+  // add to scene
+  gameScene->addWidget(enterName);
+  gameScene->addWidget(nameButton);
+  nameButton->setGeometry(0, enterName->height(), 100 ,25);
+    
   // add everything to layout
   layout->addWidget(playButton, 1, 1);
   layout->addWidget(stopButton, 1, 2);
   layout->addWidget(resetButton, 1, 3);
   layout->setRowMinimumHeight(1, 50);
     layout->addWidget(gameView, 2, 1, 1, -1);
-  layout->addWidget(message, 3, 1, 1, 3);
-  layout->addWidget(score,3 , 3);
+  layout->addWidget(name, 3, 1);
+  layout->addWidget(message, 3, 2);
+  layout->addWidget(score, 3, 3);
   
   // creates rocket
   points = 0;
@@ -157,8 +165,9 @@ MainWindow::MainWindow(){
   message->setText("Health: ---  Lives: -");
   score->setText("Score: -"); // update score
   
-  // connections (eventually combine startGame and triggerTime, get rid of resetButton, add restart button)
+  // connections  
   connect(gameTimer, SIGNAL(timeout()), this, SLOT(handleTimer()));
+  connect(nameButton, SIGNAL(clicked()), this, SLOT(startGame()));
   connect(playButton, SIGNAL(clicked()), this, SLOT(triggerTimer()));
   connect(resetButton, SIGNAL(clicked()), this, SLOT(resetGame()));
   connect(stopButton, SIGNAL(clicked()), qApp, SLOT(quit()));
