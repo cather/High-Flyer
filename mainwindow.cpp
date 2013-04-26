@@ -95,7 +95,7 @@ void MainWindow::triggerTimer() {
 
 void MainWindow::handleTimer() {
   // add star every 25 ticks
-  if (counter > 0 && counter % 25 == 0)
+  if (counter > 0 && counter % 23423425 == 0)
   {  
     star = new Star(starPic, rand()%GAME_WINDOW_MAX_X, rand()%GAME_WINDOW_MAX_Y);
     gameScene->addItem(star);
@@ -110,6 +110,14 @@ void MainWindow::handleTimer() {
     thingList.push_back(planet);
   }
   
+  // add meteor every 25 ticks
+  if (counter > 0 && counter%25 == 0)
+  {
+    meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, 10);
+    gameScene->addItem(meteor);
+    thingList.push_back(meteor);
+  }
+    
   // add alien every 35 ticks
   if (counter > 0 && counter%1111135 == 0)
   {
@@ -153,7 +161,7 @@ MainWindow::MainWindow(){
 
   enteredName = false;
   starting = true;
-  clockTime = 200;
+  clockTime = 50;
   counter = 0;
   int nW = 200, nH = 25; // variables for name elements
   
@@ -164,8 +172,11 @@ MainWindow::MainWindow(){
   missilePic = new QPixmap("images/missile.jpg");
   alienPic = new QPixmap("images/alien.jpg");
   laserPic = new QPixmap("images/laser.jpg");
+  meteorPic = new QPixmap("images/meteor.jpg");
   rocketPic->scaledToHeight(10, Qt::FastTransformation);
   planetPic->scaledToHeight(25, Qt::SmoothTransformation);
+  starPic->scaledToHeight(10, Qt::SmoothTransformation);
+  meteorPic->scaledToHeight(10, Qt::SmoothTransformation);
 
   // construct layout
   layout = new QGridLayout();

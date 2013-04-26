@@ -9,10 +9,13 @@ Star::Star(){
 Star::~Star(){
 }
 
-void Star::collide(Rocket* rocket){
-  if (Thing::collide(rocket))
+void Star::collide(Thing* rocket){
+  if (Thing::collide(rocket) && rocket->identifier == "rocket")
   {
-    rocket->addStar();
-    //emit collected(points_);
+   //addPoints(rocket);
   }
+}
+
+void Star::addPoints(Rocket* rocket){
+  rocket->addStar();
 }

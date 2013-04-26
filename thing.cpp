@@ -9,6 +9,7 @@ Thing::Thing(QPixmap* pic, double nx, double ny, int vx, int vy, int maxHealth )
   maxHealth_ = maxHealth;
   health_ = maxHealth_;
   pic_ = pic;  
+  identifier = "thing";
 
   width_ = pic_->width();
   height_ = pic_->height();
@@ -67,6 +68,9 @@ void Thing::decrementHealth(int num){
     health_ = 0;
   else
     health_ -= num;
+    
+  if (health_ ==0)
+    die();
 }
 
 void Thing::move(){
@@ -117,7 +121,7 @@ bool Thing::collide(Thing* t){
   if (t->getX() < rangeX && t->getX() > x_ && t->getY() < rangeY && t->getY() > y_)
   {
     cout << "Thing collision"<<endl;
-    die();
+    decrementHealth(1);
     return true;
   }
   else

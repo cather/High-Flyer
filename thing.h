@@ -53,6 +53,7 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     int getMaxHealth();
     
     bool offScreen;
+    char* identifier;
   
   protected:
     int x_;

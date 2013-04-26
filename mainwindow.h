@@ -89,6 +89,7 @@ class MainWindow : public QWidget{
     QPixmap* missilePic;
     QPixmap* alienPic;
     QPixmap* laserPic;
+    QPixmap* meteorPic;
   
   public slots:
     void handleTimer();

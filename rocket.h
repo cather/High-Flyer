@@ -18,6 +18,7 @@ class Rocket : public Thing {
     void offScreen(); // override offScreen
     bool pause;
     void addStar();
+    bool collide(Rocket* r);
     
   protected:
     void keyPressEvent(QKeyEvent* e);

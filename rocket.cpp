@@ -9,6 +9,7 @@ Rocket::Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, int speed, int maxH
   pause = true;
   speed_ = speed;
   starsCollected_ = 0;
+  identifier = "rocket";
 }
 
 Rocket::Rocket(){
@@ -87,3 +88,9 @@ void Rocket::offScreen(){
 void Rocket::addStar(){
   starsCollected_ + 1;
 }
+
+bool Rocket::collide(Rocket* t){
+  return false;
+}
+
+
