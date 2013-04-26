@@ -27,8 +27,8 @@
 #define BIG_WINDOW_MAX_X 500
 #define BIG_WINDOW_MAX_Y 600
 
-#define GAME_WINDOW_MAX_X BIG_WINDOW_MAX_X*3/6
-#define GAME_WINDOW_MAX_Y BIG_WINDOW_MAX_Y*3/6
+#define GAME_WINDOW_MAX_X BIG_WINDOW_MAX_X*9/10
+#define GAME_WINDOW_MAX_Y BIG_WINDOW_MAX_Y*9/10
 
 #define meteorDamage maxRocketLife/5
 #define missileHitDamage maxRocketLife
@@ -73,6 +73,7 @@ class MainWindow : public QWidget{
     QLabel* message;
     QLabel* score;
     QLabel* name;
+    QLabel* nameMenuLabel;
     QTextEdit* enterName;
     
     bool enteredName;

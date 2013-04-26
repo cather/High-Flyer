@@ -34,6 +34,7 @@ void MainWindow::startGame() {
   name->setText(n);
   nameButton->hide();
   enterName->hide();
+  nameMenuLabel->hide();
 
   starting = false;
   rocket->show();
@@ -49,6 +50,7 @@ void MainWindow::resetGame(){
   enteredName = false;
   nameButton->show();
   enterName->show();
+  nameMenuLabel->show();
   starting = true;
   gameTimer->stop();
   playButton->setText("Play");
@@ -123,6 +125,7 @@ MainWindow::MainWindow(){
   starting = true;
   clockTime = 200;
   counter = 0;
+  int nW = 200, nH = 25; // variables for name elements
   
   // storing graphics  
   rocketPic = new QPixmap("images/rocket.jpg");
@@ -142,16 +145,16 @@ MainWindow::MainWindow(){
   gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
   cout << GAME_WINDOW_MAX_X << " " << GAME_WINDOW_MAX_Y << endl;
   gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
-  
-  setMouseTracking(true);
-  
   bigView->setWindowTitle("High Flyer");
+  
+  setMouseTracking(true);  // use this later for missile????
 
   // buttons
   playButton = new QPushButton("Play");
   stopButton = new QPushButton("Quit");
   resetButton = new QPushButton("Restart");
-  nameButton = new QPushButton("Enter");
+  nameButton = new QPushButton("Welcome Abord!");
+    nameButton->setGeometry((GAME_WINDOW_MAX_X-nW)/2,(GAME_WINDOW_MAX_Y)/2+nH, nW, nH);
   
   // Timer to keep track of score, health, etc
   gameTimer = new QTimer(this);
@@ -161,16 +164,19 @@ MainWindow::MainWindow(){
   message = new QLabel();
   score = new QLabel();
   name = new QLabel();
+  nameMenuLabel = new QLabel("Enter your name:");
+    nameMenuLabel->setGeometry((GAME_WINDOW_MAX_X-nW)/2,(GAME_WINDOW_MAX_Y)/2-nH, nW, nH);
+    nameMenuLabel->setAlignment(Qt::AlignHCenter);
   
   //qtextedit for name
   enterName = new QTextEdit();
-    enterName->setFixedSize(100, 25);
     enterName->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    enterName->setGeometry((GAME_WINDOW_MAX_X-nW)/2,(GAME_WINDOW_MAX_Y)/2, nW, nH);
 
-  // add to scene
+  // add to scene    
+  gameScene->addWidget(nameMenuLabel);
   gameScene->addWidget(enterName);
   gameScene->addWidget(nameButton);
-  nameButton->setGeometry(0, enterName->height(), 100 ,25);
     
   // add everything to layout
   layout->addWidget(playButton, 1, 1);
