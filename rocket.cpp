@@ -29,22 +29,22 @@ void Rocket::keyPressEvent(QKeyEvent* e)
       case Qt::Key_Up:
         setVx(0);
         setVy(-speed_);
-        move();
+        move(x_+width_*2, y_+height_);
         break;
       case Qt::Key_Left:
         setVx(-speed_);
         setVy(0);
-        move();
+        move(x_+width_*2, y_+height_);
         break;
       case Qt::Key_Right:
         setVx(speed_);
         setVy(0);
-        move();
+        move(x_+width_*2, y_+height_);
         break;
       case Qt::Key_Down:
         setVx(0);
         setVy(speed_);
-        move();
+        move(x_+width_*2, y_+height_);
         break;
       default:
         break;
@@ -84,12 +84,14 @@ void Rocket::offScreen(){
 
   setPos(x_,y_);
 }
-
-void Rocket::addStar(){
-  starsCollected_ + 1;
-}
-
-bool Rocket::collide(Rocket* t){
+bool Rocket::collide(Thing* t){
+  if (Thing::collide(t) != "")
+  {
+    if(Thing::collide(t) == "star")
+      starsCollected_ += 1;
+    
+    return true;
+  }
   return false;
 }
 

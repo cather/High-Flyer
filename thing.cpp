@@ -121,6 +121,8 @@ string Thing::collide(Thing* t){
   if (t->getX() < rangeX && t->getX() > x_ && t->getY() < rangeY && t->getY() > y_)
   {
     cout << t->identifier<<endl;
+    if (t->identifier == "rocket")
+      decrementHealth(1);
     return t->identifier;
   }
   else

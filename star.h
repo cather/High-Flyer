@@ -13,10 +13,10 @@ class Star : public Thing {
     Star();
     ~Star();
     void collide(Thing* thing);
-    void addPoints(Rocket* rocket);
     
   private:
   
   signals:
+    void collected();
 };
 #endif //STAR_H

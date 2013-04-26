@@ -95,7 +95,7 @@ void MainWindow::triggerTimer() {
 
 void MainWindow::handleTimer() {
   // add star every 25 ticks
-  if (counter > 0 && counter % 23423425 == 0)
+  if (counter > 0 && counter % 25 == 0)
   {  
     star = new Star(starPic, rand()%GAME_WINDOW_MAX_X, rand()%GAME_WINDOW_MAX_Y);
     gameScene->addItem(star);
@@ -103,7 +103,7 @@ void MainWindow::handleTimer() {
   }
   
   //add planet every 15 ticks
-  if (counter > 0 && counter % 1000 == 0)
+  if (counter > 0 && counter % 15 == 0)
   {  
     planet = new Planet(planetPic, 100, 0);
     gameScene->addItem(planet);
@@ -119,7 +119,7 @@ void MainWindow::handleTimer() {
   }
     
   // add alien every 35 ticks
-  if (counter > 0 && counter%1111135 == 0)
+  if (counter > 0 && counter%35 == 0)
   {
     alien = new Alien(alienPic, rand()%100, 10);
     gameScene->addItem(alien);
@@ -127,7 +127,7 @@ void MainWindow::handleTimer() {
   }
   
   // level up every 30 ticks
-  if (counter > 0 && counter % 30 == 0)
+  if (counter > 0 && counter % 50 == 0)
   {
     cout << "Level up"<<endl;
     clockTime += clockTime;

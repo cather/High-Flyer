@@ -12,10 +12,7 @@ Star::~Star(){
 void Star::collide(Thing* rocket){
   if (Thing::collide(rocket)  == "rocket")
   {
-   //addPoints(rocket);
+    emit collected();
   }
 }
-
-void Star::addPoints(Rocket* rocket){
-  rocket->addStar();
-}
+void Star::collected(){}
