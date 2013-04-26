@@ -129,9 +129,10 @@ void MainWindow::handleTimer() {
       thingList.pop(i);
       i--;
     }
-    if (thingList[i]->collide(rocket) && i != 0)
-      cout << "COLLIDE"<<endl;
-      
+    if (i != 0)
+    {
+      thingList[i]->collide(rocket); // check if touching rocket
+    }
   }
   
   // Update info

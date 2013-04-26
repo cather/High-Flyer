@@ -113,20 +113,27 @@ bool Thing::dead(){
 }
 
 void Thing::die(){
-  delete this;
+  offScreen = true;
 }
 
 bool Thing::collide(Thing* t){
   int rangeX = width_ - x_;
   int rangeY = height_ - y_;
+  rangeX+=x_;
+  rangeY+=y_;
   
-  if (t->getX() < rangeX && t->getX() > x_ && t->getY() < rangeY && t->getY() > y_)
+  if (t->getX() < rangeX && t->getX() > (x_+width_) && t->getY() < rangeY && t->getY() > (y_+width_))
   {
-    return true;
     cout<<"coliide"<<endl;
+    return true;
   }
   else
-    return false;
+  { /*
+    cout << " X range:" << x_  << " to " << rangeX << " while t's x: " << t->getX() <<endl;
+    cout << " Y range:" << y_ << " to " << rangeY << " while t's y: " <<  t->getY()<<endl;
+    */
+    return false;  
+  }
 }
 
 void Thing::setPos(int x, int y){
