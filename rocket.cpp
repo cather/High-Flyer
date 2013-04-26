@@ -92,7 +92,6 @@ void Rocket::displayHealth(QLabel* label){
   }
   
   label->setText(string);
-  label->setHidden(false); 
 }
 
 void Rocket::offScreen(){

@@ -23,26 +23,26 @@ void MainWindow::handleTimer() {
 
   planet->collide(rocket); // checking if planet collides with rocket
 
-
-  // updates health every clock
-  rocket->displayHealth(message);
-  points++;
-  QString string = "Score: " + QString::number(points);
-  score->setText(string);
+  rocket->displayHealth(message); // update health
+  points++; // update score
+  score->setText("Score: " + QString::number(points)); // update score
 
 }
 
 
 MainWindow::MainWindow(){
   layout = new QGridLayout();
-  scene = new QGraphicsScene();
-  view = new QGraphicsView(scene);
-  string bg = "star.png";
-  scene->setSceneRect(0,0,WINDOW_MAX_X*3/4, WINDOW_MAX_Y*3/4);
-
-  //view->setLayout(layout);
-  view->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y);
-  view->setWindowTitle("High Flyer");
+  
+  bigScene = new QGraphicsScene();
+  bigView = new QGraphicsView(bigScene);
+  gameScene = new QGraphicsScene();
+  gameView = new QGraphicsView(gameScene);
+  bigView->setLayout(layout);
+  
+  //gameView->setLayout(layout);
+  gameScene->setSceneRect(0,0,WINDOW_MAX_X*3/4, WINDOW_MAX_Y*3/4);
+  gameView->setFixedSize( WINDOW_MAX_X, WINDOW_MAX_Y);
+  gameView->setWindowTitle("High Flyer");
    
   // buttons
   playButton = new QPushButton("Play");
@@ -60,14 +60,14 @@ MainWindow::MainWindow(){
   layout->addWidget(playButton, 1, 1);
   layout->addWidget(stopButton, 1, 2);
   layout->addWidget(timerButton, 1, 3);
-  layout->setRowMinimumHeight(1, 100);
-  layout->addWidget(view, 2, 1, 1, -1); // need to put game view at r2c1
+  layout->setRowMinimumHeight(1, 50);
+  layout->addWidget(gameView, 2, 1, 1, -1); // need to put gameview at r2c1
   
   timerButton->show();
   
   //add this stuff below menu bar
-  layout->addWidget(message, 3, 1);
-  layout->addWidget(score,3 , 2);
+  layout->addWidget(message, 3, 1, 1, 3);
+  layout->addWidget(score,3 , 3);
   
   
    
@@ -76,20 +76,20 @@ MainWindow::MainWindow(){
   double width, height, xv, yv;
   width = 80.0; height = 100.0; xv = 5; yv = 5;
   rocket = new Rocket( WINDOW_MAX_X*3/4, WINDOW_MAX_Y*3/4, 10, 20, xv, yv, maxRocketLife );
-  scene->addItem(rocket);
+  gameScene->addItem(rocket);
   rocket->grabKeyboard();
   thingList.push_back(rocket);
   
   //planet
   planet = new Planet(100,0,20,30);
-  scene->addItem(planet);
+  gameScene->addItem(planet);
   thingList.push_back(planet);
   
   /*
   //missile test
 //  int x, int y, int speed, int lifeSpan, Rocket* rocketToChase
   missile = new Missile (100, 100, 15, 30, rocket);
-  scene->addItem(missile);
+  gameScene->addItem(missile);
   thingList.push_back(missile);
   */
   
@@ -97,7 +97,7 @@ MainWindow::MainWindow(){
   //meteor test
   double y = rand()%WINDOW_MAX_Y, w = 100, h = 100, velocity = 15, hEalth = 10;
   meteor = new Meteor (y, w, h, velocity, hEalth);
-  scene->addItem(meteor);
+  gameScene->addItem(meteor);
   thingList.push_back(meteor);
   
   if (meteor->collide(laser))
@@ -126,12 +126,12 @@ MainWindow::MainWindow(){
 }
 
 void MainWindow::show(){
-  view->show();
+  bigView->show();
 }
 
 MainWindow::~MainWindow(){
-  delete scene;
-  delete view;
+  delete gameScene;
+  delete gameView;
   for (int i = 0, n = thingList.size(); i<n; i++)
     delete thingList[i];
 }
