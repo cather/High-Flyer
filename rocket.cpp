@@ -3,16 +3,13 @@
 
 using namespace std;
 
-Rocket::Rocket(int windowMaxX, int windowMaxY, double w, double h, int speed, int maxHealth) : Thing(windowMaxX, windowMaxY, w, h, 0, 0, maxHealth) {
+Rocket::Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, double w, double h, int speed, int maxHealth) : Thing(pic, windowMaxX/2, windowMaxY, w, h, 0, 0, maxHealth) {
 
+  cout << x_ << " " << y_ << endl;
   lives = 4; // start with 4 lives
-  gameOver = false; pause = false;
+  gameOver = false;
+  pause = true;
   speed_ = speed;
-  
-  QGraphicsPixmapItem* pic = new QGraphicsPixmapItem(QPixmap("images/rocket.jpg"));
-  setPic(pic);
-  //since pic isn't working right now
-  setBrush(Qt::red);
 }
 
 Rocket::Rocket(){
@@ -82,8 +79,6 @@ void Rocket::offScreen(){
   x_ -= velocityX_;
   y_ -= velocityY_;
   cout <<"Off screen"<<endl;
-  QPointF p( x_, y_ );
-  QRectF r( rect() );
-  r.moveTo(p);
-  setRect( r );
+
+  setPos(x_,y_);
 }

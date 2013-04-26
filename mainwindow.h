@@ -70,6 +70,14 @@ class MainWindow : public QWidget{
     
     bool starting;
     int counter;
+    int clockTime;
+    
+    QPixmap* rocketPic;
+    QPixmap* planetPic;
+    QPixmap* starPic;
+    QPixmap* missilePic;
+    QPixmap* alienPic;
+    QPixmap* laserPic;
   
   public slots:
     void handleTimer();

@@ -8,45 +8,51 @@ using namespace std;
 #define rocketMaxLife 100
 
 void MainWindow::triggerTimer() {
-    if ( gameTimer->isActive() )
-    {
-      gameTimer->stop();
-      rocket->pause = true;
-      playButton->setText("Play");
-    }
-    else
-    {
-      gameTimer->start();
-      playButton->setText("Pause");
-      if (starting)
-      {
-        gameScene->addItem(rocket);
-        rocket->grabKeyboard();
-        starting = false;
-      }
-      rocket->pause = false;
-    }
+  if (starting)
+  {
+    rocket->show();
+    rocket->pause = false;
+    rocket->grabKeyboard();
+    starting = false;
+  }
+  if ( gameTimer->isActive() )
+  {
+    gameTimer->stop();
+    playButton->setText("Play");
+    rocket->pause = true;
+  }
+  else
+  {
+    gameTimer->start();
+    playButton->setText("Pause");
+    rocket->pause = false;
+  }
 }
 
 void MainWindow::resetGame(){
   starting = true;
+  gameTimer->stop();
   playButton->setText("Play");
-  points = -1;
+  points = 0;
   counter = 0;
-  
+  rocket->hide();
+  rocket->setPos(100,0);
   // keep rocket, delete everything else
   for (int i = thingList.size()-1; i > 1; i++)
     delete thingList[i];
+    
+  message->setText("Health: ---  Lives: -");
+  score->setText("Score: -");
 }
 
 void MainWindow::handleTimer() {
-  if (counter % 20 == 0)
+  if (counter > 0 && counter % 15 == 0)
   {  
     //planet
-    planet = new Planet(100,0,20,30);
+    planet = new Planet(planetPic, 100,0,20,30);
     gameScene->addItem(planet);
     thingList.push_back(planet);
- }
+   }
   
   /*
   //missile test
@@ -75,6 +81,14 @@ void MainWindow::handleTimer() {
   }
   */
 
+  // clockTime starts at 500 ms => level up after 10 seconds -> clockTime = 5000
+  if (counter > 0 && counter % 30 == 0)
+  {
+    cout << "Level up"<<endl;
+    clockTime += clockTime;
+    gameTimer->setInterval(clockTime);
+  }
+
   if (planet != NULL)
     planet->collide(rocket); // checking if planet collides with rocket
 
@@ -86,8 +100,17 @@ void MainWindow::handleTimer() {
 
 
 MainWindow::MainWindow(){
+
+  bool starting = true;
+  rocketPic = new QPixmap("images/rocket.jpg");
+  planetPic = new QPixmap("images/planets.jpg");
+  starPic;
+  missilePic;
+  alienPic;
+  laserPic;
+
+  clockTime = 500;
   counter = 0;
-  starting = false;
   layout = new QGridLayout();
   bigScene = new QGraphicsScene();
   bigView = new QGraphicsView(bigScene);
@@ -106,12 +129,12 @@ MainWindow::MainWindow(){
   
   // Timer to keep track of score, health, etc
   gameTimer = new QTimer(this);
-  gameTimer->setInterval(500); // half a second
+  gameTimer->setInterval(clockTime);
 
   // qlabel for displaying health and lives
   message = new QLabel();
   score = new QLabel();
-
+  
   // add everything to layout
   layout->addWidget(playButton, 1, 1);
   layout->addWidget(stopButton, 1, 2);
@@ -122,9 +145,14 @@ MainWindow::MainWindow(){
   layout->addWidget(score,3 , 3);
   
   // creates rocket
-  points = -1;
-  rocket = new Rocket(100,0, rocketWidth, rocketHeight, rocketSpeed, rocketMaxLife);
+  points = 0;
+  rocket = new Rocket(rocketPic, 100,0, rocketWidth, rocketHeight, rocketSpeed, rocketMaxLife);
+  gameScene->addItem(rocket);
+  rocket->hide();
   thingList.push_back(rocket);
+  message->setText("Health: ---  Lives: -");
+  score->setText("Score: -"); // update score
+  
 
 
   // connections (eventually combine startGame and triggerTime, get rid of resetButton, add restart button)
