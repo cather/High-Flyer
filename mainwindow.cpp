@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-
 using namespace std;
 
 void MainWindow::mouseMoveEvent(QMouseEvent *e){
@@ -94,8 +93,9 @@ void MainWindow::triggerTimer() {
 }
 
 void MainWindow::handleTimer() {
-  // add star every 25 ticks
-  if (counter > 0 && counter % 25 == 0)
+
+    // add star every 25 ticks
+  if (counter > 0 && counter % 34534535 == 0)
   {  
     star = new Star(starPic, rand()%GAME_WINDOW_MAX_X, rand()%GAME_WINDOW_MAX_Y);
     gameScene->addItem(star);
@@ -103,7 +103,7 @@ void MainWindow::handleTimer() {
   }
   
   //add planet every 15 ticks
-  if (counter > 0 && counter % 15 == 0)
+  if (counter > 0 && counter % 43543 == 0)
   {  
     planet = new Planet(planetPic, 100, 0);
     gameScene->addItem(planet);
@@ -111,7 +111,7 @@ void MainWindow::handleTimer() {
   }
   
   // add meteor every 25 ticks
-  if (counter > 0 && counter%25 == 0)
+  if (counter > 0 && counter%3453454340 == 0)
   {
     meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, 10);
     gameScene->addItem(meteor);
@@ -119,24 +119,32 @@ void MainWindow::handleTimer() {
   }
     
   // add alien every 35 ticks
-  if (counter > 0 && counter%35 == 0)
+  if (counter > 0 && counter%34534535 == 0)
   {
-    alien = new Alien(alienPic, rand()%100, 10);
+    alien = new Alien(alienPic, rand()%10, rand()%200);
     gameScene->addItem(alien);
     thingList.push_back(alien);
+  }
+  // add missile every 25 ticks
+  if (counter > 0 && counter % 15 == 0 && alien !=NULL)
+  {  
+    missile = new Missile(missilePic, GAME_WINDOW_MAX_X/2, 0, 5, 5, rocket);
+    gameScene->addItem(missile);
+    thingList.push_back(missile);
   }
   
   // move every Thing, deleting those off-screen
   for (int i = 0; i < thingList.size(); i++)
   {
     thingList[i]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
+    thingList[i]->collide(rocket); // check if touching rocket
+    
     if(thingList[i]->offScreen)
     {
       thingList[i]->hide();
       thingList.pop(i);
       i--;
     }
-    thingList[i]->collide(rocket); // check if touching rocket
   }
   
   // Update info
@@ -149,7 +157,7 @@ void MainWindow::handleTimer() {
     
       
   // level up every 100 ticks
-  if (counter > 0 && counter % 100 == 0)
+  if (counter > 0 && counter % 200 == 0)
   {
     cout << "Level up"<<endl;
     clockTime += clockTime;
@@ -167,7 +175,7 @@ MainWindow::MainWindow(){
 
   enteredName = false;
   starting = true;
-  clockTime = 50;
+  clockTime = 100;
   counter = 0;
   int nW = 200, nH = 25; // variables for name elements
   
@@ -179,10 +187,13 @@ MainWindow::MainWindow(){
   alienPic = new QPixmap("images/alien.jpg");
   laserPic = new QPixmap("images/laser.jpg");
   meteorPic = new QPixmap("images/meteor.jpg");
-  rocketPic->scaledToHeight(10, Qt::FastTransformation);
-  planetPic->scaledToHeight(25, Qt::SmoothTransformation);
-  starPic->scaledToHeight(10, Qt::SmoothTransformation);
-  meteorPic->scaledToHeight(10, Qt::SmoothTransformation);
+  rocketPic->scaledToHeight(2, Qt::FastTransformation);
+  planetPic->scaledToHeight(2, Qt::SmoothTransformation);
+  starPic->scaledToHeight(2, Qt::SmoothTransformation);
+  meteorPic->scaledToHeight(2, Qt::SmoothTransformation);
+  missilePic->scaledToHeight(2, Qt::SmoothTransformation);
+  alienPic->scaledToHeight(2, Qt::SmoothTransformation);
+  
 
   // construct layout
   layout = new QGridLayout();

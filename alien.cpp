@@ -20,7 +20,6 @@ void Alien::move(int windowMaxX, int windowMaxY){
   x_ += velocityX_;
   y_ += velocityY_;
 
-
   if (!lifeTime_ == 0)
   {
     if (!offScreen)
@@ -33,7 +32,9 @@ void Alien::move(int windowMaxX, int windowMaxY){
         offScreen = true;
       if ( (y_+height_) > windowMaxY )
         offScreen = true;
-
+    }
+    else
+    {
       int mag = rand()%3;
       switch(mag)
       {

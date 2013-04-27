@@ -10,6 +10,7 @@ Rocket::Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, int speed, int maxH
   speed_ = speed;
   starsCollected_ = 0;
   identifier = "rocket";
+  direction = -1;
 }
 
 Rocket::Rocket(){
@@ -23,28 +24,20 @@ Rocket::~Rocket(){
 void Rocket::keyPressEvent(QKeyEvent* e)
 {
   if (!gameOver && pause == false)
-  {
+  { 
     switch(e->key())
     { 
       case Qt::Key_Up:
-        setVx(0);
-        setVy(-speed_);
-        move(x_+width_*2, y_+height_);
+        direction = 0;
         break;
       case Qt::Key_Left:
-        setVx(-speed_);
-        setVy(0);
-        move(x_+width_*2, y_+height_);
+        direction = 1;
         break;
       case Qt::Key_Right:
-        setVx(speed_);
-        setVy(0);
-        move(x_+width_*2, y_+height_);
+        direction = 2;
         break;
       case Qt::Key_Down:
-        setVx(0);
-        setVy(speed_);
-        move(x_+width_*2, y_+height_);
+        direction = 3;
         break;
       default:
         break;
@@ -95,4 +88,28 @@ bool Rocket::collide(Thing* t){
   return false;
 }
 
+void Rocket::move(int x, int y)
+{
+ switch(direction)
+  {
+    case 0: // up    
+      setVx(0);
+      setVy(-speed_);
+      break;
+    case 1: //left    
+      setVx(-speed_);
+      setVy(0);
+      break;
+    case 2: // right
+      setVx(speed_);
+      setVy(0);
+      break;
+    case 3: //down
+      setVx(0);
+      setVy(speed_);
+      break;
+  }
+  if (!gameOver && pause == false)
+    Thing::move(x_+width_*2, y_+height_);
+}
 

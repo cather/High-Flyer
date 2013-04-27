@@ -12,9 +12,11 @@ class Missile : public Thing {
     Missile(QPixmap* pic, int x, int y, int speed, int lifeSpan, Rocket* rocket );
     Missile();
     ~Missile();
-    void updateVelocity();
+    void move(int windowMaxX, int windowMaxY);
   private:
     Rocket* rocket;
     int speed_;
+    bool firstMove;
+    bool down;
 };
 #endif //MISSILE_H

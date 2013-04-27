@@ -43,7 +43,7 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     void setY(int y);
     void setVx(int vx);
     void setVy(int vy);
-    void move(int windowMaxX, int windowMaxY);
+    virtual void move(int windowMaxX, int windowMaxY);
     void move();
     void setPos(int x, int y);
     
