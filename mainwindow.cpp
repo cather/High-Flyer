@@ -224,28 +224,26 @@ MainWindow::MainWindow(){
   score = new QLabel();
   name = new QLabel();
   nameMenuLabel = new QLabel("Enter your name:");
-    nameMenuLabel->setGeometry((GAME_WINDOW_MAX_X-nW)/2,(GAME_WINDOW_MAX_Y)/2-nH, nW, nH);
+    nameMenuLabel->setFixedSize( nW, nH);
     nameMenuLabel->setAlignment(Qt::AlignHCenter);
   
   //qtextedit for name
   enterName = new QTextEdit();
     enterName->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    enterName->setGeometry((GAME_WINDOW_MAX_X-nW)/2,(GAME_WINDOW_MAX_Y)/2, nW, nH);
+    enterName->setFixedSize(nW, nH);
 
-  // add to scene    
-  gameScene->addWidget(nameMenuLabel);
-  gameScene->addWidget(enterName);
-  gameScene->addWidget(nameButton);
-    
   // add everything to layout
-  layout->addWidget(playButton, 1, 1);
-  layout->addWidget(stopButton, 1, 2);
-  layout->addWidget(resetButton, 1, 3);
-  layout->setRowMinimumHeight(1, 50);
-    layout->addWidget(gameView, 2, 1, 1, -1);
-  layout->addWidget(name, 3, 1);
-  layout->addWidget(message, 3, 2);
-  layout->addWidget(score, 3, 3);
+  layout->addWidget(nameMenuLabel,1,1);
+  layout->addWidget(enterName,1,2);
+  layout->addWidget(nameButton,1,3);
+    layout->addWidget(playButton, 2, 1);
+    layout->addWidget(stopButton, 2, 2);
+    layout->addWidget(resetButton, 2, 3);
+    layout->setRowMinimumHeight(2, 50);
+  layout->addWidget(gameView, 3, 1, 1, -1);
+    layout->addWidget(name, 4, 1);
+    layout->addWidget(message, 4, 2);
+    layout->addWidget(score, 4, 3);
   
   // creates rocket
   points = 0;
