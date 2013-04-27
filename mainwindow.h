@@ -70,6 +70,7 @@ class MainWindow : public QWidget{
     QLabel* nameMenuLabel;
     QTextEdit* enterName;
     
+    bool validToShoot;
     bool enteredName;
     bool starting;
     int points;

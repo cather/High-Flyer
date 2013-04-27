@@ -2,8 +2,13 @@
 using namespace std;
 
 void MainWindow::shootLaser(int x, int y){
-  if (laser != NULL)
+  if (validToShoot)
+  {
+    laser = new Laser(laserPic, 5, 5, rocket);
+    gameScene->addItem(laser);
+    thingList.push_back(laser);
     laser->shoot(x,y);
+  }
 }
 
 void MainWindow::startGame() {
@@ -23,6 +28,7 @@ void MainWindow::startGame() {
 
   gameTimer->start();
   playButton->setText("Pause");
+  validToShoot = true;
 }
 
 void MainWindow::resetGame(){
@@ -69,6 +75,7 @@ void MainWindow::endGame(){
     thingList.peek_front()->hide();
     thingList.pop_front();
   }
+  validToShoot = false;
   
 }
 
@@ -81,12 +88,14 @@ void MainWindow::triggerTimer() {
       gameTimer->stop();
       playButton->setText("Play");
       rocket->pause = true;
+      validToShoot = false;
     }
     else
     {
       gameTimer->start();
       playButton->setText("Pause");
       rocket->pause = false;
+      validToShoot = true;
     }
   }
 }
@@ -171,14 +180,12 @@ void MainWindow::handleTimer() {
 
 
 MainWindow::MainWindow(){
-
+  validToShoot = false;
   enteredName = false;
   starting = true;
   clockTime = 100;
   counter = 0;
   int nW = 200, nH = 25; // variables for name elements
-  
-  laser = NULL;
   
   // storing graphics  
   rocketPic = new QPixmap("images/rocket.jpg");

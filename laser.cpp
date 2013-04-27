@@ -13,16 +13,24 @@ Laser::~Laser(){
 }
 
 void Laser::findStartingPoint(){
-  setX( rocket_->getWidth()/2 );
-  setY( rocket_->getY() );
+  setX( rocket_->getWidth()/2 + rocket_->getX());
+  setY( rocket_->getY() - rocket_->getHeight()+height_);
 }
 
 void Laser::shoot(int x, int y){
-  cout << "ds"<<endl;
   findStartingPoint();
-  setVx(x);
-  setVy(y);
+  int xdir = 1, ydir = 1;
+  if (x < x_)
+    xdir = -1;
+  if (y < y_)
+    ydir = -1;
+    
+  cout << "Clicking " << x << " " << y << endl;
   
-  move();
+  setVx( xdir * velocityX_ );
+  setVy( ydir * velocityY_ );
+  
+  cout << "Moving " << velocityX_ << " " <<velocityX_ << endl;
+  
 }
 
