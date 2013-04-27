@@ -12,11 +12,13 @@ class Laser : public Thing {
     Laser();
     ~Laser();
     void findStartingPoint();
+    //void move(int maxX, int maxY);
+    
+    void  shoot(int,int);
     
   private:
     Rocket* rocket_;
     
   public slots:
-    void  shootLaser(int,int);
 };
 #endif //LASER_H

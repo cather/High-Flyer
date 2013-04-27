@@ -17,7 +17,7 @@ void Laser::findStartingPoint(){
   setY( rocket_->getY() );
 }
 
-void Laser::shootLaser(int x, int y){
+void Laser::shoot(int x, int y){
   cout << "ds"<<endl;
   findStartingPoint();
   setVx(x);
@@ -25,3 +25,4 @@ void Laser::shootLaser(int x, int y){
   
   move();
 }
+

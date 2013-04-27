@@ -1,10 +1,9 @@
 #include "mainwindow.h"
 using namespace std;
 
-void MainWindow::mouseMoveEvent(QMouseEvent *e){
-  cout << "mouse"<<endl;
-  mousePoint = e->pos();
-  emit shootLaser(mousePoint.x(), mousePoint.y());
+void MainWindow::shootLaser(int x, int y){
+  if (laser != NULL)
+    laser->shoot(x,y);
 }
 
 void MainWindow::startGame() {
@@ -179,6 +178,8 @@ MainWindow::MainWindow(){
   counter = 0;
   int nW = 200, nH = 25; // variables for name elements
   
+  laser = NULL;
+  
   // storing graphics  
   rocketPic = new QPixmap("images/rocket.jpg");
   planetPic = new QPixmap("images/planets.jpg");
@@ -199,15 +200,14 @@ MainWindow::MainWindow(){
   layout = new QGridLayout();
   bigScene = new QGraphicsScene();
   bigView = new QGraphicsView(bigScene);
-  gameScene = new QGraphicsScene();
+  gameScene = new ClickScene(this);
   gameView = new QGraphicsView(gameScene);
+    gameScene->setFocus();
     bigView->setLayout(layout);
     gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
     cout << GAME_WINDOW_MAX_X << " " << GAME_WINDOW_MAX_Y << endl;
     gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
-
-  setMouseTracking(true);  // use this later for missile????
-
+    
   // buttons
   playButton = new QPushButton("Play");
   stopButton = new QPushButton("Quit");
@@ -263,6 +263,8 @@ MainWindow::MainWindow(){
   connect(playButton, SIGNAL(clicked()), this, SLOT(triggerTimer()));
   connect(resetButton, SIGNAL(clicked()), this, SLOT(resetGame()));
   connect(stopButton, SIGNAL(clicked()), qApp, SLOT(quit()));
+
+
 }
 
 void MainWindow::show(){

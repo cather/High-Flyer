@@ -14,6 +14,8 @@
 #include <QTextEdit>
 #include <QMouseEvent>
 
+#include "clickscene.h"
+
 #include "thing.h"
 #include "planet.h"
 #include "rocket.h"
@@ -29,6 +31,7 @@
 #define GAME_WINDOW_MAX_X BIG_WINDOW_MAX_X*9/10
 #define GAME_WINDOW_MAX_Y BIG_WINDOW_MAX_Y*9/10
 
+class ClickScene;
 
 class MainWindow : public QWidget{
   Q_OBJECT;
@@ -37,14 +40,12 @@ class MainWindow : public QWidget{
     explicit MainWindow();
     ~MainWindow();
     void show();
-  
+    void shootLaser(int x, int y);
+    
   private:
-  
-    void mouseMoveEvent(QMouseEvent *e);
-  
     QGridLayout* layout;
     
-    QGraphicsScene* gameScene;
+    ClickScene* gameScene;
     QGraphicsView* gameView;
     QGraphicsScene* bigScene;
     QGraphicsView* bigView;
@@ -93,7 +94,6 @@ class MainWindow : public QWidget{
     
   signals:
     void clicked();
-    void shootLaser(int, int);
 };
 
 #endif // MAINWINDOW_H
