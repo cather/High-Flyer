@@ -20,17 +20,19 @@ void Laser::findStartingPoint(){
 void Laser::shoot(int x, int y){
   findStartingPoint();
   int xdir = 1, ydir = 1;
-  if (x < x_)
-    xdir = -1;
-  if (y < y_)
-    ydir = -1;
-    
-  cout << "Clicking " << x << " " << y << endl;
+
+  int xvel = 0, yvel = 0;
+  xvel = (x - x_) / velocityX_;
+  yvel = (y - y_) / velocityY_;
   
-  setVx( xdir * velocityX_ );
-  setVy( ydir * velocityY_ );
+  cout << xvel << " " <<yvel<<endl;
   
-  cout << "Moving " << velocityX_ << " " <<velocityX_ << endl;
+  setVx( xdir * xvel );
+  setVy( ydir * yvel );
+  
+  cout << velocityX_ << " " << velocityY_ <<endl;
+  
+  
   
 }
 
