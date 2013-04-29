@@ -9,7 +9,7 @@ using namespace std;
   param xy the value of the y-velocity
   param maxHealth the value of the Thing's maximum possible health level
 */
-Thing::Thing(QPixmap* pic, double nx, double ny, int vx, int vy, int maxHealth ) : QGraphicsPixmapItem(*pic) {
+Thing::Thing(QPixmap* pic, double nx, double ny, int w, int h, int vx, int vy, int maxHealth ) : QGraphicsPixmapItem(*pic) {
   x_ = nx;
   y_ = ny;
   velocityX_ = vx;
@@ -19,8 +19,8 @@ Thing::Thing(QPixmap* pic, double nx, double ny, int vx, int vy, int maxHealth )
   pic_ = pic;  
   identifier = "thing";
 
-  width_ = pic_->width();
-  height_ = pic_->height();
+  width_ = w;
+  height_ = h;
   offScreen = false;
   
   setPos(x_,y_);

@@ -17,13 +17,17 @@
 #include "clickscene.h"
 
 #include "thing.h"
-#include "planet.h"
 #include "rocket.h"
+#include "laser.h"
+
+/*
+#include "planet.h"
 #include "missile.h"
 #include "alien.h"
 #include "star.h"
 #include "meteor.h"
-#include "laser.h"
+*/
+
 #include "mylist.h"
 
 #define BIG_WINDOW_MAX_X 500
@@ -64,11 +68,13 @@ class MainWindow : public QWidget{
     QGraphicsView* bigView;
     Rocket* rocket;
     Laser* laser;
+    /*
     Meteor* meteor;
     Alien* alien;
     Missile* missile;
     Planet* planet;
     Star* star;
+    */
     
     MyList<Thing*> thingList;
     

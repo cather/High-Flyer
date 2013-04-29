@@ -14,7 +14,7 @@
 class Thing : public QObject, public QGraphicsPixmapItem{
   public:
 
-    Thing(QPixmap* pix, double nx, double ny, int vx, int vy, int maxHealth );
+    Thing(QPixmap* pix, double nx, double ny, int w, int h, int vx, int vy, int maxHealth );
     Thing();
     ~Thing();
 
@@ -63,12 +63,6 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     int maxHealth_;
     /** The Thing's picture visualization*/
     QPixmap* pic_;
-    
-    
-    
-  public slots:
-  
-  signals:
 
 };
 #endif // THING_H

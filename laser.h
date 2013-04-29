@@ -8,19 +8,13 @@
 
 class Laser : public Thing {
   public:
-    Laser(QPixmap* pic, int vx, int vy, Rocket* rocket);
+    Laser(QPixmap* pic, int w, int h, int vx, int vy, Rocket* rocket);
     Laser();
     ~Laser();
-    void findStartingPoint();
     //void move(int maxX, int maxY);
+    void shoot (int x, int y);
     
     bool collidesWith(Thing* enemy); // enemies are planet, meteor, alien, missile
-    
-    void  shoot(int,int);
-    
-  private:
-    Rocket* rocket_;
-    
-  public slots:
+
 };
 #endif //LASER_H

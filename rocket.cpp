@@ -3,32 +3,40 @@
 
 using namespace std;
 
-Rocket::Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, int speed, int maxHealth) : Thing(pic, 0,0, 0, 0, maxHealth) {
-
+/** Constructor. All rockets have 0 intial velocities
+  @param pic the QPixmap to represent the rocket
+  @param windowMaxX the max x size of the window
+  @param windowMaxY the max y size of the window
+  @param speed the speed the rocket will move
+  @param maxHealth the maxHealth of the rocket
+*/
+Rocket::Rocket(QPixmap* pic, int GAME_WINDOW_MAX_X, int GAME_WINDOW_MAX_Y, int w, int h, int speed, int maxHealth) : 
+  Thing(pic, (GAME_WINDOW_MAX_X-pic->width())/2, (GAME_WINDOW_MAX_Y-pic->height()), w, h, 0, 0, maxHealth) {
+  
+  cout << "rocket constructor " << x_ <<" " << y_ << endl;
   lives = 4; // start with 4 lives
   gameOver = false;
-  pause = true;
   speed_ = speed;
   starsCollected_ = 0;
   identifier = "rocket";
   direction = -1;
-    cout << "rocket!" << x_ <<" " << y_<<endl;
-    
+  setPos(x_,y_);    
 }
-
+/** Constructor */
 Rocket::Rocket(){
 }
 
-
+/** Destructor */
 Rocket::~Rocket(){
 }
 
+/** Returns number of lives the rocket has*/
 int Rocket::getLives(){ return lives;}
- 
-// need some way to pass in (int windowMaxX, int windowMaxY) to stop rocket from moving off screen
+
+/** overloaded keypress event that sets the direction of the rocket to move*/
 void Rocket::keyPressEvent(QKeyEvent* e)
 {
-  if (!gameOver && pause == false)
+  if (!gameOver)
   { 
     switch(e->key())
     { 
@@ -51,12 +59,18 @@ void Rocket::keyPressEvent(QKeyEvent* e)
   }
 }
 
+/** Subtracts lives from the rocket's lives. If the result is less than 0, set lives to 0
+  @param i the number of lives to subtract
+*/
 void Rocket::loseLives(int i ){
   lives= lives-i;
   if (lives < 0)
     lives = 0;
 }
 
+/** Updates the rocket's health and number of lives in a QLabel
+  @param label the QLabel to update with health and life information
+*/
 void Rocket::displayHealth(QLabel* label){
   QString string = "Health: " + QString::number(health_);
   string.append(" Lives: " + QString::number(lives) );
@@ -78,52 +92,62 @@ void Rocket::displayHealth(QLabel* label){
   label->setText(string);
 }
 
+/** returns how many stars collected, scaled by 50 */
 int Rocket::getStars(){
   return (starsCollected_*50);
 }
 
-void Rocket::keepOnScreen(){
-  if (offScreen)
-  {
-    x_ -= velocityX_;
-    y_ -= velocityY_;
-    cout <<"Off screen"<<endl;
-
-    setPos(x_,y_);
-  }
-}
-
+/** Function that returns true if colliding with another Thing, false otherwise*/
 bool Rocket::collidesWith(Thing* t){
   return collidesWithItem(t, Qt::IntersectsItemShape);
 }
 
+/** Moves the rocket
+  @param windowMaxX the x-area the rocket can move in without being considered offScreen
+  @param windowMaxY the y-area the rocket can move in without being considered offScreen
+*/
 void Rocket::move(int windowMaxX, int windowMaxY)
 {
- switch(direction)
-  {
-    case 0: // up
-      setVx(0);
-      setVy(-speed_);
-      break;
-    case 1: //left    
-      setVx(-speed_);
-      setVy(0);
-      break;
-    case 2: // right
-      setVx(speed_);
-      setVy(0);
-      break;
-    case 3: //down
-      setVx(0);
-      setVy(speed_);
-    default:
-      break;
+  if (!gameOver){
+    // based on direction, which was determined by keypressevents, sets velocities
+    switch(direction)
+    {
+      case 0: // move up
+        setVx(0);
+        setVy(-speed_);
+        break;
+      case 1: //move left    
+        setVx(-speed_);
+        setVy(0);
+        break;
+      case 2: //move right
+        setVx(speed_);
+        setVy(0);
+        break;
+      case 3: //move down
+        setVx(0);
+        setVy(speed_);
+      default:
+        break;
+    }
+    
+    x_ += velocityX_;
+    y_ += velocityY_;
+    
+    // if offScreen as a result of the position change, reverts the change
+    if ( x_ < 0 || y_ < 0 || (x_+width_) > windowMaxX || (y_+height_) > windowMaxY)
+    {
+      x_ -= velocityX_;
+      y_ -= velocityY_;
+    }
+    
+    //changes visible position on screen
+    setPos(x_,y_);
+
+    // re-initializes infor for next key press event to reset
+    direction = -1;
+    setVx(0);
+    setVy(0);
   }
-  if (!gameOver && pause == false)
-    Thing::move(windowMaxX, windowMaxY);
-  keepOnScreen();
-  direction = -1;
-  setVx(0);
-  setVy(0);
 }
 
