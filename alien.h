@@ -13,6 +13,7 @@ class Alien : public Thing {
     int lifeTime_; // indicates how long Alien will move around on the screen
     int hoverTime_;
     int randFactor_; // random number that decides how much alien will move
+    bool collidesWith(Thing* rocket);
     
   private:
   

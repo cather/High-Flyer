@@ -12,7 +12,7 @@ class Star : public Thing {
     Star(QPixmap* pic, int x, int y);
     Star();
     ~Star();
-    void collide(Thing* thing);
+    bool collidesWith(Thing* rocket);
     
   private:
   

@@ -9,10 +9,10 @@ Star::Star(){
 Star::~Star(){
 }
 
-void Star::collide(Thing* rocket){
-  if (Thing::collide(rocket)  == "rocket")
-  {
-    emit collected();
-  }
+bool Star::collidesWith(Thing* rocket){
+  if (collidesWithItem(rocket, Qt::IntersectsItemShape))
+      emit collected(); // emits signal when touching item
+  return collidesWithItem(rocket, Qt::IntersectsItemShape);
 }
+
 void Star::collected(){}

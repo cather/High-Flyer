@@ -70,29 +70,26 @@ int Rocket::getStars(){
   return (starsCollected_*50);
 }
 
-void Rocket::offScreen(){
-  x_ -= velocityX_;
-  y_ -= velocityY_;
-  cout <<"Off screen"<<endl;
-
-  setPos(x_,y_);
-}
-bool Rocket::collide(Thing* t){
-  if (Thing::collide(t) != "")
+void Rocket::keepOnScreen(){
+  if (offScreen)
   {
-    if(Thing::collide(t) == "star")
-      starsCollected_ += 1;
-    
-    return true;
+    x_ -= velocityX_;
+    y_ -= velocityY_;
+    cout <<"Off screen"<<endl;
+
+    setPos(x_,y_);
   }
-  return false;
+}
+
+bool Rocket::collidesWith(Thing* t){
+  collidesWithItem(t, Qt::IntersectsItemShape);
 }
 
 void Rocket::move(int x, int y)
 {
  switch(direction)
   {
-    case 0: // up    
+    case 0: // up
       setVx(0);
       setVy(-speed_);
       break;
@@ -108,8 +105,14 @@ void Rocket::move(int x, int y)
       setVx(0);
       setVy(speed_);
       break;
+    default:
+      setVx(0);
+      setVy(0);
+      break;
   }
   if (!gameOver && pause == false)
-    Thing::move(x_+width_*2, y_+height_);
+    Thing::move(x,y);
+  keepOnScreen();
+  //direction = -1;
 }
 

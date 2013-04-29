@@ -11,7 +11,7 @@ class Planet : public Thing {
     Planet(QPixmap* pic, int x, int y);
     Planet();
     ~Planet();
-    bool collide(Thing* rocket);
+    bool collidesWith(Thing* rocket);
   private:
 };
 #endif //PLANET_H

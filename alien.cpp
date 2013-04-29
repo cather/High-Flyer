@@ -64,3 +64,12 @@ void Alien::move(int windowMaxX, int windowMaxY){
   setPos(x_,y_);      
   
 }
+
+bool Alien::collidesWith(Thing* rocket){
+  if ( collidesWithItem(rocket, Qt::IntersectsItemShape) )
+  {
+    rocket->decrementHealth(rocket->getHealth()/2); // cuts current health in half
+  }
+  
+  return collidesWithItem(rocket, Qt::IntersectsItemShape);
+}

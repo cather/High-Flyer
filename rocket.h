@@ -15,9 +15,9 @@ class Rocket : public Thing {
     void dead();
     void displayHealth(QLabel* label);
     int getStars();
-    void offScreen(); // override offScreen
+    void keepOnScreen();
     bool pause;
-    bool collide(Thing* r);
+    bool collidesWith(Thing* t); //same as in thing
     void move(int x, int y);
     int direction;
     

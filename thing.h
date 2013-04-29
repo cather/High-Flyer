@@ -30,7 +30,6 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     Thing();
     ~Thing();
 
-    std::string collide(Thing* t);
     bool dead();
     
     int getX();
@@ -38,14 +37,14 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     int getWidth();
     int getHeight();
     
-    
     void setX(int x);
     void setY(int y);
     void setVx(int vx);
     void setVy(int vy);
-    virtual void move(int windowMaxX, int windowMaxY);
-    void move();
     void setPos(int x, int y);
+    
+    virtual void move(int windowMaxX, int windowMaxY);
+    virtual bool collidesWith(Thing* r);
     
     int getHealth();
     void decrementHealth(int num);

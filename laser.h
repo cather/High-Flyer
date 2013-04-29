@@ -14,6 +14,8 @@ class Laser : public Thing {
     void findStartingPoint();
     //void move(int maxX, int maxY);
     
+    bool collidesWith(Thing* enemy); // enemies are planet, meteor, alien, missile
+    
     void  shoot(int,int);
     
   private:

@@ -13,10 +13,13 @@ class Missile : public Thing {
     Missile();
     ~Missile();
     void move(int windowMaxX, int windowMaxY);
+    bool collideWith(Thing* enemy); // enemies are planet, meteor, alien, laser, rocket
   private:
     Rocket* rocket;
     int speed_;
     bool firstMove;
     bool down;
+    
+    QGraphicsPixmapItem* explosion;
 };
 #endif //MISSILE_H

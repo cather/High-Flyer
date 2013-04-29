@@ -45,6 +45,8 @@ class MainWindow : public QWidget{
   private:
     QGridLayout* layout;
     
+    QGraphicsItemAnimation* bg;
+    
     ClickScene* gameScene;
     QGraphicsView* gameView;
     QGraphicsScene* bigScene;

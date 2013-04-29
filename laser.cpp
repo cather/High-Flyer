@@ -3,6 +3,7 @@ using namespace std;
 Laser::Laser(QPixmap* pic, int vx, int vy, Rocket* rocket ) : Thing(pic, rocket->getWidth()/2+rocket->getX(), rocket->getY(), vx, vy, 1 ){
 
   rocket_ = rocket;
+  identifier = "laser";
 }
 
 
@@ -23,8 +24,12 @@ void Laser::shoot(int x, int y){
   
   setVx( xvel );
   setVy( yvel );
-  
-  
-  
 }
 
+
+bool Laser::collidesWith(Thing* enemy){
+
+  enemy->decrementHealth(1); // hurt enemy
+  
+  return collidesWithItem(enemy, Qt::IntersectsItemShape);
+}

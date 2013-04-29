@@ -15,11 +15,11 @@ Planet::~Planet(){
 }
 
 // if the planet is touching the rocket, kill the rocket and destroy the planet
-bool Planet::collide(Thing* rocket){
+bool Planet::collidesWith(Thing* rocket){
   cout<<"D"<<endl;
-  if (Thing::collide(rocket) == "rocket")
+  if (collidesWithItem(rocket, Qt::IntersectsItemShape))
   {
-    cout << "Touching"<<endl;
+    cout << "Touching somethins"<<endl;
     rocket->decrementHealth(rocket->getHealth()); // kills rocket
     return true;
   }

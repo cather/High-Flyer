@@ -33,6 +33,7 @@ void MainWindow::startGame() {
 
 void MainWindow::resetGame(){
   connect(nameButton, SIGNAL(clicked()), this, SLOT(startGame()));
+  clockTime = 100;
   enteredName = false;
   nameButton->show();
     nameButton->setText("Welcome abord!");
@@ -103,7 +104,7 @@ void MainWindow::triggerTimer() {
 void MainWindow::handleTimer() {
 
     // add star every 25 ticks
-  if (counter > 0 && counter % 34534535 == 0)
+  if (counter > 0 && counter % 25 == 0)
   {  
     star = new Star(starPic, rand()%GAME_WINDOW_MAX_X, rand()%GAME_WINDOW_MAX_Y);
     gameScene->addItem(star);
@@ -111,7 +112,7 @@ void MainWindow::handleTimer() {
   }
   
   //add planet every 15 ticks
-  if (counter > 0 && counter % 43543 == 0)
+  if (counter > 0 && counter % 15 == 0)
   {  
     planet = new Planet(planetPic, 100, 0);
     gameScene->addItem(planet);
@@ -119,7 +120,7 @@ void MainWindow::handleTimer() {
   }
   
   // add meteor every 25 ticks
-  if (counter > 0 && counter%3453454340 == 0)
+  if (counter > 0 && counter%25 == 0)
   {
     meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, 10);
     gameScene->addItem(meteor);
@@ -127,7 +128,7 @@ void MainWindow::handleTimer() {
   }
     
   // add alien every 35 ticks
-  if (counter > 0 && counter%34534535 == 0)
+  if (counter > 0 && counter%35 == 0)
   {
     alien = new Alien(alienPic, rand()%10, rand()%200);
     gameScene->addItem(alien);
@@ -142,11 +143,11 @@ void MainWindow::handleTimer() {
   }
   
   // move every Thing, deleting those off-screen
-  for (int i = 0; i < thingList.size(); i++)
+  thingList[0]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y); // rocket first
+  for (int i = 1; i < thingList.size(); i++)
   {
     thingList[i]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
-    thingList[i]->collide(rocket); // check if touching rocket
-    
+    thingList[i]->collidesWithItem(rocket); // check if touching rocket
     if(thingList[i]->offScreen)
     {
       thingList[i]->hide();
@@ -154,6 +155,9 @@ void MainWindow::handleTimer() {
       i--;
     }
   }
+  
+  
+  gameScene->advance();
   
   // Update info
   rocket->displayHealth(message); // update health
@@ -188,20 +192,13 @@ MainWindow::MainWindow(){
   int nW = 200, nH = 25; // variables for name elements
   
   // storing graphics  
-  rocketPic = new QPixmap("images/rocket.jpg");
-  planetPic = new QPixmap("images/planets.jpg");
-  starPic = new QPixmap("images/stars.jpg");
-  missilePic = new QPixmap("images/missile.jpg");
-  alienPic = new QPixmap("images/alien.jpg");
+  rocketPic = new QPixmap("images/rocket.png");
+  planetPic = new QPixmap("images/planet.png");
+  starPic = new QPixmap("images/star.png");
+  missilePic = new QPixmap("images/missile.png");
+  alienPic = new QPixmap("images/alien.png");
   laserPic = new QPixmap("images/laser.jpg");
-  meteorPic = new QPixmap("images/meteor.jpg");
-  rocketPic->scaledToHeight(2, Qt::FastTransformation);
-  planetPic->scaledToHeight(2, Qt::SmoothTransformation);
-  starPic->scaledToHeight(2, Qt::SmoothTransformation);
-  meteorPic->scaledToHeight(2, Qt::SmoothTransformation);
-  missilePic->scaledToHeight(2, Qt::SmoothTransformation);
-  alienPic->scaledToHeight(2, Qt::SmoothTransformation);
-  
+  meteorPic = new QPixmap("images/meteor.png");
 
   // construct layout
   layout = new QGridLayout();
@@ -209,7 +206,8 @@ MainWindow::MainWindow(){
   bigView = new QGraphicsView(bigScene);
   gameScene = new ClickScene(this);
   gameView = new QGraphicsView(gameScene);
-    gameScene->setFocus();
+    gameScene->addPixmap(QPixmap("bg.png"));
+
     bigView->setLayout(layout);
     gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
     cout << GAME_WINDOW_MAX_X << " " << GAME_WINDOW_MAX_Y << endl;

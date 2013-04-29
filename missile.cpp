@@ -42,9 +42,7 @@ void Missile::move(int windowMaxX, int windowMaxY){
     
     health_--;
       
-    if ( 
-      ( (x_+width_) < 0 || ( y_+height_) < 0 )|| 
-      ( x_ > windowMaxX || y_ > windowMaxY ) )
+    if ( ( (x_+width_) < 0 || ( y_+height_) < 0 )|| ( x_ > windowMaxX || y_ > windowMaxY ) )
       offScreen = true;
    
     setPos(x_,y_);
@@ -66,5 +64,14 @@ void Missile::move(int windowMaxX, int windowMaxY){
    
     setPos(x_,y_);
   }
+}
+
+bool Missile::collideWith(Thing* enemy){
+
+  if (collidesWithItem(enemy, Qt::IntersectsItemShape))
+  {
+    enemy->decrementHealth(10);
+  }
   
+  return collidesWithItem(enemy, Qt::IntersectsItemShape);
 }

@@ -13,10 +13,9 @@ class Meteor : public Thing {
     Meteor();
     ~Meteor();
     void die();
-    void collide(Thing* rocket);
+    bool collidesWith(Thing* enemy); // reacts when collides with rocket, laser
   private:
     bool hit;
-    int damageFactor;
 };
 #endif //METEOR_H
 
