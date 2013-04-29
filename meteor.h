@@ -12,7 +12,6 @@ class Meteor : public Thing {
     Meteor(QPixmap* pic, int y, int vx );
     Meteor();
     ~Meteor();
-    void die();
     bool collidesWith(Thing* enemy); // reacts when collides with rocket, laser
   private:
     bool hit;

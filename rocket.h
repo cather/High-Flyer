@@ -18,8 +18,10 @@ class Rocket : public Thing {
     void keepOnScreen();
     bool pause;
     bool collidesWith(Thing* t); //same as in thing
-    void move(int x, int y);
+    void move(int windowMaxX, int windowMaxY);
     int direction;
+    int getLives();
+    void loseLives(int i);
     
   protected:
     void keyPressEvent(QKeyEvent* e);

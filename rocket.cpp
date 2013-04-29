@@ -3,7 +3,8 @@
 
 using namespace std;
 
-Rocket::Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, int speed, int maxHealth) : Thing(pic, (windowMaxX-pic->width())/2, windowMaxY-pic->height(), 0, 0, maxHealth) {
+Rocket::Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, int speed, int maxHealth) : Thing(pic, 0,0, 0, 0, maxHealth) {
+
   lives = 4; // start with 4 lives
   gameOver = false;
   pause = true;
@@ -11,6 +12,8 @@ Rocket::Rocket(QPixmap* pic, int windowMaxX, int windowMaxY, int speed, int maxH
   starsCollected_ = 0;
   identifier = "rocket";
   direction = -1;
+    cout << "rocket!" << x_ <<" " << y_<<endl;
+    
 }
 
 Rocket::Rocket(){
@@ -19,6 +22,8 @@ Rocket::Rocket(){
 
 Rocket::~Rocket(){
 }
+
+int Rocket::getLives(){ return lives;}
  
 // need some way to pass in (int windowMaxX, int windowMaxY) to stop rocket from moving off screen
 void Rocket::keyPressEvent(QKeyEvent* e)
@@ -40,9 +45,16 @@ void Rocket::keyPressEvent(QKeyEvent* e)
         direction = 3;
         break;
       default:
+        direction = -1;
         break;
     }
   }
+}
+
+void Rocket::loseLives(int i ){
+  lives= lives-i;
+  if (lives < 0)
+    lives = 0;
 }
 
 void Rocket::displayHealth(QLabel* label){
@@ -50,13 +62,13 @@ void Rocket::displayHealth(QLabel* label){
   string.append(" Lives: " + QString::number(lives) );
   
   // if health goes to zero, decrement number of lives and replenish health bar
-  if (Thing::dead() && lives > 0) 
+  if (Thing::dead && lives > 0) 
   {
     lives--;
     health_ = maxHealth_;
   }
   // if on last life and dead, game over
-  else if (Thing::dead() && lives == 0)
+  else if (Thing::dead && lives == 0)
   {
     gameOver = true;
     string.clear();  
@@ -82,10 +94,10 @@ void Rocket::keepOnScreen(){
 }
 
 bool Rocket::collidesWith(Thing* t){
-  collidesWithItem(t, Qt::IntersectsItemShape);
+  return collidesWithItem(t, Qt::IntersectsItemShape);
 }
 
-void Rocket::move(int x, int y)
+void Rocket::move(int windowMaxX, int windowMaxY)
 {
  switch(direction)
   {
@@ -104,15 +116,14 @@ void Rocket::move(int x, int y)
     case 3: //down
       setVx(0);
       setVy(speed_);
-      break;
     default:
-      setVx(0);
-      setVy(0);
       break;
   }
   if (!gameOver && pause == false)
-    Thing::move(x,y);
+    Thing::move(windowMaxX, windowMaxY);
   keepOnScreen();
-  //direction = -1;
+  direction = -1;
+  setVx(0);
+  setVy(0);
 }
 

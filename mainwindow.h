@@ -31,6 +31,17 @@
 #define GAME_WINDOW_MAX_X BIG_WINDOW_MAX_X*9/10
 #define GAME_WINDOW_MAX_Y BIG_WINDOW_MAX_Y*9/10
 
+
+#define rocketHealth = 10
+#define alienHealth = 3;
+#define missileHealth = 1;
+#define starHealth = 1;
+#define planetHealth = 1;
+#define laserHealth = 1;
+
+#define rocketSpeed 20
+#define rocketMaxLife 100
+
 class ClickScene;
 
 class MainWindow : public QWidget{
@@ -87,6 +98,7 @@ class MainWindow : public QWidget{
     QPixmap* alienPic;
     QPixmap* laserPic;
     QPixmap* meteorPic;
+    QPixmap* explosion;
   
   public slots:
     void handleTimer();

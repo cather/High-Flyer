@@ -104,7 +104,7 @@ void MainWindow::triggerTimer() {
 void MainWindow::handleTimer() {
 
     // add star every 25 ticks
-  if (counter > 0 && counter % 25 == 0)
+  if (counter > 0 && (counter) % 50 == 0)
   {  
     star = new Star(starPic, rand()%GAME_WINDOW_MAX_X, rand()%GAME_WINDOW_MAX_Y);
     gameScene->addItem(star);
@@ -112,7 +112,7 @@ void MainWindow::handleTimer() {
   }
   
   //add planet every 15 ticks
-  if (counter > 0 && counter % 15 == 0)
+  if (counter > 0 && (counter) % 55 == 0)
   {  
     planet = new Planet(planetPic, 100, 0);
     gameScene->addItem(planet);
@@ -128,16 +128,16 @@ void MainWindow::handleTimer() {
   }
     
   // add alien every 35 ticks
-  if (counter > 0 && counter%35 == 0)
+  if (counter > 0 && (counter)%35 == 0)
   {
     alien = new Alien(alienPic, rand()%10, rand()%200);
     gameScene->addItem(alien);
     thingList.push_back(alien);
   }
   // add missile every 25 ticks
-  if (counter > 0 && counter % 15 == 0 && alien !=NULL)
+  if (counter > 0 && (counter) % 15 == 0 && alien !=NULL)
   {  
-    missile = new Missile(missilePic, GAME_WINDOW_MAX_X/2, 0, 5, 5, rocket);
+    missile = new Missile(missilePic, GAME_WINDOW_MAX_X/2, 0, 5, 5, rocket, explosion);
     gameScene->addItem(missile);
     thingList.push_back(missile);
   }
@@ -147,10 +147,10 @@ void MainWindow::handleTimer() {
   for (int i = 1; i < thingList.size(); i++)
   {
     thingList[i]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
-    thingList[i]->collidesWithItem(rocket); // check if touching rocket
-    if(thingList[i]->offScreen)
+    thingList[i]->collidesWith(rocket); // check if touching rocket
+    if(thingList[i]->dead)
     {
-      thingList[i]->hide();
+      thingList[i]->die();
       thingList.pop(i);
       i--;
     }
@@ -187,7 +187,7 @@ MainWindow::MainWindow(){
   validToShoot = false;
   enteredName = false;
   starting = true;
-  clockTime = 100;
+  clockTime = 50;
   counter = 0;
   int nW = 200, nH = 25; // variables for name elements
   
@@ -199,6 +199,7 @@ MainWindow::MainWindow(){
   alienPic = new QPixmap("images/alien.png");
   laserPic = new QPixmap("images/laser.jpg");
   meteorPic = new QPixmap("images/meteor.png");
+  explosion = new QPixmap("images/explosion.png");
 
   // construct layout
   layout = new QGridLayout();

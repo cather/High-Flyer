@@ -29,7 +29,7 @@ void Laser::shoot(int x, int y){
 
 bool Laser::collidesWith(Thing* enemy){
 
-  enemy->decrementHealth(1); // hurt enemy
-  
+  if (collidesWithItem(enemy, Qt::IntersectsItemShape))
+    enemy->decrementHealth(1); // hurt enemy
   return collidesWithItem(enemy, Qt::IntersectsItemShape);
 }

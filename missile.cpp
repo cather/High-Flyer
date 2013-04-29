@@ -1,15 +1,17 @@
 #include "missile.h"
 using namespace std;
-Missile::Missile(QPixmap* pic, int x, int y, int speed, int lifeSpan, Rocket* rocketToChase ) : Thing(pic, x, y, 30, 30, lifeSpan) {
+Missile::Missile(QPixmap* pic, int x, int y, int speed, int lifeSpan, Rocket* rocketToChase, QPixmap* explosion ) : Thing(pic, x, y, 30, 30, lifeSpan) {
  
  /* in constructor before:
  ( rocket->getX() - x_ )/abs(( rocket->getX() - x_ )), 
   ( rocket->getY() - y_ )/ abs(( rocket->getY() - y_ ))
 */
-  rocket = rocketToChase;
+  rocket_ = rocketToChase;
   speed_ = speed;
   firstMove = true;
   down = true;
+  explosion_ = explosion;
+  explosionCounter = 10;
 }
 
 Missile::Missile(){
@@ -26,7 +28,7 @@ void Missile::move(int windowMaxX, int windowMaxY){
   if (firstMove)
     velocityX_ = 2*velocityX_;
     
-  if (!offScreen && !dead())
+  if (!offScreen && !dead)
   {
     if (down)
     {
@@ -54,7 +56,7 @@ void Missile::move(int windowMaxX, int windowMaxY){
     firstMove = false;
   }
   
-  if (dead())
+  if (dead)
   {
     y_ += 2*velocityY_;
     if ( 
@@ -66,11 +68,24 @@ void Missile::move(int windowMaxX, int windowMaxY){
   }
 }
 
+void Missile::explode(){
+  // leave a pixmap of explosion for 5 seconds, missile dies
+  //scene_->addItem(explosion_);
+  explosionCounter--;
+  if (explosionCounter == 0)
+  {
+    // explision dies
+    die();
+  }
+}
+
 bool Missile::collideWith(Thing* enemy){
 
   if (collidesWithItem(enemy, Qt::IntersectsItemShape))
   {
+    cout << "missile killing enemy"<<endl;
     enemy->decrementHealth(10);
+    explode();
   }
   
   return collidesWithItem(enemy, Qt::IntersectsItemShape);

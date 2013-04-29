@@ -7,31 +7,17 @@
 #include <QBrush>
 #include <iostream>
 
-#define rocketHealth = 10
-#define alienHealth = 3;
-#define missileHealth = 1;
-#define starHealth = 1;
-#define planetHealth = 1;
-#define laserHealth = 1;
+/** A generic class Things from which the rest of my game's objects can inherit from. Things have an x,y position, width, height, pixmapitem, and velocities in x,y .Things can move, detect when touching another Thing, detect when run out of health and detect when off-screen. 
 
-#define rocketWidth 50
-#define rocketHeight 100
-#define rocketSpeed 5
-#define rocketMaxLife 100
-
-#define alienWidth 50
-#define alienHeight 100
-
-/*Things can move, detect when touching another Thing, detect when run out of health and detect when off-screen. Things have an x,y position, width, height, pixmapitem, and velocities in x,y*/
+@author Cathy Ji*/
 
 class Thing : public QObject, public QGraphicsPixmapItem{
   public:
+
     Thing(QPixmap* pix, double nx, double ny, int vx, int vy, int maxHealth );
     Thing();
     ~Thing();
 
-    bool dead();
-    
     int getX();
     int getY();
     int getWidth();
@@ -51,20 +37,34 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     void die();
     
     int getMaxHealth();
+    std::string identifier; // get rid of this. 
     
+    /** Flag that is true when the Item is not within the parameters of the area in which it is allowed to move*/
     bool offScreen;
-    std::string identifier;
+    /** Flag that is true when both health is 0 and offScreen is true*/
+    bool dead;
   
   protected:
+    /** The X coord of the Thing's left-most point*/
     int x_;
+    /** The Y coord of the Thing's bottom-most point*/    
     int y_;
+    /** The rate at which the Thing will move in the x-direction*/
     int velocityX_;
+    /** The rate at whcih the Thing will move in the y-direction*/
     int velocityY_;
+    /** The width of the Thing*/
     int width_;
+    /** The height of the Thing*/
     int height_;
+    /** The current health level*/
     int health_;
+    /** The Thing's maximum possible amount of health*/
     int maxHealth_;
+    /** The Thing's picture visualization*/
     QPixmap* pic_;
+    
+    
     
   public slots:
   

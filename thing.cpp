@@ -1,6 +1,14 @@
 #include "thing.h"
 using namespace std;
 
+/** Constructor
+  param pic the QPixmap to represent the thing
+  param nx the Thing's left-most x coord
+  param ny the Thing's bottom-most y coord
+  param vx the value of the x-velocity
+  param xy the value of the y-velocity
+  param maxHealth the value of the Thing's maximum possible health level
+*/
 Thing::Thing(QPixmap* pic, double nx, double ny, int vx, int vy, int maxHealth ) : QGraphicsPixmapItem(*pic) {
   x_ = nx;
   y_ = ny;
@@ -16,6 +24,7 @@ Thing::Thing(QPixmap* pic, double nx, double ny, int vx, int vy, int maxHealth )
   offScreen = false;
   
   setPos(x_,y_);
+
 }
 
 Thing::Thing(){}
@@ -32,43 +41,35 @@ void Thing::setVx(int vx){ velocityX_ = vx; }
 void Thing::setVy(int vy){ velocityY_ = vy; }
 
 void Thing::decrementHealth(int num){
+  cout << "Deremetnging  health"<<endl;
   if (health_ - num < 0)
     health_ = 0;
   else
-    health_ -= num;
+    health_ = health_ - num;
 
   if (health_ == 0)
     die();
 }
-
-void Thing::move(int windowMaxX, int windowMaxY){
-  
-  if (!dead())
+void Thing::move(int windowMaxX, int windowMaxY){  
+  if (!dead)
   {
     x_ += velocityX_;
     y_ += velocityY_;
-    
     if ( ((x_+width_) < 0 || (y_+height_) < 0 )|| (x_ > windowMaxX || y_ > windowMaxY))
       die();
-    
     setPos(x_,y_);
   }
 }
 
-bool Thing::dead(){
-  if (health_ == 0 || offScreen)
-    return true;
-  else
-    return false;
-}
-
 void Thing::die(){
   offScreen = true;
+  health_ = 0;
   hide();
+  dead = true;
 }
 
 bool Thing::collidesWith(Thing* r){
-  collidesWithItem(r, Qt::IntersectsItemShape);
+  return collidesWithItem(r, Qt::IntersectsItemShape);
 }
 
 void

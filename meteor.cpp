@@ -13,7 +13,8 @@ Meteor::~Meteor(){
 bool Meteor::collidesWith(Thing* enemy){
   if (collidesWithItem(enemy, Qt::IntersectsItemShape))
   {
-    enemy->decrementHealth(20); // hurts enemy by 20 points
+    enemy->decrementHealth(10); // hurts enemy by 20 points
+    die();
   }
   return collidesWithItem(enemy, Qt::IntersectsItemShape);
 }

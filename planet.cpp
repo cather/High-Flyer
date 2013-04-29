@@ -14,7 +14,8 @@ Planet::Planet(){
 Planet::~Planet(){
 }
 
-// if the planet is touching the rocket, kill the rocket and destroy the planet
+
+/** A function that determines whether or not the planet has collided with another Thing object. Returns true if a Planet is collided with a Thing, false otherwise. When true, kills the rocket by decrementing it's current health to 0. */
 bool Planet::collidesWith(Thing* rocket){
   cout<<"D"<<endl;
   if (collidesWithItem(rocket, Qt::IntersectsItemShape))
