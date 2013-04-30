@@ -102,7 +102,7 @@ bool Rocket::collidesWith(Thing* t){
   return collide;
 }
 
-/** Moves the rocket
+/** Moves the rocket in the direction given by the keypressevent function. If the rocket is moved off screen, moves the rocket back on screen
   @param windowMaxX the x-area the rocket can move in without being considered offScreen
   @param windowMaxY the y-area the rocket can move in without being considered offScreen
 */

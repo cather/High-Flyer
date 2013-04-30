@@ -4,6 +4,8 @@ using namespace std;
     @param pix the QPixmap the represent the star
     @param x the x coord to appear
     @param y the y coord to appear
+    @param w the width of the Star
+    @param h the height of the Star
 */
 Star::Star(QPixmap* pic, int x, int y, int w, int h) : Thing(pic, x, y, w, h, 0, 0, 1) {
   offScreen = false;
@@ -16,7 +18,7 @@ Star::Star(){
 /** Destructor */
 Star::~Star(){
 }
-/** Returns true if the star is intersecting with a Thing, false otherwise
+/** Returns true if the star is intersecting with a Thing, false otherwise. If true, adds 1 to the Thing's star_ count and flags offScreen as true
   @param rocket the Thing the star is checking if it's colliding with
 */
 bool Star::collidesWith(Thing* rocket){
@@ -34,6 +36,3 @@ bool Star::collidesWith(Thing* rocket){
     else
       return false;
 }
-
-/** Signal to rocket to indicate it's collided with something*/
-void Star::collected(){}
