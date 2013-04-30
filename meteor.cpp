@@ -5,12 +5,9 @@ using namespace std;
   @param y the y position of the meteor
   @param vx the x-velocity of the meteor */
 Meteor::Meteor(QPixmap* pic, int y, int w, int h, int vx) : Thing(pic, -50, y, w, h, vx, 0, 1){
-
   offScreen = false;
   collisionCounts = true;
   dead = false;
-  
-  
 }
 
 /** constructor*/

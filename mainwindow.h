@@ -22,8 +22,8 @@
 #include "alien.h"
 #include "missile.h"
 #include "meteor.h"
-/*
 #include "planet.h"
+/*
 
 #include "star.h"
 */
@@ -71,9 +71,9 @@ class MainWindow : public QWidget{
     Alien* alien;
     Missile* missile;
     Meteor* meteor;
+    Planet* planet;
     /*
     
-    Planet* planet;
     Star* star;
     */
     

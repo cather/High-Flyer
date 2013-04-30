@@ -118,14 +118,15 @@ void MainWindow::handleTimer() {
   }
   
   
+  //*/ 
   //add planet every 15 ticks
   if (counter > 0 && (counter) % 55 == 0)
   {  
-    planet = new Planet(planetPic, 100, 0);
+    planet = new Planet(planetPic, 0, 0, planetPic->width(), planetPic->height());
     gameScene->addItem(planet);
     thingList.push_back(planet);
   }
-  */
+  /*
   // add meteor every 25 ticks
   if (counter > 0 && counter%25 == 0)
   {
@@ -133,7 +134,7 @@ void MainWindow::handleTimer() {
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
   }
-    /*
+   
   // add alien every 35 ticks
   if (counter > 0 && (counter)%35 == 0)
   {
