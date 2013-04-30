@@ -71,11 +71,13 @@ void Thing::setVy(int vy){ velocityY_ = vy; }
 */
 void Thing::decrementHealth(int num){
   health_ = health_ - num;
-  if (health_ - num < 0)
+  if (health_ - num < 0 && lives_ > 0)
   {
     health_ = maxHealth_;
     lives_--;
   }  
+  else if (health_ - num < 0)
+    health_ = 0;
   if (health_ == 0 && lives_ == 0)
   {
     dead = true;

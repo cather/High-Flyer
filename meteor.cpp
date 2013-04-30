@@ -18,7 +18,7 @@ Meteor::Meteor(){
 /** destructor */
 Meteor::~Meteor(){
 }
-/** If colliding with a Thing for the first time, decrements that Thing's health and kills itself and returns true. Returns false otherwise. Cannot collide more than once
+/** If colliding with a Thing for the first time, decrements that Thing's health and kills itself and returns true. Returns false otherwise.
   @param enemy the Thing the Meteor checks if it's intersecting
 */
 bool Meteor::collidesWith(Thing* enemy){
@@ -29,7 +29,7 @@ bool Meteor::collidesWith(Thing* enemy){
   {
     decrementHealth(1);
     enemy->decrementHealth(10);
-    collisionCounts = false;
+    //collisionCounts = false;
     return true;
   }
   else

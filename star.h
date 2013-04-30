@@ -12,5 +12,9 @@ class Star : public Thing {
     Star();
     ~Star();
     bool collidesWith(Thing* rocket);
+    void move(int windowMaxX, int windowMaxY);
+  private:
+    bool firstMove;
+    bool down;
 };
 #endif //STAR_H

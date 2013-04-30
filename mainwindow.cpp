@@ -132,7 +132,7 @@ void MainWindow::handleTimer() {
     // add star every 50 ticks
   if (counter > 0 && (counter) % 50 == 0)
   {  
-    star = new Star(starPic, rand()%GAME_WINDOW_MAX_X, rand()%GAME_WINDOW_MAX_Y, starPic->width(), starPic->height());
+    star = new Star(starPic, rand()%GAME_WINDOW_MAX_X, 0, starPic->width(), starPic->height());
     gameScene->addItem(star);
     thingList.push_back(star);
   }
@@ -156,7 +156,7 @@ void MainWindow::handleTimer() {
   // add alien every 45 ticks
   if (counter > 0 && (counter)%45 == 0)
   {
-    alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 2);
+    alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 55);
     gameScene->addItem(alien);
     thingList.push_back(alien);
     spawnMissile( (alien->getWidth()-alien->getX())/2, (alien->getHeight()-alien->getY()) );  //add missile
@@ -229,7 +229,7 @@ void MainWindow::handleTimer() {
   counter++; // update timer counter
   
   // check if player still alive. if not, endgame
-  if (rocket->getHealth() == 0)
+  if (rocket->getHealth() == 0 || rocket->getLives() == 0)
     endGame();
 }
 
@@ -253,7 +253,7 @@ MainWindow::MainWindow(){
   rocketPic = new QPixmap("images/rocket.png");
   planetPic = new QPixmap("images/planet.png");
   starPic = new QPixmap("images/star.png");
-  missilePic = new QPixmap("images/missile.jpg");
+  missilePic = new QPixmap("images/missile_small.jpg");
   alienPic = new QPixmap("images/alien.png");
   laserPic = new QPixmap("images/laser.jpg");
   meteorPic = new QPixmap("images/meteor.png");

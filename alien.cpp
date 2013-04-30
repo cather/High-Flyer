@@ -70,8 +70,8 @@ bool Alien::collidesWith(Thing* rocket){
   if (collide && collisionCounts)
   {
     decrementHealth(1);
-    rocket->decrementHealth(10);
-    collisionCounts = false;
+    //rocket->decrementHealth(10);
+    //collisionCounts = false;
     if (rocket->dead) // if rocket's health is 0, flags offScreen
       rocket->offScreen = true;
     return true;

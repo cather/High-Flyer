@@ -33,14 +33,25 @@ Missile::~Missile(){}
 void Missile::move(int windowMaxX, int windowMaxY){
 
   // set velocity to direction of rocket_
-  velocityX_ = ( rocket_->getX() - x_ )/ 50 * speed_;
-  velocityY_ = ( rocket_->getY() - y_ )/ 50 * speed_;
+  velocityX_ = ( rocket_->getX() - x_ )/ x_ * speed_;
+  velocityY_ = ( rocket_->getY() - y_ )/ y_ * speed_;
+  
+  if (rocket_->getX() - x_ > 50)
+    velocityX_ = ( rocket_->getX() - x_ )/ 50 * speed_;
+  else
+   velocityX_ = ( rocket_->getX() - x_ ) * speed_;
+  if ( rocket_->getY() - y_  > 50)
+    velocityY_ = ( rocket_->getY() - y_ )/ 50 * speed_;
+  else
+    velocityY_ = ( rocket_->getY() - y_ ) * speed_;
+  
+  
   x_ += velocityX_;
   y_ += velocityY_;
   setPos(x_,y_);
   
   // keep track of counter
-  explosionCounter--;
+  //explosionCounter--;
   if (explosionCounter == 0)
       explode();
 

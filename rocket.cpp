@@ -66,14 +66,15 @@ void Rocket::displayHealth(QLabel* label){
   string.append(" Lives: " + QString::number(lives_) );
   
   // if health goes to zero, decrement number of lives and replenish health bar
-  if (Thing::dead && lives_ > 0) 
+  if ( (health_ == 0 || health_ < 0) && lives_ > 0) 
   {
     lives_--;
     health_ = maxHealth_;
   }
   // if on last life and dead, print game over
-  else if (Thing::dead && lives_ == 0)
+  else if (health_ == 0 && lives_ == 0)
   {
+    lives_ = 0;
     gameOver = true;
   }
   
@@ -138,8 +139,6 @@ void Rocket::move(int windowMaxX, int windowMaxY)
 
     // re-initializes info for next key press event to reset
     direction = -1;
-    setVx(0);
-    setVy(0);
   }
 }
 

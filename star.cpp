@@ -7,9 +7,11 @@ using namespace std;
     @param w the width of the Star
     @param h the height of the Star
 */
-Star::Star(QPixmap* pic, int x, int y, int w, int h) : Thing(pic, x, y, w, h, 0, 0, 1) {
+Star::Star(QPixmap* pic, int x, int y, int w, int h) : Thing(pic, x, y, w, h, 5, 20, 1) {
   offScreen = false;
   collisionCounts = true;
+  firstMove = true;
+  down = true;
 }
 
 /** Default constructor */
@@ -35,4 +37,47 @@ bool Star::collidesWith(Thing* rocket){
     }
     else
       return false;
+}
+
+void Star::move(int windowMaxX, int windowMaxY)
+{
+  if (firstMove)
+    velocityX_ = 2*velocityX_;
+    
+  if (!offScreen && !dead)
+  {
+    if (down)
+    {
+      x_ -= velocityX_;
+      down = false;
+    }
+    else
+    {
+      x_ += velocityX_;
+      down = true;
+    }
+    y_ += velocityY_;
+    
+    health_--;
+      
+    if ( ( (x_+width_) < 0 || ( y_+height_) < 0 )|| ( x_ > windowMaxX || y_ > windowMaxY ) )
+      offScreen = true;
+   
+    setPos(x_,y_);
+  }
+  
+  if (firstMove)
+  {
+    velocityX_ = velocityX_/2;
+    firstMove = false;
+  }
+  
+  if (dead)
+  {
+    y_ += 2*velocityY_;
+    if ( ( (x_+width_) < 0 || ( y_+height_) < 0 )|| (x_ > windowMaxX || y_ > windowMaxY ) )
+      offScreen = true;
+   
+    setPos(x_,y_);
+  }
 }
