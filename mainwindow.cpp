@@ -26,23 +26,24 @@ void MainWindow::shootLaser(int x, int y){
 
 /** Function that starts the game. Updates labels and buttons to indicate game has started, starts timer, and toggles Laser spawning capability*/
 void MainWindow::startGame() {
-  enteredName = true;
-  QString n = enterName->toPlainText();
-  
-  
-  nameMenuLabel->setText( n );
-  
-  name->setText(n);
-  nameButton->hide();
-  enterName->hide();
+  level = 1;
+  QString n = nameField->toPlainText();
+  if (!n.isEmpty())
+  {
+    nameMenuLabel->setText( n );
+    name->setText(n);
+    nameButton->hide();
+    nameField->hide();
+    message->setText("Level " + QString::number(level));
 
-  starting = false;
-  rocket->show();
-  rocket->grabKeyboard();
+    starting = false;
+    rocket->show();
+    rocket->grabKeyboard();
 
-  gameTimer->start();
-  playButton->setText("Pause");
-  validToShoot = true;
+    gameTimer->start();
+    playButton->setText("Pause");
+    validToShoot = true;
+  }
 }
 
 /** Function that resets the game. Updates labels and buttons to indicate a new game is in progress, resets the the timer, clears the scene and deletes all Things, and adds a new rocket*/
@@ -52,9 +53,9 @@ void MainWindow::resetGame(){
   enteredName = false;
   nameButton->show();
     nameButton->setText("Welcome abord!");
-  enterName->show();
+  nameField->show();
   nameMenuLabel->show();
-    nameMenuLabel->setText("Enter your name");
+    nameMenuLabel->setText("Enter your name: ");
   starting = true;
   gameTimer->stop();
   playButton->setText("Play");
@@ -74,7 +75,7 @@ void MainWindow::resetGame(){
   rocket->hide();
   thingList.push_back(rocket);
      
-  //message->setText("Health: ---  Lives: -");
+  message->setText("Level " + QString::number(level));
   score->setText("Score: -");
 }
 
@@ -82,7 +83,7 @@ void MainWindow::resetGame(){
 void MainWindow::endGame(){  
   gameTimer->stop();
   nameMenuLabel->show();
-  nameMenuLabel->setText("Great flight " + name->text() + "! Your score was " + QString::number(points));
+  nameMenuLabel->setText("Great flight " + name->text() + "! Score: " + QString::number(points));
 
   nameButton->show();
   nameButton->setText("Fly again");
@@ -189,7 +190,7 @@ void MainWindow::handleTimer() {
   if (counter > 0 && counter % 200 == 0)
   {
     level++;
-    message->setText("Level " + level);
+    message->setText("Level " + QString::number(level));
     clockTime -= 5;
     if (clockTime < 0 || clockTime == 0)
     {
@@ -283,13 +284,13 @@ MainWindow::MainWindow(){
     nameMenuLabel->setAlignment(Qt::AlignHCenter);
 
   //qtextedit for name
-  enterName = new QTextEdit();
-    enterName->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    enterName->setFixedSize(nW, nH);
+  nameField = new QTextEdit();
+    nameField->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    nameField->setFixedSize(nW, nH);
 
   // add everything to layout
   layout->addWidget(nameMenuLabel,1,1);
-  layout->addWidget(enterName,1,2);
+  layout->addWidget(nameField,1,2);
   layout->addWidget(nameButton,1,3);
     layout->addWidget(playButton, 2, 1);
     layout->addWidget(stopButton, 2, 2);

@@ -74,7 +74,7 @@ class MainWindow : public QWidget{
     QLabel* score;
     QLabel* name;
     QLabel* nameMenuLabel;
-    QTextEdit* enterName;
+    QTextEdit* nameField;
     
     int level;
     bool validToShoot;
