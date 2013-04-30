@@ -6,7 +6,7 @@ MainWindow::MainWindow(){
   validToShoot = false;
   enteredName = false;
   starting = true;
-  clockTime = 50;
+  clockTime = 100;
   counter = 0;
   int nW = 200, nH = 25; // variables for name elements
   

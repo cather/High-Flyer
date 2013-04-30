@@ -130,7 +130,7 @@ void MainWindow::handleTimer() {
   // add alien every 35 ticks
   if (counter > 0 && (counter)%35 == 0)
   {
-    alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 100, 200);
+    alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 2, 200);
     gameScene->addItem(alien);
     thingList.push_back(alien);
   }
@@ -148,9 +148,20 @@ void MainWindow::handleTimer() {
   for (int i = 0; i < thingList.size(); i++)
   {
     thingList[i]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
-    thingList[i]->collidesWith(rocket);// check if touching rocket
+    if (thingList[i]->getPic() != rocketPic && thingList[i]->getPic() != laserPic)
+    {
+      bool touchRocket = thingList[i]->collidesWith(rocket);// check if touching rocket
     
-    if(thingList[i]->dead)
+      if (!touchRocket)
+      {
+        for (int j = 0; j < thingList.size(); j++)
+        {
+          if (thingList[j]->getPic() == laserPic)
+            thingList[i]->collidesWith(thingList[j]);
+        }
+      }
+    }
+    if(thingList[i]->offScreen || thingList[i]->dead)
     {
       thingList[i]->die();
       thingList.pop(i);
@@ -175,6 +186,8 @@ void MainWindow::handleTimer() {
   {
     cout << "Level up"<<endl;
     clockTime -= 5;
+    if (clockTime < 0 || clockTime == 0)
+      gameTimer->stop();
     gameTimer->setInterval(clockTime);
     while(1 < thingList.size())
     {

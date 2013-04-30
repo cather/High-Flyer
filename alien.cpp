@@ -12,6 +12,7 @@ Alien::Alien(QPixmap* pic, int w, int h, int rf, int onScreenFor ) : Thing(pic, 
   width_ = pic_->width();
   height_ = pic_->height();
   offScreen = false;
+  dead=false;
 
 }
 /** Default constructor */
@@ -33,10 +34,10 @@ void Alien::move(int windowMaxX, int windowMaxY){
   // check whether offScreen
   if ( x_< 0  ||  y_< 0 || ((x_+width_) > windowMaxX ) || ( (y_+height_) > windowMaxY ) )
   {
-    die(); // sets offScreen to on, health to 0, dead to 1, and hides
+    offScreen = true;
   }
       
-  if (!lifeTime_ == 0 && !dead )
+  if (!dead && !offScreen )
   {
     int mag = rand()%3;
     switch(mag)
@@ -58,7 +59,7 @@ void Alien::move(int windowMaxX, int windowMaxY){
         setVy(- rand()%randFactor_);
         break;
     }
-    lifeTime_--; // decrement amount of time left to move
+//    lifeTime_--; // decrement amount of time left to move
   }
   
 }
@@ -71,6 +72,9 @@ bool Alien::collidesWith(Thing* rocket){
   if (rocket->getPic() == pic_)
     return false;
   if (collide)
-    rocket->decrementHealth(1); // cuts current health
+  {
+    rocket->decrementHealth(10);
+    decrementHealth(1); // cuts own health
+  }
   return collide;
 }

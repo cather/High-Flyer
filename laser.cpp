@@ -7,7 +7,7 @@ using namespace std;
   @param xy the y-velocity of the laser
   @pram rocket the Rocket from which the laser gets information about its starting position  */
 Laser::Laser(QPixmap* pic, int w, int h, int vx, int vy, Rocket* rocket) :
-  Thing(pic, rocket->getX()+(rocket->getWidth()/2), rocket->getY()-20, w, h, vx, vy, 1 ){
+  Thing(pic, rocket->getX()+(rocket->getWidth()/2), rocket->getY()-20, w, h, vx, vy, 100 ){
   offScreen = false;
   dead = false;
 }
