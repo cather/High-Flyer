@@ -9,17 +9,17 @@
 
 class Missile : public Thing {
   public:
-    Missile(QPixmap* pic, int x, int y, int w, int h, int speed, int lifeSpan, Rocket* rocketToChase, QPixmap* explosion );
+    Missile(QPixmap* pic, int x, int y, int w, int h, int speed, Rocket* rocketToChase, QPixmap* explosion );
     Missile();
     ~Missile();
     void move(int windowMaxX, int windowMaxY);
-    bool collidesWith(Thing* enemy); // enemies are planet, meteor, rocket
+    bool collidesWith(Thing* enemy);
     void explode();
   private:
+    /** the rocket being followed*/
     Rocket* rocket_;
+    /** the speed of the missile */
     int speed_;
-    bool firstMove;
-    bool down;
     int time;
     int explosionCounter;
     QPixmap* explosion_;

@@ -11,11 +11,9 @@ class Laser : public Thing {
     Laser(QPixmap* pic, int w, int h, int vx, int vy, Rocket* rocket);
     Laser();
     ~Laser();
-    //void move(int maxX, int maxY);
     void shoot (int x, int y);
     
-    bool collidesWith(Thing* enemy); // enemies are planet, meteor, alien, missile
-    bool collidesWith(Laser* l);
+    bool collidesWith(Thing* enemy);
 
 };
 #endif //LASER_H

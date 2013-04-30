@@ -1,12 +1,19 @@
 #include "mainwindow.h"
 using namespace std;
 
+/** Adds a Missile to the screen and pushes it back to the thingList
+@param AlienMidx the x coordinate to spawn the missile at
+@param AlienMidy the y coordinate to spawn the missile at
+*/
 void MainWindow::spawnMissile(int AlienMidx, int AlienMidy){
-  missile = new Missile(missilePic, AlienMidx,  AlienMidy, missilePic->width(), missilePic->height(), 1, 20, rocket, explosion);
+  missile = new Missile(missilePic, AlienMidx,  AlienMidy, missilePic->width(), missilePic->height(), 20, rocket, explosion);
   gameScene->addItem(missile);
   thingList.push_back(missile);
 }
 
+/** Adds a Laser to the screen, calls the Laser's shoot function, and pushes it back to the thingList. A Laser is only spawned if validToShoot is true
+@param x the x-coord to spawn the Laser at
+@param y the y-coord to spawn the Laser at*/
 void MainWindow::shootLaser(int x, int y){
   if (validToShoot)
   {
@@ -17,6 +24,7 @@ void MainWindow::shootLaser(int x, int y){
   }
 }
 
+/** Function that starts the game. Updates labels and buttons to indicate game has started, starts timer, and toggles Laser spawning capability*/
 void MainWindow::startGame() {
   enteredName = true;
   QString n = enterName->toPlainText();
@@ -28,8 +36,6 @@ void MainWindow::startGame() {
 
   starting = false;
   rocket->show();
-  cout << "Rocket " << rocket->getX() << " " << rocket->getY() << endl;
-  rocket->pause = false;
   rocket->grabKeyboard();
 
   gameTimer->start();
@@ -37,6 +43,7 @@ void MainWindow::startGame() {
   validToShoot = true;
 }
 
+/** Function that resets the game. Updates labels and buttons to indicate a new game is in progress, resets the the timer, clears the scene and deletes all Things, and adds a new rocket*/
 void MainWindow::resetGame(){
   connect(nameButton, SIGNAL(clicked()), this, SLOT(startGame()));
   clockTime = 100;
@@ -69,8 +76,8 @@ void MainWindow::resetGame(){
   score->setText("Score: -");
 }
 
-void MainWindow::endGame(){
-  
+/** Function that ends the game. Updates labels and buttons to indicate a game is over. Deletes everything from the scene and displays the final score*/
+void MainWindow::endGame(){  
   nameButton->show();
   nameButton->setText("Fly again");
     connect(nameButton, SIGNAL(clicked()), this, SLOT(resetGame()));
@@ -83,32 +90,29 @@ void MainWindow::endGame(){
     thingList.pop_front();
   }
   validToShoot = false;
-  
 }
 
+/** Function that triggers the gameTimer on and off. Reconfigures buttons and user-interactivity based on whether the gameTimer is on or off*/
 void MainWindow::triggerTimer() {
-
   if (enteredName)
   {
     if ( gameTimer->isActive() )
     {
       gameTimer->stop();
       playButton->setText("Play");
-      rocket->pause = true;
       validToShoot = false;
     }
     else
     {
       gameTimer->start();
       playButton->setText("Pause");
-      rocket->pause = false;
       validToShoot = true;
     }
   }
 }
 
+/** Function that is called whenever the timer times out. Adds Items at different time intervals to the screen and to the thingList list. Moves each thing on the screen, hiding those that move offScreen or run out of health, and updates the player's health. Also increments score and displays it, as well as triggering when to level up by making gameplay faster*/
 void MainWindow::handleTimer() {
-
     // add star every 25 ticks
   if (counter > 0 && (counter) % 10 == 0)
   {  
@@ -126,7 +130,7 @@ void MainWindow::handleTimer() {
     gameScene->addItem(planet);
     thingList.push_back(planet);
   }
-  /*
+  
   // add meteor every 25 ticks
   if (counter > 0 && counter%25 == 0)
   {
@@ -144,7 +148,7 @@ void MainWindow::handleTimer() {
     spawnMissile( (alien->getWidth()-alien->getX())/2, (alien->getHeight()-alien->getY()) );
     
   }
-  */
+  
   
   // move every Thing, deleting those off-screen
   for (int i = 0; i < thingList.size(); i++)
@@ -211,9 +215,104 @@ void MainWindow::handleTimer() {
   */
 }
 
-
+/** Function that shows the QGraphicsView that encapsulates the entire program */
 void MainWindow::show(){
   bigView->show();
 }
 
+/** Constructor. Creates all pixmaps, layout items, buttons, labels, and button connections. Also creates an intial Rocket item and adds it to the screen but hides it until startGame is called*/
+MainWindow::MainWindow(){
+  starPoints = 0;
+  validToShoot = false;
+  enteredName = false;
+  starting = true;
+  clockTime = 100;
+  counter = 0;
+  int nW = 200, nH = 25; // variables for name elements
+  
+  // storing graphics  
+  rocketPic = new QPixmap("images/rocket.png");
+  planetPic = new QPixmap("images/planet.png");
+  starPic = new QPixmap("images/star.png");
+  missilePic = new QPixmap("images/missile.jpg");
+  alienPic = new QPixmap("images/alien.png");
+  laserPic = new QPixmap("images/laser.jpg");
+  meteorPic = new QPixmap("images/meteor.png");
+  explosion = new QPixmap("images/explosion.png");
+
+  // construct layout
+  layout = new QGridLayout();
+  bigScene = new QGraphicsScene();
+  bigView = new QGraphicsView(bigScene);
+  gameScene = new ClickScene(this);
+  gameView = new QGraphicsView(gameScene);
+    gameScene->addPixmap(QPixmap("bg.png"));
+
+    bigView->setLayout(layout);
+    gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
+    cout << "game scene: " << GAME_WINDOW_MAX_X << " " << GAME_WINDOW_MAX_Y << endl;
+    gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
+    
+  // buttons
+  playButton = new QPushButton("Play");
+  stopButton = new QPushButton("Quit");
+  resetButton = new QPushButton("Restart");
+  nameButton = new QPushButton("Welcome Abord!");
+    nameButton->setGeometry((GAME_WINDOW_MAX_X-nW)/2,(GAME_WINDOW_MAX_Y)/2+nH, nW, nH);
+  
+  // Timer to keep track of score, health, etc
+  gameTimer = new QTimer(this);
+  gameTimer->setInterval(clockTime);
+
+  // qlabel for displaying health and lives
+  message = new QLabel();
+  score = new QLabel();
+  name = new QLabel();
+  nameMenuLabel = new QLabel("Enter your name:");
+    nameMenuLabel->setFixedSize( nW, nH);
+    nameMenuLabel->setAlignment(Qt::AlignHCenter);
+
+  //qtextedit for name
+  enterName = new QTextEdit();
+    enterName->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    enterName->setFixedSize(nW, nH);
+
+  // add everything to layout
+  layout->addWidget(nameMenuLabel,1,1);
+  layout->addWidget(enterName,1,2);
+  layout->addWidget(nameButton,1,3);
+    layout->addWidget(playButton, 2, 1);
+    layout->addWidget(stopButton, 2, 2);
+    layout->addWidget(resetButton, 2, 3);
+    layout->setRowMinimumHeight(2, 50);
+  layout->addWidget(gameView, 3, 1, 1, -1);
+    layout->addWidget(name, 4, 1);
+    layout->addWidget(message, 4, 2);
+    layout->addWidget(score, 4, 3);
+  
+  // creates rocket
+  points = 0;
+  rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketPic->width(), rocketPic->height(), rocketSpeed, rocketMaxLife);
+  gameScene->addItem(rocket);
+  rocket->hide();
+  thingList.push_back(rocket);
+  message->setText("Health: ---  Lives: -");
+  score->setText("Score: -");
+  
+  // connections
+  connect(gameTimer, SIGNAL(timeout()), this, SLOT(handleTimer()));
+  connect(nameButton, SIGNAL(clicked()), this, SLOT(startGame()));
+  connect(playButton, SIGNAL(clicked()), this, SLOT(triggerTimer()));
+  connect(resetButton, SIGNAL(clicked()), this, SLOT(resetGame()));
+  connect(stopButton, SIGNAL(clicked()), qApp, SLOT(quit()));
+
+}
+
+/** Destructor*/
+MainWindow::~MainWindow(){
+  delete gameScene;
+  delete gameView;
+  for (int i = 0; i < thingList.size(); i++)
+    delete thingList[i];
+}
 

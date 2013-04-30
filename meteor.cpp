@@ -3,6 +3,8 @@ using namespace std;
 /** Constructor. All meteors start at coord -50, 0 and have y-velocity of 0, maxHealth of 1
   @param pic the QPixmap to represent the meteor
   @param y the y position of the meteor
+  @param w the width of the rocket
+  @param h the height of the rocket
   @param vx the x-velocity of the meteor */
 Meteor::Meteor(QPixmap* pic, int y, int w, int h, int vx) : Thing(pic, -50, y, w, h, vx, 0, 1){
   offScreen = false;
@@ -16,7 +18,7 @@ Meteor::Meteor(){
 /** destructor */
 Meteor::~Meteor(){
 }
-/** If colliding with a Thing, decrements that Thing's health and kills itself and returns true. Returns false otherwise.
+/** If colliding with a Thing for the first time, decrements that Thing's health and kills itself and returns true. Returns false otherwise. Cannot collide more than once
   @param enemy the Thing the Meteor checks if it's intersecting
 */
 bool Meteor::collidesWith(Thing* enemy){
@@ -34,6 +36,7 @@ bool Meteor::collidesWith(Thing* enemy){
     return false;
 }
 
+/** Function to move the meteor on screen. If offScreen, sets that flag as true*/
 void Meteor::move(int windowMaxX, int windowMaxY){  
   x_ += velocityX_;
   y_ += velocityY_;

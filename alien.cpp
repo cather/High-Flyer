@@ -1,28 +1,24 @@
 #include "alien.h"
-/** Constructor. The alien has a maxHealth of 3 and starts with intial coordinates 0,0
+/** Constructor. Alien appears at a random position above the screen and moves down into it in a random way. Has maxHealth of 3.
   @param pic the QPixmap to represent the alien
+  @param w the width of the rocket
+  @param h the height of the rocket
   @param rf the number by which the alien's velocity will be modulo'd by to produce random velocities
   @param onScreenFor the number of times the alien can move randomly before moving in a straight line off screen and dieing.*/
-Alien::Alien(QPixmap* pic, int w, int h, int rf) : Thing(pic, 0, 0, w, h, rand()%(rf+1), rand()%(rf+1), 3)
+Alien::Alien(QPixmap* pic, int w, int h, int rf) : Thing(pic, rand()%(rf+1), 0-h, w, h, rand()%(rf+1), rand()%(rf+1), 3)
 {
-
-  // maxHealth is 3
-  // velocities are random 
   randFactor_ = rf+1;
   lifeTime_ = 50; // decrements every time it moves
-  width_ = pic_->width();
-  height_ = pic_->height();
   offScreen = false;
   dead = false;
+}
 
-}
 /** Default constructor */
-Alien::Alien(){
-}
+Alien::Alien(){}
 /** Destructor */
-Alien::~Alien(){
-}
-/** Function that takes in the size of the available area to move and moves the alien by its velocity. If the alien's position is off-screen, its offScreen flag is set to true
+Alien::~Alien(){}
+
+/** Function that takes in the size of the available area to move and moves the alien by its velocity. Then sets velocity to a random number for the next time move is called. lifetime_ is decremented each time the alien moves this way. When lifetime_ = 0, the velocity stays constant and no longer sets randomly. When the alien's position is off-screen, its offScreen flag is set to true. 
     @param windowMaxX the width of the space the Alien can move in and be considered on screen
     @param windowMaxY the height of the space the Alien can move in and be considered on screen
     */
@@ -34,9 +30,7 @@ void Alien::move(int windowMaxX, int windowMaxY){
 
     // check whether offScreen
     if ( (x_+width_)< 0  ||  (y_+height_)< 0 || (x_ > windowMaxX ) || ( y_ > windowMaxY ) )
-    {
       offScreen = true;
-    }
         
     if (lifeTime_ != 0 && !dead && !offScreen )
     {
@@ -65,23 +59,19 @@ void Alien::move(int windowMaxX, int windowMaxY){
   
 }
 
-/** Function that returns true when the Alien intersects with a Thing. If it does, it cuts the health of the Thing in half
+/** Function that returns true when the Alien intersects with a Thing. If it does, it decrements the Thing's health by 10 while decrementing its own by 1
   @param rocket the Thing that the Alien is checking if its intersecting
 */
 bool Alien::collidesWith(Thing* rocket){
   bool collide = collidesWithItem(rocket, Qt::IntersectsItemShape);
   if (rocket->getPic() == pic_)
     return false;
-  if (collide && collisionCounts)
+  if (collide)
   {
     decrementHealth(1);
-    rocket->decrementHealth(1);
-    collisionCounts = false;
-    if (rocket->dead)
-    {
+    rocket->decrementHealth(10);
+    if (rocket->dead) // if rocket's health is 0, flags offScreen
       rocket->offScreen = true;
-      rocket->hide();
-    }
     return true;
   }
   else

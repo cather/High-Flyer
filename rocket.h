@@ -16,24 +16,22 @@ class Rocket : public Thing {
     void displayHealth(QLabel* label);
     int getStars();
     void keepOnScreen();
-    bool pause;
     void move(int windowMaxX, int windowMaxY);
-    int direction;
-    int getLives();
-    void loseLives(int i);
+    int getLives();    
     
-    
-    bool collidesWith(Thing* t); //same as in thing
+    bool collidesWith(Thing* t);
     
   protected:
     void keyPressEvent(QKeyEvent* e);
 
   private:
-    /** number of lives the rocket has*/
+    /** Current number of lives*/
     int lives;
-    /** flag that's true if rocket has no lives and 0 health */
+    /** Flag for when rocket has no lives and 0 health */
     bool gameOver;
-    /** speed of the rocket */
+    /** Speed of the rocket */
     int speed_;
+    /** Flag that the user sets through keyboard input. Controls velocities of the rocket*/
+    int direction;
 };
 #endif //ROCKET_H
