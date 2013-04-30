@@ -125,15 +125,15 @@ void MainWindow::handleTimer() {
     gameScene->addItem(planet);
     thingList.push_back(planet);
   }
-  
+  */
   // add meteor every 25 ticks
   if (counter > 0 && counter%25 == 0)
   {
-    meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, 10);
+    meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), 10);
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
   }
-    */
+    /*
   // add alien every 35 ticks
   if (counter > 0 && (counter)%35 == 0)
   {
@@ -143,7 +143,7 @@ void MainWindow::handleTimer() {
     spawnMissile( (alien->getWidth()-alien->getX())/2, (alien->getHeight()-alien->getY()) );
     
   }
-  
+  */
   
   // move every Thing, deleting those off-screen
   for (int i = 0; i < thingList.size(); i++)

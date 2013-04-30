@@ -18,8 +18,6 @@ Missile::Missile(QPixmap* pic, int x, int y, int w, int h, int speed, int lifeSp
 
   
   time = lifeSpan;
-  width_ = pic_->width();
-  height_ = pic_->height();
   offScreen = false;
   dead = false;
   collisionCounts = true;

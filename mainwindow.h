@@ -21,11 +21,11 @@
 #include "laser.h"
 #include "alien.h"
 #include "missile.h"
+#include "meteor.h"
 /*
 #include "planet.h"
 
 #include "star.h"
-#include "meteor.h"
 */
 
 #include "mylist.h"
@@ -70,8 +70,8 @@ class MainWindow : public QWidget{
     Laser* laser;
     Alien* alien;
     Missile* missile;
-    /*
     Meteor* meteor;
+    /*
     
     Planet* planet;
     Star* star;
