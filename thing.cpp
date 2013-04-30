@@ -16,12 +16,12 @@ Thing::Thing(QPixmap* pic, double nx, double ny, int w, int h, int vx, int vy, i
   velocityY_ = vy;
   maxHealth_ = maxHealth;
   health_ = maxHealth_;
-  pic_ = pic;  
-  identifier = "thing";
+  pic_ = pic;
 
   width_ = w;
   height_ = h;
   offScreen = false;
+  dead = false;
   
   setPos(x_,y_);
 
@@ -42,7 +42,7 @@ void Thing::setVx(int vx){ velocityX_ = vx; }
 void Thing::setVy(int vy){ velocityY_ = vy; }
 
 void Thing::decrementHealth(int num){
-  cout << "Deremetnging  health"<<endl;
+  //cout << "Decrementing  health"<<endl;
   health_ = health_ - num;
   if (health_ - num < 0)
     health_ = 0;
@@ -63,13 +63,6 @@ void Thing::move(int windowMaxX, int windowMaxY){
     }
     setPos(x_,y_);
   }
-}
-
-void Thing::die(){
-  offScreen = true;
-  health_ = 0;
-  hide();
-  dead = true;
 }
 
 bool Thing::collidesWith(Thing* r){

@@ -70,6 +70,7 @@ void MainWindow::endGame(){
     connect(nameButton, SIGNAL(clicked()), this, SLOT(resetGame()));
   nameMenuLabel->show();
   nameMenuLabel->setText(name->text() + "'s score: " + QString::number(points) );
+  gameTimer->stop();
   while (!thingList.empty())
   {
     thingList.peek_front()->hide();
@@ -130,7 +131,7 @@ void MainWindow::handleTimer() {
   // add alien every 35 ticks
   if (counter > 0 && (counter)%35 == 0)
   {
-    alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 2, 200);
+    alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 2);
     gameScene->addItem(alien);
     thingList.push_back(alien);
   }
@@ -150,8 +151,10 @@ void MainWindow::handleTimer() {
     thingList[i]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
     if (thingList[i]->getPic() != rocketPic && thingList[i]->getPic() != laserPic)
     {
-      bool touchRocket = thingList[i]->collidesWith(rocket);// check if touching rocket
-    
+      // check if touching rocket
+      bool touchRocket = thingList[i]->collidesWith(rocket);
+      
+      // if not, check if touching laser
       if (!touchRocket)
       {
         for (int j = 0; j < thingList.size(); j++)
@@ -161,9 +164,11 @@ void MainWindow::handleTimer() {
         }
       }
     }
+    
+    //if off screen or has zero health, delete
     if(thingList[i]->offScreen || thingList[i]->dead)
     {
-      thingList[i]->die();
+      thingList[i]->hide();
       thingList.pop(i);
       i--;
     }
@@ -180,7 +185,7 @@ void MainWindow::handleTimer() {
   if (rocket->getHealth() == 0)
     endGame();
     
-      
+      /*
   // level up every 100 ticks
   if (counter > 0 && counter % 200 == 0)
   {
@@ -195,6 +200,7 @@ void MainWindow::handleTimer() {
       thingList.pop(1);
     }
   }
+  */
 }
 
 

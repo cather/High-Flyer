@@ -11,12 +11,11 @@ using namespace std;
   @param maxHealth the maxHealth of the rocket
 */
 Rocket::Rocket(QPixmap* pic, int GAME_WINDOW_MAX_X, int GAME_WINDOW_MAX_Y, int w, int h, int speed, int maxHealth) : 
-  Thing(pic, (GAME_WINDOW_MAX_X-pic->width())/2, (GAME_WINDOW_MAX_Y-pic->height()), w, h, 0, 0, maxHealth) {
+  Thing(pic, (GAME_WINDOW_MAX_X-pic->width())/2, (GAME_WINDOW_MAX_Y-pic->height()), w, h, 10, 10, maxHealth) {
   lives = 4; // start with 4 lives
   gameOver = false;
   speed_ = speed;
   starsCollected_ = 0;
-  identifier = "rocket";
   direction = -1;
   setPos(x_,y_);
 }

@@ -6,7 +6,7 @@
 
 class Alien : public Thing {
   public:
-    Alien(QPixmap* pix, int w, int h, int rf, int onScreenFor);
+    Alien(QPixmap* pix, int w, int h, int rf);
     Alien();
     ~Alien();
     void move(int windowMaxX, int windowMaxY);    

@@ -34,15 +34,12 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     virtual bool collidesWith(Thing* r);
     
     int getHealth();
-    void decrementHealth(int num);
-    void die();
-    
     int getMaxHealth();
-    std::string identifier; // get rid of this. 
+    void decrementHealth(int num);
     
     /** Flag that is true when the Item is not within the parameters of the area in which it is allowed to move*/
     bool offScreen;
-    /** Flag that is true when both health is 0 and offScreen is true*/
+    /** Flag that is true when health is 0*/
     bool dead;
   
   protected:
