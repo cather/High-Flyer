@@ -22,6 +22,7 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     int getY();
     int getWidth();
     int getHeight();
+    QPixmap* getPic();
     
     void setX(int x);
     void setY(int y);

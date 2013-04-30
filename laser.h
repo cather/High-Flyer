@@ -15,6 +15,7 @@ class Laser : public Thing {
     void shoot (int x, int y);
     
     bool collidesWith(Thing* enemy); // enemies are planet, meteor, alien, missile
+    bool collidesWith(Laser* l);
 
 };
 #endif //LASER_H

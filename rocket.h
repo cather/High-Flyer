@@ -17,11 +17,13 @@ class Rocket : public Thing {
     int getStars();
     void keepOnScreen();
     bool pause;
-    bool collidesWith(Thing* t); //same as in thing
     void move(int windowMaxX, int windowMaxY);
     int direction;
     int getLives();
     void loseLives(int i);
+    
+    
+    bool collidesWith(Thing* t); //same as in thing
     
   protected:
     void keyPressEvent(QKeyEvent* e);

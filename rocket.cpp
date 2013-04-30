@@ -12,8 +12,6 @@ using namespace std;
 */
 Rocket::Rocket(QPixmap* pic, int GAME_WINDOW_MAX_X, int GAME_WINDOW_MAX_Y, int w, int h, int speed, int maxHealth) : 
   Thing(pic, (GAME_WINDOW_MAX_X-pic->width())/2, (GAME_WINDOW_MAX_Y-pic->height()), w, h, 0, 0, maxHealth) {
-  
-  cout << "rocket constructor " << x_ <<" " << y_ << endl;
   lives = 4; // start with 4 lives
   gameOver = false;
   speed_ = speed;
@@ -99,7 +97,10 @@ int Rocket::getStars(){
 
 /** Function that returns true if colliding with another Thing, false otherwise*/
 bool Rocket::collidesWith(Thing* t){
-  return collidesWithItem(t, Qt::IntersectsItemShape);
+  bool collide = collidesWithItem(t, Qt::IntersectsItemShape);
+  if (t->getPic() == pic_)
+    return false;
+  return collide;
 }
 
 /** Moves the rocket

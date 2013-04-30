@@ -25,8 +25,8 @@ Laser::~Laser(){
   @param mousePointY the y coord of the mouseclick
 */
 void Laser::shoot(int mousePointX, int mousePointY){
-  int xvel = (mousePointX - x_)/velocityX_;
-  int yvel = (mousePointY-y_) / velocityY_;
+  int xvel = (mousePointX - x_)/10;
+  int yvel = (mousePointY-y_) / 10;
   setVx( xvel );
   setVy( yvel );
 }
@@ -35,11 +35,14 @@ void Laser::shoot(int mousePointX, int mousePointY){
   @param enemy the Thing the Laser checks if it's intersecting
 */
 bool Laser::collidesWith(Thing* enemy){
+  if (enemy->getPic() == pic_)
+    return false;
+
   bool collide = collidesWithItem(enemy, Qt::IntersectsItemShape);
-  if (collide == true)
+  if (collide)
   {
     enemy->decrementHealth(1); // hurts enemy
-    die(); // kills self
+    offScreen = true;
   }
   return collide;
 }

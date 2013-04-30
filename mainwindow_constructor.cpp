@@ -74,7 +74,6 @@ MainWindow::MainWindow(){
   points = 0;
   rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketPic->width(), rocketPic->height(), rocketSpeed, rocketMaxLife);
   gameScene->addItem(rocket);
-  rocket->setZValue(100);
   rocket->hide();
   thingList.push_back(rocket);
   message->setText("Health: ---  Lives: -");

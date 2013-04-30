@@ -19,11 +19,11 @@
 #include "thing.h"
 #include "rocket.h"
 #include "laser.h"
-
+#include "alien.h"
 /*
 #include "planet.h"
 #include "missile.h"
-#include "alien.h"
+
 #include "star.h"
 #include "meteor.h"
 */
@@ -68,9 +68,10 @@ class MainWindow : public QWidget{
     QGraphicsView* bigView;
     Rocket* rocket;
     Laser* laser;
+    Alien* alien;
     /*
     Meteor* meteor;
-    Alien* alien;
+    
     Missile* missile;
     Planet* planet;
     Star* star;

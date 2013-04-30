@@ -33,6 +33,7 @@ int Thing::getX(){ return x_; }
 int Thing::getY(){ return y_; }
 int Thing::getWidth(){ return width_; }
 int Thing::getHeight(){ return height_; }
+QPixmap* Thing::getPic(){ return pic_; }
 int Thing::getHealth(){ return health_; }
 int Thing::getMaxHealth(){ return maxHealth_; }
 void Thing::setX(int x){ x_ = x; }
@@ -42,13 +43,12 @@ void Thing::setVy(int vy){ velocityY_ = vy; }
 
 void Thing::decrementHealth(int num){
   cout << "Deremetnging  health"<<endl;
+  health_ = health_ - num;
   if (health_ - num < 0)
     health_ = 0;
-  else
-    health_ = health_ - num;
-
+    
   if (health_ == 0)
-    die();
+    dead = true;
 }
 
 void Thing::move(int windowMaxX, int windowMaxY){  
@@ -59,8 +59,7 @@ void Thing::move(int windowMaxX, int windowMaxY){
     y_ += velocityY_;
     if ( x_ < 0 || y_ < 0 || (x_+width_) > windowMaxX || (y_+height_) > windowMaxY)
     {
-      cout <<"die"<<endl;
-      die();
+      offScreen = true;
     }
     setPos(x_,y_);
   }
@@ -74,7 +73,8 @@ void Thing::die(){
 }
 
 bool Thing::collidesWith(Thing* r){
-
+  if (r->getPic() == pic_)
+    return false;
   return collidesWithItem(r, Qt::IntersectsItemShape);
 }
 

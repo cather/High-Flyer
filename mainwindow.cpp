@@ -56,7 +56,6 @@ void MainWindow::resetGame(){
   //make a new rocket
   rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketPic->width(), rocketPic->height(), rocketSpeed, rocketMaxLife);
   gameScene->addItem(rocket);
-  rocket->setZValue(100);
   rocket->hide();
   thingList.push_back(rocket);
      
@@ -127,14 +126,16 @@ void MainWindow::handleTimer() {
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
   }
-    
+    */
   // add alien every 35 ticks
   if (counter > 0 && (counter)%35 == 0)
   {
-    alien = new Alien(alienPic, rand()%10, rand()%200);
+    alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 100, 200);
     gameScene->addItem(alien);
     thingList.push_back(alien);
   }
+  
+  /*
   // add missile every 25 ticks
   if (counter > 0 && (counter) % 15 == 0 && alien !=NULL)
   {  
@@ -144,11 +145,11 @@ void MainWindow::handleTimer() {
   }
   */
   // move every Thing, deleting those off-screen
-  thingList[0]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y); // rocket first
-  for (int i = 1; i < thingList.size(); i++)
+  for (int i = 0; i < thingList.size(); i++)
   {
     thingList[i]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
-    thingList[i]->collidesWith(rocket); // check if touching rocket
+    thingList[i]->collidesWith(rocket);// check if touching rocket
+    
     if(thingList[i]->dead)
     {
       thingList[i]->die();
@@ -173,7 +174,7 @@ void MainWindow::handleTimer() {
   if (counter > 0 && counter % 200 == 0)
   {
     cout << "Level up"<<endl;
-    clockTime += clockTime;
+    clockTime -= 5;
     gameTimer->setInterval(clockTime);
     while(1 < thingList.size())
     {
