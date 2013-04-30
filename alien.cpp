@@ -5,10 +5,11 @@
   @param onScreenFor the number of times the alien can move randomly before moving in a straight line off screen and dieing.*/
 Alien::Alien(QPixmap* pic, int w, int h, int rf) : Thing(pic, 0, 0, w, h, rand()%(rf+1), rand()%(rf+1), 3)
 {
+
   // maxHealth is 3
   // velocities are random 
   randFactor_ = rf+1;
-  lifeTime_ = 30; // decrements every time it moves
+  lifeTime_ = 50; // decrements every time it moves
   width_ = pic_->width();
   height_ = pic_->height();
   offScreen = false;
