@@ -72,15 +72,18 @@ bool Alien::collidesWith(Thing* rocket){
   bool collide = collidesWithItem(rocket, Qt::IntersectsItemShape);
   if (rocket->getPic() == pic_)
     return false;
-  if (collide)
+  if (collide && collisionCounts)
   {
     decrementHealth(1);
     rocket->decrementHealth(1);
+    collisionCounts = false;
     if (rocket->dead)
     {
       rocket->offScreen = true;
       rocket->hide();
     }
+    return true;
   }
-  return collide;
+  else
+    return false;
 }

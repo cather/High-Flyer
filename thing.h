@@ -41,6 +41,7 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     bool offScreen;
     /** Flag that is true when health is 0*/
     bool dead;
+    bool collisionCounts;
   
   protected:
     /** The X coord of the Thing's left-most point*/

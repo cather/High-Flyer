@@ -39,9 +39,12 @@ bool Laser::collidesWith(Thing* enemy){
     return false;
 
   bool collide = collidesWithItem(enemy, Qt::IntersectsItemShape);
-  if (collide)
+  if (collide && collisionCounts)
   {
     enemy->decrementHealth(1); // hurts enemy
+    collisionCounts = false;
+    return true;
   }
-  return collide;
+  else
+    return false;
 }

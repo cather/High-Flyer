@@ -13,7 +13,7 @@ class Missile : public Thing {
     Missile();
     ~Missile();
     void move(int windowMaxX, int windowMaxY);
-    bool collideWith(Thing* enemy); // enemies are planet, meteor, alien, laser, rocket
+    bool collidesWith(Thing* enemy); // enemies are planet, meteor, rocket
     void explode();
   private:
     Rocket* rocket_;

@@ -22,6 +22,7 @@ Missile::Missile(QPixmap* pic, int x, int y, int w, int h, int speed, int lifeSp
   height_ = pic_->height();
   offScreen = false;
   dead = false;
+  collisionCounts = true;
 }
 
 Missile::Missile(){
@@ -38,6 +39,9 @@ void Missile::move(int windowMaxX, int windowMaxY){
   y_ += velocityY_;
   
   setPos(x_,y_);
+  explosionCounter--;
+  if (explosionCounter == 0)
+      explode();
   
   if ( (x_+width_)< 0  ||  (y_+height_)< 0 || (x_ > windowMaxX ) || ( y_ > windowMaxY ) )
     offScreen = true;
@@ -93,20 +97,23 @@ void Missile::move(int windowMaxX, int windowMaxY){
 void Missile::explode(){
   // leave a pixmap of explosion for 5 seconds, missile dies
   //scene_->addItem(explosion_);
-  explosionCounter--;
-  if (explosionCounter == 0)
-  {
-  }
+
+  health_ = 0;
+  offScreen = true;
+  
 }
 
-bool Missile::collideWith(Thing* enemy){
-
-  if (collidesWithItem(enemy, Qt::IntersectsItemShape))
+bool Missile::collidesWith(Thing* enemy){
+  bool collide = collidesWithItem(enemy, Qt::IntersectsItemShape);
+  if (enemy->getPic() == pic_)
+    return false;
+  if (collide && collisionCounts)
   {
-    cout << "missile killing enemy"<<endl;
     enemy->decrementHealth(10);
     explode();
+    collisionCounts = false;
+    return true;
   }
-  
-  return collidesWithItem(enemy, Qt::IntersectsItemShape);
+  else
+    return false;
 }

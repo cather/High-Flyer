@@ -22,6 +22,7 @@ Thing::Thing(QPixmap* pic, double nx, double ny, int w, int h, int vx, int vy, i
   height_ = h;
   offScreen = false;
   dead = false;
+  collisionCounts = true;
   
   setPos(x_,y_);
 
@@ -42,7 +43,6 @@ void Thing::setVx(int vx){ velocityX_ = vx; }
 void Thing::setVy(int vy){ velocityY_ = vy; }
 
 void Thing::decrementHealth(int num){
-  //cout << "Decrementing  health"<<endl;
   health_ = health_ - num;
   if (health_ - num < 0)
     health_ = 0;
@@ -68,7 +68,14 @@ void Thing::move(int windowMaxX, int windowMaxY){
 bool Thing::collidesWith(Thing* r){
   if (r->getPic() == pic_)
     return false;
-  return collidesWithItem(r, Qt::IntersectsItemShape);
+  bool collide = collidesWithItem(r, Qt::IntersectsItemShape);
+  if (collide && collisionCounts)
+  {
+    collisionCounts = false;
+    return true;
+  }
+  else
+    return false;
 }
 
 void
