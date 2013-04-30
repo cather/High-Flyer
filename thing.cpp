@@ -50,13 +50,18 @@ void Thing::decrementHealth(int num){
   if (health_ == 0)
     die();
 }
+
 void Thing::move(int windowMaxX, int windowMaxY){  
+
   if (!dead)
   {
     x_ += velocityX_;
     y_ += velocityY_;
-    if ( ((x_+width_) < 0 || (y_+height_) < 0 )|| (x_ > windowMaxX || y_ > windowMaxY))
+    if ( x_ < 0 || y_ < 0 || (x_+width_) > windowMaxX || (y_+height_) > windowMaxY)
+    {
+      cout <<"die"<<endl;
       die();
+    }
     setPos(x_,y_);
   }
 }
@@ -69,6 +74,7 @@ void Thing::die(){
 }
 
 bool Thing::collidesWith(Thing* r){
+
   return collidesWithItem(r, Qt::IntersectsItemShape);
 }
 

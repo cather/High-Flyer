@@ -20,7 +20,7 @@ Rocket::Rocket(QPixmap* pic, int GAME_WINDOW_MAX_X, int GAME_WINDOW_MAX_Y, int w
   starsCollected_ = 0;
   identifier = "rocket";
   direction = -1;
-  setPos(x_,y_);    
+  setPos(x_,y_);
 }
 /** Constructor */
 Rocket::Rocket(){

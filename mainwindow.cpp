@@ -6,8 +6,8 @@ void MainWindow::shootLaser(int x, int y){
   {
     laser = new Laser(laserPic, 5, 5, laserPic->width(), laserPic->height(), rocket);
     gameScene->addItem(laser);
-    thingList.push_back(laser);
     laser->shoot(x,y);
+    thingList.push_back(laser);
   }
 }
 

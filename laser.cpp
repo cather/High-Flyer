@@ -6,11 +6,10 @@ using namespace std;
   @param vx the x-velocity of the laser
   @param xy the y-velocity of the laser
   @pram rocket the Rocket from which the laser gets information about its starting position  */
-Laser::Laser(QPixmap* pic, int w, int h, int vx, int vy, Rocket* rocket) : Thing(pic, (rocket->getWidth()/2)+ rocket->getX(), rocket->getY()-10, w, h, vx, vy, 1 ){
-  width_ = pic_->width();
-  height_ = pic_->height();
+Laser::Laser(QPixmap* pic, int w, int h, int vx, int vy, Rocket* rocket) :
+  Thing(pic, rocket->getX()+(rocket->getWidth()/2), rocket->getY()-20, w, h, vx, vy, 1 ){
   offScreen = false;
-  cout << "laser " << x_<< " " << y_ <<endl;
+  dead=false;
 }
 
 /** Constructor */
@@ -23,12 +22,11 @@ Laser::~Laser(){
 
 /** Moves laser*/
 void Laser::shoot(int mousePointX, int mousePointY){
-  int xvel = (mousePointX - x_) / velocityX_;
-  int yvel = (mousePointY - y_) / velocityY_;
-  
+  int xvel = (mousePointX - x_)/velocityX_;
+  int yvel = (mousePointY-y_) / velocityY_;
+  cout <<xvel << " "<<yvel<<endl;
   setVx( xvel );
   setVy( yvel );
-  cout << "laser v " << xvel << " "<<yvel<<endl;
 }
 
 
@@ -36,6 +34,8 @@ void Laser::shoot(int mousePointX, int mousePointY){
   @param enemy the Thing the Laser checks if it's intersecting
 */
 bool Laser::collidesWith(Thing* enemy){
-
-  return collidesWithItem(enemy, Qt::IntersectsItemShape);
+  bool collide = collidesWithItem(enemy, Qt::IntersectsItemShape);
+  if (collide == true)
+    cout <<"collides"<<endl;
+  return collide;
 }
