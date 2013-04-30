@@ -147,7 +147,7 @@ void MainWindow::handleTimer() {
   */
   
   // add meteor every 40 ticks
-  if (counter > 0 && counter%20 == 0)
+  if (counter > 0 && counter%10 == 0)
   {
     meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), 20);
     gameScene->addItem(meteor);
@@ -329,8 +329,19 @@ MainWindow::MainWindow(){
 
 /** Destructor*/
 MainWindow::~MainWindow(){
-  delete gameScene;
-  delete gameView;
+  //delete gameScene;
+  //delete gameView;
+  delete bigView;
+  delete bigScene;
+  
+  delete rocketPic;
+  delete planetPic;
+  delete starPic;
+  delete missilePic;
+  delete alienPic;
+  delete laserPic;
+  delete meteorPic;
+  delete explosion;
   for (int i = 0; i < thingList.size(); i++)
     delete thingList[i];
 }
