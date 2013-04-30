@@ -70,11 +70,13 @@ class MainWindow : public QWidget{
     QPushButton* playButton;
     QPushButton* nameButton;
     QLabel* message;
+    QLabel* health;
     QLabel* score;
     QLabel* name;
     QLabel* nameMenuLabel;
     QTextEdit* enterName;
     
+    int level;
     bool validToShoot;
     bool enteredName;
     bool starting;

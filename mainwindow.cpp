@@ -29,10 +29,12 @@ void MainWindow::startGame() {
   enteredName = true;
   QString n = enterName->toPlainText();
   
+  
+  nameMenuLabel->setText( n );
+  
   name->setText(n);
   nameButton->hide();
   enterName->hide();
-  nameMenuLabel->hide();
 
   starting = false;
   rocket->show();
@@ -72,18 +74,23 @@ void MainWindow::resetGame(){
   rocket->hide();
   thingList.push_back(rocket);
      
-  message->setText("Health: ---  Lives: -");
+  //message->setText("Health: ---  Lives: -");
   score->setText("Score: -");
 }
 
 /** Function that ends the game. Updates labels and buttons to indicate a game is over. Deletes everything from the scene and displays the final score*/
 void MainWindow::endGame(){  
+  gameTimer->stop();
+  nameMenuLabel->show();
+  nameMenuLabel->setText("Great flight " + name->text() + "! Your score was " + QString::number(points));
+
   nameButton->show();
   nameButton->setText("Fly again");
     connect(nameButton, SIGNAL(clicked()), this, SLOT(resetGame()));
-  nameMenuLabel->show();
-  nameMenuLabel->setText(name->text() + "'s score: " + QString::number(points) );
-  gameTimer->stop();
+  
+  message->setText("Game Over");
+
+
   while (!thingList.empty())
   {
     thingList.peek_front()->hide();
@@ -113,42 +120,39 @@ void MainWindow::triggerTimer() {
 
 /** Function that is called whenever the timer times out. Adds Items at different time intervals to the screen and to the thingList list. Moves each thing on the screen, hiding those that move offScreen or run out of health, and updates the player's health. Also increments score and displays it, as well as triggering when to level up by making gameplay faster*/
 void MainWindow::handleTimer() {
-    // add star every 25 ticks
-  if (counter > 0 && (counter) % 10 == 0)
+
+    // add star every 50 ticks
+  if (counter > 0 && (counter) % 50 == 0)
   {  
     star = new Star(starPic, rand()%GAME_WINDOW_MAX_X, rand()%GAME_WINDOW_MAX_Y, starPic->width(), starPic->height());
     gameScene->addItem(star);
     thingList.push_back(star);
   }
   
-  
-  // 
-  //add planet every 15 ticks
-  if (counter > 0 && (counter) % 55 == 0)
+  //add planet every 60 ticks
+  if (counter > 0 && (counter) % 60 == 0)
   {  
     planet = new Planet(planetPic, 0, 0, planetPic->width(), planetPic->height());
     gameScene->addItem(planet);
     thingList.push_back(planet);
   }
   
-  // add meteor every 25 ticks
-  if (counter > 0 && counter%25 == 0)
+  // add meteor every 40 ticks
+  if (counter > 0 && counter%40 == 0)
   {
     meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), 10);
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
   }
    
-  // add alien every 35 ticks
-  if (counter > 0 && (counter)%35 == 0)
+  // add alien every 45 ticks
+  if (counter > 0 && (counter)%45 == 0)
   {
     alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 2);
     gameScene->addItem(alien);
     thingList.push_back(alien);
-    spawnMissile( (alien->getWidth()-alien->getX())/2, (alien->getHeight()-alien->getY()) );
-    
+    spawnMissile( (alien->getWidth()-alien->getX())/2, (alien->getHeight()-alien->getY()) );  //add missile
   }
-  
   
   // move every Thing, deleting those off-screen
   for (int i = 0; i < thingList.size(); i++)
@@ -179,40 +183,46 @@ void MainWindow::handleTimer() {
     }
   }
   
-  
-  
-  gameScene->advance();
-  
-  // Update info
-  rocket->displayHealth(message); // update health
-  if (counter > 0 && counter % 20 == 0)
-      points++;
-  if (rocket->getStars() == starPoints+1)
-  {
-    points = points+10; // update score
-    starPoints += 1;
-  }
-  score->setText("Score: " + QString::number(points)); // update score
-  counter++; // update timer counter
-  if (rocket->getHealth() == 0)
-    endGame();
-    
-      /*
-  // level up every 100 ticks
+//  gameScene->advance();
+
+  // level up every 200 ticks by making game pass faster
   if (counter > 0 && counter % 200 == 0)
   {
-    cout << "Level up"<<endl;
+    level++;
+    message->setText("Level " + level);
     clockTime -= 5;
     if (clockTime < 0 || clockTime == 0)
+    {
       gameTimer->stop();
+      message->setText("You won!");
+    }
     gameTimer->setInterval(clockTime);
+    
+    // delete everything from screen except rocket
     while(1 < thingList.size())
     {
       thingList[1]->hide();
       thingList.pop(1);
     }
   }
-  */
+    
+  // update health
+  rocket->displayHealth(health); 
+  // update regular points based on timer
+  if (counter > 0 && counter % 20 == 0)
+      points++;
+  // update score for star points
+  if (rocket->getStars() == starPoints+1)
+  {
+    points = points+10; 
+    starPoints += 1;
+  }
+  score->setText("Score: " + QString::number(points));
+  counter++; // update timer counter
+  
+  // check if player still alive. if not, endgame
+  if (rocket->getHealth() == 0)
+    endGame();
 }
 
 /** Function that shows the QGraphicsView that encapsulates the entire program */
@@ -222,6 +232,7 @@ void MainWindow::show(){
 
 /** Constructor. Creates all pixmaps, layout items, buttons, labels, and button connections. Also creates an intial Rocket item and adds it to the screen but hides it until startGame is called*/
 MainWindow::MainWindow(){
+  level = 1;
   starPoints = 0;
   validToShoot = false;
   enteredName = false;
@@ -247,10 +258,8 @@ MainWindow::MainWindow(){
   gameScene = new ClickScene(this);
   gameView = new QGraphicsView(gameScene);
     gameScene->addPixmap(QPixmap("bg.png"));
-
     bigView->setLayout(layout);
     gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
-    cout << "game scene: " << GAME_WINDOW_MAX_X << " " << GAME_WINDOW_MAX_Y << endl;
     gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
     
   // buttons
@@ -266,6 +275,7 @@ MainWindow::MainWindow(){
 
   // qlabel for displaying health and lives
   message = new QLabel();
+  health = new QLabel();
   score = new QLabel();
   name = new QLabel();
   nameMenuLabel = new QLabel("Enter your name:");
@@ -286,17 +296,17 @@ MainWindow::MainWindow(){
     layout->addWidget(resetButton, 2, 3);
     layout->setRowMinimumHeight(2, 50);
   layout->addWidget(gameView, 3, 1, 1, -1);
-    layout->addWidget(name, 4, 1);
-    layout->addWidget(message, 4, 2);
+    layout->addWidget(message, 4, 1);
+    layout->addWidget(health, 4, 2);
     layout->addWidget(score, 4, 3);
   
   // creates rocket
   points = 0;
   rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketPic->width(), rocketPic->height(), rocketSpeed, rocketMaxLife);
   gameScene->addItem(rocket);
-  rocket->hide();
+  rocket->hide(); // hide until game starts
   thingList.push_back(rocket);
-  message->setText("Health: ---  Lives: -");
+  health->setText("Health: ---  Lives: -");
   score->setText("Score: -");
   
   // connections

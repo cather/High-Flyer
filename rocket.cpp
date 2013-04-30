@@ -62,22 +62,19 @@ void Rocket::keyPressEvent(QKeyEvent* e)
   @param label the QLabel to update with health and life information
 */
 void Rocket::displayHealth(QLabel* label){
-  QString string = "" ;
+  QString string = "Health: " + QString::number(health_);
+  string.append(" Lives: " + QString::number(lives) );
   
   // if health goes to zero, decrement number of lives and replenish health bar
   if (Thing::dead && lives > 0) 
   {
     lives--;
     health_ = maxHealth_;
-    string.append("Health: " + QString::number(health_));
-    string.append(" Lives: " + QString::number(lives) );
   }
   // if on last life and dead, print game over
   else if (Thing::dead && lives == 0)
   {
     gameOver = true;
-    string.clear();  
-    string = "Game over";
   }
   
   label->setText(string);
