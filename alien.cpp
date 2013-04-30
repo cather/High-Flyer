@@ -69,6 +69,7 @@ bool Alien::collidesWith(Thing* rocket){
     return false;
   if (collide && collisionCounts)
   {
+    rocket->decrementHealth(5);
     decrementHealth(1);
     //rocket->decrementHealth(10);
     //collisionCounts = false;

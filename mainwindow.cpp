@@ -32,11 +32,11 @@ void MainWindow::startGame() {
   if (!n.isEmpty())
   {
     enteredName = true;
-    nameMenuLabel->setText( n + "'s flight" );
+    nameMenuLabel->setText("Level " + QString::number(level));
     name->setText(n);
     nameButton->hide();
     nameField->hide();
-    message->setText("Level " + QString::number(level));
+    message->setText("");
 
     starting = false;
     rocket->show();
@@ -81,7 +81,7 @@ void MainWindow::resetGame(){
   thingList.push_back(rocket);
      
   level = 1;
-  message->setText("Level " + QString::number(level));
+  //message->setText("Level " + QString::number(level));
   score->setText("Score: -");
 }
 
@@ -89,7 +89,7 @@ void MainWindow::resetGame(){
 void MainWindow::endGame(){  
   gameTimer->stop();
   nameMenuLabel->show();
-  nameMenuLabel->setText("Great flight " + name->text() + "! Score: " + QString::number(points));
+  nameMenuLabel->setText("Great flight " + name->text() + "! Stars: " + QString::number(starPoints));
 
   nameButton->show();
   nameButton->setText("Fly again");
@@ -101,7 +101,7 @@ void MainWindow::endGame(){
 
   while (!thingList.empty())
   {
-    thingList.peek_front()->hide();
+//    thingList.peek_front()->hide();
     thingList.pop_front();
   }
   validToShoot = false;
@@ -149,7 +149,7 @@ void MainWindow::handleTimer() {
   // add meteor every 40 ticks
   if (counter > 0 && counter%10 == 0)
   {
-    meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), 20);
+    meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), rand()%50);
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
   }
@@ -198,7 +198,8 @@ void MainWindow::handleTimer() {
   if (counter > 0 && counter % 200 == 0)
   {
     level++;
-    message->setText("Level " + QString::number(level));
+    nameMenuLabel->setText("Level " + QString::number(level));
+    message->setText("Level up");
     clockTime -= 15;
     if (clockTime < 0 || clockTime == 0)
     {
@@ -225,6 +226,12 @@ void MainWindow::handleTimer() {
   {
     points = points+10; 
     starPoints += 1;
+    message->setText("Collected star!");
+  }
+  else
+  {
+    if (counter > 0 && counter % 15 == 0)
+      message->setText("");
   }
   score->setText("Score: " + QString::number(points));
   counter++; // update timer counter
@@ -275,7 +282,7 @@ MainWindow::MainWindow(){
   playButton = new QPushButton("Play");
   stopButton = new QPushButton("Quit");
   resetButton = new QPushButton("Restart");
-  nameButton = new QPushButton("Welcome Abord!");
+  nameButton = new QPushButton("Welcome Aboard!");
     nameButton->setGeometry((GAME_WINDOW_MAX_X-nW)/2,(GAME_WINDOW_MAX_Y)/2+nH, nW, nH);
   
   // Timer to keep track of score, health, etc
