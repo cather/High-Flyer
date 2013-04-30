@@ -13,13 +13,16 @@ using namespace std;
   @param maxHealth the maxHealth of the rocket
 */
 Rocket::Rocket(QPixmap* pic, int GAME_WINDOW_MAX_X, int GAME_WINDOW_MAX_Y, int w, int h, int speed, int maxHealth) : 
-  Thing(pic, (GAME_WINDOW_MAX_X-pic->width())/2, (GAME_WINDOW_MAX_Y-pic->height()), w, h, speed, speed, maxHealth) {
+  Thing(pic, (GAME_WINDOW_MAX_X-pic->width())/2, (GAME_WINDOW_MAX_Y-pic->height())/2, w, h, speed, speed, maxHealth) {
   speed_ = speed;
   stars_ = 0;
   direction = -1;
   lives_ = 4; // start with 4 lives
   gameOver = false;
   setPos(x_,y_);
+  
+      setVx(0);
+    setVy(0);
 }
 /** Constructor */
 Rocket::Rocket(){
@@ -100,6 +103,7 @@ bool Rocket::collidesWith(Thing* t){
 */
 void Rocket::move(int windowMaxX, int windowMaxY)
 {
+  
   if (!gameOver){
     // based on direction, which was determined by keypressevents, sets velocities
     switch(direction)
@@ -119,6 +123,7 @@ void Rocket::move(int windowMaxX, int windowMaxY)
       case 3: //move down
         setVx(0);
         setVy(speed_);
+        break;
       default:
         break;
     }
@@ -139,6 +144,8 @@ void Rocket::move(int windowMaxX, int windowMaxY)
 
     // re-initializes info for next key press event to reset
     direction = -1;
+    //setVx(0);
+    //setVy(0);
   }
 }
 
