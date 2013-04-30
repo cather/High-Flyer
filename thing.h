@@ -59,6 +59,8 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     int width_;
     /** The height of the Thing*/
     int height_;
+    /** Number of lives */
+    int lives_;
     /** The current health level*/
     int health_;
     /** The Thing's maximum possible amount of health*/

@@ -11,7 +11,7 @@ using namespace std;
   @param explosion the QPixmap to represent the missile's explosion
 */
 Missile::Missile(QPixmap* pic, int x, int y, int w, int h, int speed, Rocket* rocketToChase, QPixmap* explosion ) : 
-  Thing(pic, x, y, w, h, (rocketToChase->getX() - x_)/10,  (rocketToChase->getY() - y_)/10 , 1) {
+  Thing(pic, x, y, w, h, (rocketToChase->getX() - x_)/50,  (rocketToChase->getY() - y_)/50 , 1) {
   rocket_ = rocketToChase;
   speed_ = speed;
   explosionCounter = 10;
@@ -33,8 +33,8 @@ Missile::~Missile(){}
 void Missile::move(int windowMaxX, int windowMaxY){
 
   // set velocity to direction of rocket_
-  velocityX_ = ( rocket_->getX() - x_ )/ 10 * speed_;
-  velocityY_ = ( rocket_->getY() - y_ )/ 10 * speed_;
+  velocityX_ = ( rocket_->getX() - x_ )/ 50 * speed_;
+  velocityY_ = ( rocket_->getY() - y_ )/ 50 * speed_;
   x_ += velocityX_;
   y_ += velocityY_;
   setPos(x_,y_);

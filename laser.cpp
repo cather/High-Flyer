@@ -24,8 +24,10 @@ Laser::~Laser(){}
   @param mousePointY the y coord of the mouseclick
 */
 void Laser::shoot(int mousePointX, int mousePointY){
-  int xvel = (mousePointX - x_)/10;
-  int yvel = (mousePointY-y_) / 10;
+  int xvel = (mousePointX - x_)/50;
+  int yvel = 0;
+  if (mousePointY < y_)
+    yvel = -50;
   setVx( xvel );
   setVy( yvel );
 }

@@ -25,6 +25,8 @@ Thing::Thing(QPixmap* pic, double nx, double ny, int w, int h, int vx, int vy, i
   collisionCounts = true;
   stars_ = 0;
   
+  lives_ = 1;
+  
   setPos(x_,y_);
 
 }
@@ -70,10 +72,16 @@ void Thing::setVy(int vy){ velocityY_ = vy; }
 void Thing::decrementHealth(int num){
   health_ = health_ - num;
   if (health_ - num < 0)
-    health_ = 0;
-    
-  if (health_ == 0)
+  {
+    health_ = maxHealth_;
+    lives_--;
+  }  
+  if (health_ == 0 && lives_ == 0)
+  {
     dead = true;
+    health_ = 0;
+    lives_ = 0;
+  }
 }
 
 /** Moves the Thing. If it goes off screen, marks the offScreen flag as true
@@ -95,7 +103,7 @@ void Thing::move(int windowMaxX, int windowMaxY){
 }
 
 /** Pure virtual function*/
-bool Thing::collidesWith(Thing* r){}
+
 
 /** Sets position
 @param x the new x position

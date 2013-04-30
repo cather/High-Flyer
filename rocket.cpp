@@ -17,7 +17,7 @@ Rocket::Rocket(QPixmap* pic, int GAME_WINDOW_MAX_X, int GAME_WINDOW_MAX_Y, int w
   speed_ = speed;
   stars_ = 0;
   direction = -1;
-  lives = 4; // start with 4 lives
+  lives_ = 4; // start with 4 lives
   gameOver = false;
   setPos(x_,y_);
 }
@@ -30,7 +30,7 @@ Rocket::~Rocket(){
 }
 
 /** Returns number of lives the rocket has*/
-int Rocket::getLives(){ return lives;}
+int Rocket::getLives(){ return lives_;}
 
 /** overloaded keypress event that sets the direction of the rocket to move in the move() function*/
 void Rocket::keyPressEvent(QKeyEvent* e)
@@ -63,16 +63,16 @@ void Rocket::keyPressEvent(QKeyEvent* e)
 */
 void Rocket::displayHealth(QLabel* label){
   QString string = "Health: " + QString::number(health_);
-  string.append(" Lives: " + QString::number(lives) );
+  string.append(" Lives: " + QString::number(lives_) );
   
   // if health goes to zero, decrement number of lives and replenish health bar
-  if (Thing::dead && lives > 0) 
+  if (Thing::dead && lives_ > 0) 
   {
-    lives--;
+    lives_--;
     health_ = maxHealth_;
   }
   // if on last life and dead, print game over
-  else if (Thing::dead && lives == 0)
+  else if (Thing::dead && lives_ == 0)
   {
     gameOver = true;
   }

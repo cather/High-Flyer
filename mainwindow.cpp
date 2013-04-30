@@ -2,18 +2,19 @@
 using namespace std;
 
 /** Adds a Missile to the screen and pushes it back to the thingList
-@param AlienMidx the x coordinate to spawn the missile at
-@param AlienMidy the y coordinate to spawn the missile at
+  @param AlienMidx the x coordinate to spawn the missile at
+  @param AlienMidy the y coordinate to spawn the missile at
 */
 void MainWindow::spawnMissile(int AlienMidx, int AlienMidy){
-  missile = new Missile(missilePic, AlienMidx,  AlienMidy, missilePic->width(), missilePic->height(), 20, rocket, explosion);
+  missile = new Missile(missilePic, AlienMidx,  AlienMidy, missilePic->width(), missilePic->height(), 5, rocket, explosion);
   gameScene->addItem(missile);
   thingList.push_back(missile);
 }
 
 /** Adds a Laser to the screen, calls the Laser's shoot function, and pushes it back to the thingList. A Laser is only spawned if validToShoot is true
-@param x the x-coord to spawn the Laser at
-@param y the y-coord to spawn the Laser at*/
+  @param x the x-coord to spawn the Laser at
+  @param y the y-coord to spawn the Laser at
+*/
 void MainWindow::shootLaser(int x, int y){
   if (validToShoot)
   {
@@ -30,7 +31,8 @@ void MainWindow::startGame() {
   QString n = nameField->toPlainText();
   if (!n.isEmpty())
   {
-    nameMenuLabel->setText( n );
+    enteredName = true;
+    nameMenuLabel->setText( n + "'s flight" );
     name->setText(n);
     nameButton->hide();
     nameField->hide();
@@ -50,6 +52,8 @@ void MainWindow::startGame() {
 void MainWindow::resetGame(){
   connect(nameButton, SIGNAL(clicked()), this, SLOT(startGame()));
   clockTime = 100;
+  gameTimer->setInterval(clockTime);
+  
   enteredName = false;
   nameButton->show();
     nameButton->setText("Welcome abord!");
@@ -57,6 +61,7 @@ void MainWindow::resetGame(){
   nameMenuLabel->show();
     nameMenuLabel->setText("Enter your name: ");
   starting = true;
+  
   gameTimer->stop();
   playButton->setText("Play");
   points = 0;
@@ -75,6 +80,7 @@ void MainWindow::resetGame(){
   rocket->hide();
   thingList.push_back(rocket);
      
+  level = 1;
   message->setText("Level " + QString::number(level));
   score->setText("Score: -");
 }
@@ -90,6 +96,7 @@ void MainWindow::endGame(){
     connect(nameButton, SIGNAL(clicked()), this, SLOT(resetGame()));
   
   message->setText("Game Over");
+  rocket->ungrabKeyboard();
 
 
   while (!thingList.empty())
@@ -191,7 +198,7 @@ void MainWindow::handleTimer() {
   {
     level++;
     message->setText("Level " + QString::number(level));
-    clockTime -= 5;
+    clockTime -= 15;
     if (clockTime < 0 || clockTime == 0)
     {
       gameTimer->stop();
@@ -206,7 +213,7 @@ void MainWindow::handleTimer() {
       thingList.pop(1);
     }
   }
-    
+
   // update health
   rocket->displayHealth(health); 
   // update regular points based on timer

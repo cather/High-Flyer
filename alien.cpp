@@ -11,6 +11,7 @@ Alien::Alien(QPixmap* pic, int w, int h, int rf) : Thing(pic, rand()%(rf+1), 0-h
   lifeTime_ = 50; // decrements every time it moves
   offScreen = false;
   dead = false;
+  collisionCounts = true;
 }
 
 /** Default constructor */
@@ -66,10 +67,11 @@ bool Alien::collidesWith(Thing* rocket){
   bool collide = collidesWithItem(rocket, Qt::IntersectsItemShape);
   if (rocket->getPic() == pic_)
     return false;
-  if (collide)
+  if (collide && collisionCounts)
   {
     decrementHealth(1);
     rocket->decrementHealth(10);
+    collisionCounts = false;
     if (rocket->dead) // if rocket's health is 0, flags offScreen
       rocket->offScreen = true;
     return true;

@@ -26,7 +26,7 @@ class Rocket : public Thing {
 
   private:
     /** Current number of lives*/
-    int lives;
+    //int lives;
     /** Flag for when rocket has no lives and 0 health */
     bool gameOver;
     /** Speed of the rocket */
