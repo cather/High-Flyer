@@ -32,6 +32,8 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     
     virtual void move(int windowMaxX, int windowMaxY);
     virtual bool collidesWith(Thing* r);
+    void addStar();
+    
     
     int getHealth();
     int getMaxHealth();
@@ -42,6 +44,8 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     /** Flag that is true when health is 0*/
     bool dead;
     bool collisionCounts;
+    
+    int stars_;
   
   protected:
     /** The X coord of the Thing's left-most point*/
@@ -62,6 +66,7 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     int maxHealth_;
     /** The Thing's picture visualization*/
     QPixmap* pic_;
+    
 
 };
 #endif // THING_H

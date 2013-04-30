@@ -23,6 +23,7 @@ Thing::Thing(QPixmap* pic, double nx, double ny, int w, int h, int vx, int vy, i
   offScreen = false;
   dead = false;
   collisionCounts = true;
+  stars_ = 0;
   
   setPos(x_,y_);
 
@@ -78,10 +79,13 @@ bool Thing::collidesWith(Thing* r){
     return false;
 }
 
-void
- Thing::setPos(int x, int y){
+void Thing::setPos(int x, int y){
   x_ = x;
   y_ = y;
   
   QGraphicsPixmapItem::setPos(x,y);
+}
+
+void Thing::addStar(){
+  stars_ += 1;
 }

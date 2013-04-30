@@ -35,7 +35,5 @@ class Rocket : public Thing {
     bool gameOver;
     /** speed of the rocket */
     int speed_;
-    /** number of stars the rocket has collided with */
-    int starsCollected_;
 };
 #endif //ROCKET_H

@@ -15,7 +15,7 @@ Rocket::Rocket(QPixmap* pic, int GAME_WINDOW_MAX_X, int GAME_WINDOW_MAX_Y, int w
   lives = 4; // start with 4 lives
   gameOver = false;
   speed_ = speed;
-  starsCollected_ = 0;
+  stars_ = 0;
   direction = -1;
   setPos(x_,y_);
 }
@@ -89,9 +89,9 @@ void Rocket::displayHealth(QLabel* label){
   label->setText(string);
 }
 
-/** returns how many stars collected, scaled by 50 */
+/** returns how many stars collected */
 int Rocket::getStars(){
-  return (starsCollected_*50);
+  return (stars_);
 }
 
 /** Function that returns true if colliding with another Thing, false otherwise*/

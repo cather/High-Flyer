@@ -3,6 +3,7 @@ using namespace std;
 
 
 MainWindow::MainWindow(){
+  starPoints = 0;
   validToShoot = false;
   enteredName = false;
   starting = true;

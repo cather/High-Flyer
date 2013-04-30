@@ -23,11 +23,7 @@
 #include "missile.h"
 #include "meteor.h"
 #include "planet.h"
-/*
-
 #include "star.h"
-*/
-
 #include "mylist.h"
 
 #define BIG_WINDOW_MAX_X 500
@@ -72,10 +68,7 @@ class MainWindow : public QWidget{
     Missile* missile;
     Meteor* meteor;
     Planet* planet;
-    /*
-    
     Star* star;
-    */
     
     MyList<Thing*> thingList;
     
@@ -97,6 +90,8 @@ class MainWindow : public QWidget{
     int counter;
     int clockTime;
     QPoint mousePoint;
+    
+    int starPoints;
     
     QPixmap* rocketPic;
     QPixmap* planetPic;
