@@ -2,6 +2,7 @@
 #define ALIEN_H
 
 #include "thing.h"
+#include "missile.h"
 /** The Alien class appears from a random direction on the screen, and has a random velocity that makes it move around randomly on the screen. */
 
 class Alien : public Thing {
@@ -17,9 +18,6 @@ class Alien : public Thing {
     int lifeTime_;
     /** The number by which the Alien's velocity will be modulo'd by to produce a random velocity*/
     int randFactor_;
-  
-  signals:
-    void attack(); // signal to drop a missile
   
 };
 #endif //ALIEN_H

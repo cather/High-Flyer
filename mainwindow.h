@@ -20,9 +20,9 @@
 #include "rocket.h"
 #include "laser.h"
 #include "alien.h"
+#include "missile.h"
 /*
 #include "planet.h"
-#include "missile.h"
 
 #include "star.h"
 #include "meteor.h"
@@ -56,10 +56,10 @@ class MainWindow : public QWidget{
     ~MainWindow();
     void show();
     void shootLaser(int x, int y);
+    void spawnMissile(int AlienMidx, int AlienMidy);
     
   private:
     QGridLayout* layout;
-    
     QGraphicsItemAnimation* bg;
     
     ClickScene* gameScene;
@@ -69,10 +69,10 @@ class MainWindow : public QWidget{
     Rocket* rocket;
     Laser* laser;
     Alien* alien;
+    Missile* missile;
     /*
     Meteor* meteor;
     
-    Missile* missile;
     Planet* planet;
     Star* star;
     */

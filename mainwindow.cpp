@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 using namespace std;
 
+void MainWindow::spawnMissile(int AlienMidx, int AlienMidy){
+
+}
+
 void MainWindow::shootLaser(int x, int y){
   if (validToShoot)
   {
@@ -131,20 +135,18 @@ void MainWindow::handleTimer() {
   // add alien every 35 ticks
   if (counter > 0 && (counter)%35 == 0)
   {
+    missile = new Missile(missilePic, 100,  100, missilePic->width(), missilePic->height(), 1, 20, rocket, explosion);
+    gameScene->addItem(missile);
+    thingList.push_back(missile);
+    /*
     alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 2);
     gameScene->addItem(alien);
     thingList.push_back(alien);
+    spawnMissile(alien->getX(), alien->getY());
+    */
   }
   
-  /*
-  // add missile every 25 ticks
-  if (counter > 0 && (counter) % 15 == 0 && alien !=NULL)
-  {  
-    missile = new Missile(missilePic, GAME_WINDOW_MAX_X/2, 0, 5, 5, rocket, explosion);
-    gameScene->addItem(missile);
-    thingList.push_back(missile);
-  }
-  */
+  
   // move every Thing, deleting those off-screen
   for (int i = 0; i < thingList.size(); i++)
   {

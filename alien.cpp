@@ -13,7 +13,7 @@ Alien::Alien(QPixmap* pic, int w, int h, int rf) : Thing(pic, 0, 0, w, h, rand()
   width_ = pic_->width();
   height_ = pic_->height();
   offScreen = false;
-  dead=false;
+  dead = false;
 
 }
 /** Default constructor */
