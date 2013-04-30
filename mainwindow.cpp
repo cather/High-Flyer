@@ -2,7 +2,9 @@
 using namespace std;
 
 void MainWindow::spawnMissile(int AlienMidx, int AlienMidy){
-
+  missile = new Missile(missilePic, AlienMidx,  AlienMidy, missilePic->width(), missilePic->height(), 1, 20, rocket, explosion);
+  gameScene->addItem(missile);
+  thingList.push_back(missile);
 }
 
 void MainWindow::shootLaser(int x, int y){
@@ -135,15 +137,11 @@ void MainWindow::handleTimer() {
   // add alien every 35 ticks
   if (counter > 0 && (counter)%35 == 0)
   {
-    missile = new Missile(missilePic, 100,  100, missilePic->width(), missilePic->height(), 1, 20, rocket, explosion);
-    gameScene->addItem(missile);
-    thingList.push_back(missile);
-    /*
     alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 2);
     gameScene->addItem(alien);
     thingList.push_back(alien);
-    spawnMissile(alien->getX(), alien->getY());
-    */
+    spawnMissile( (alien->getWidth()-alien->getX())/2, (alien->getHeight()-alien->getY()) );
+    
   }
   
   

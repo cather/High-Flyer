@@ -14,8 +14,6 @@ Missile::Missile(QPixmap* pic, int x, int y, int w, int h, int speed, int lifeSp
 */
   rocket_ = rocketToChase;
   speed_ = speed;
-  firstMove = true;
-  down = true;
   explosionCounter = 10;
 
   
