@@ -6,7 +6,7 @@ using namespace std;
   @param AlienMidy the y coordinate to spawn the missile at
 */
 void MainWindow::spawnMissile(int AlienMidx, int AlienMidy){
-  missile = new Missile(missilePic, AlienMidx,  AlienMidy, missilePic->width(), missilePic->height(), 15, rocket, explosion);
+  missile = new Missile(missilePic, AlienMidx,  AlienMidy, missilePic->width(), missilePic->height(), 2, rocket);
   gameScene->addItem(missile);
   thingList.push_back(missile);
 }
@@ -148,7 +148,7 @@ void MainWindow::handleTimer() {
     thingList.push_back(planet);
   }
   
-  
+  /*
   // add small meteor every 40 ticks
   if (counter > 0 && counter%5 == 0)
   {
@@ -163,7 +163,7 @@ void MainWindow::handleTimer() {
     meteor = new Meteor(meteorBigPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), rand()%50);
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
-  }
+  }*/
    
   // add alien every 45 ticks
   if (counter > 0 && (counter)%45 == 0)
@@ -277,7 +277,6 @@ MainWindow::MainWindow(){
   laserPic = new QPixmap("images/laser.jpg");
   meteorPic = new QPixmap("images/meteor_small.png");
   meteorBigPic = new QPixmap("images/meteor.png");
-  //explosion = new QPixmap("images/explosion.png");
 
   // construct layout
   layout = new QGridLayout();
@@ -361,7 +360,6 @@ MainWindow::~MainWindow(){
   delete laserPic;
   delete meteorPic;
   delete meteorBigPic;
-  //delete explosion;
   for (int i = 0; i < thingList.size(); i++)
     delete thingList[i];
 }

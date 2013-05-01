@@ -5,11 +5,11 @@
 #include "rocket.h"
 #include <math.h>
 
-/* Missile follows rocket ship. Starting position is Alien*/
+/** Missile follows rocket ship. Starting position is Alien*/
 
 class Missile : public Thing {
   public:
-    Missile(QPixmap* pic, int x, int y, int w, int h, int speed, Rocket* rocketToChase, QPixmap* explosion );
+    Missile(QPixmap* pic, int x, int y, int w, int h, int speed, Rocket* rocketToChase);
     Missile();
     ~Missile();
     void move(int windowMaxX, int windowMaxY);
@@ -22,6 +22,6 @@ class Missile : public Thing {
     int speed_;
     int time;
     int explosionCounter;
-    QPixmap* explosion_;
+    int recalculateCounter;
 };
 #endif //MISSILE_H

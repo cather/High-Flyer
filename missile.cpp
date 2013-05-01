@@ -8,13 +8,14 @@ using namespace std;
   @param speed the speed of the Missile
   @param lifeSpan how many times the missile can move before it explodes
   @param rocketToChase the Rocket that the missile changes its velocity to move towards
-  @param explosion the QPixmap to represent the missile's explosion
 */
-Missile::Missile(QPixmap* pic, int x, int y, int w, int h, int speed, Rocket* rocketToChase, QPixmap* explosion ) : 
-  Thing(pic, x, y, w, h, (rocketToChase->getX() - x_)/50,  (rocketToChase->getY() - y_)/50 , 1) {
+Missile::Missile(QPixmap* pic, int x, int y, int w, int h, int speed, Rocket* rocketToChase) : 
+  Thing(pic, x, y, w, h, (rocketToChase->getX() - x_)/50*speed,  (rocketToChase->getY() - y_)/50*speed , 1) {
   rocket_ = rocketToChase;
   speed_ = speed;
-  explosionCounter = 10;
+  explosionCounter = 100;
+  
+  recalculateCounter = 10;
   
   offScreen = false;
   dead = false;
@@ -33,25 +34,20 @@ Missile::~Missile(){}
 void Missile::move(int windowMaxX, int windowMaxY){
 
   // set velocity to direction of rocket_
-  velocityX_ = ( rocket_->getX() - x_ )/ x_ * speed_;
-  velocityY_ = ( rocket_->getY() - y_ )/ y_ * speed_;
-  
-  if (rocket_->getX() - x_ > 50)
-    velocityX_ = ( rocket_->getX() - x_ )/ 50 * speed_;
-  else
-   velocityX_ = ( rocket_->getX() - x_ ) * speed_;
-  if ( rocket_->getY() - y_  > 50)
-    velocityY_ = ( rocket_->getY() - y_ )/ 50 * speed_;
-  else
+  if (recalculateCounter == 0 )
+  {
+    velocityX_ = ( rocket_->getX() - x_ )  * speed_;
     velocityY_ = ( rocket_->getY() - y_ ) * speed_;
+  }
   
+  recalculateCounter--;
   
   x_ += velocityX_;
   y_ += velocityY_;
   setPos(x_,y_);
   
   // keep track of counter
-  //explosionCounter--;
+  explosionCounter--;
   if (explosionCounter == 0)
       explode();
 
@@ -60,17 +56,14 @@ void Missile::move(int windowMaxX, int windowMaxY){
     offScreen = true;
 }
 
-/** function that makes the explosion_ Pixmap appear*/
+/** function that makes the missile die*/
 void Missile::explode(){
-  // leave a pixmap of explosion for 5 seconds, missile dies
-  //scene_->addItem(explosion_);
-
   health_ = 0;
   offScreen = true;
   
 }
 
-/** function that detects whether Missile intersects another Thing for the first time. Returns true if yes, false otherwise. If true, decrements the THing's health and explodes
+/** function that detects whether Missile intersects another Thing for the first time. Returns true if yes, false otherwise. If true, decrements the Thing's health and explodes
   @param enemy the Thing being checked for collision with the missile*/
 bool Missile::collidesWith(Thing* enemy){
   bool collide = collidesWithItem(enemy, Qt::IntersectsItemShape);
