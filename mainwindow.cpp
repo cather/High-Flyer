@@ -139,15 +139,15 @@ void MainWindow::handleTimer() {
     gameScene->addItem(star);
     thingList.push_back(star);
   }
-  /*
+  
   //add planet every 60 ticks
   if (counter > 0 && (counter) % 60 == 0)
   {  
-    planet = new Planet(planetPic, 0, 0, planetPic->width(), planetPic->height());
+    planet = new Planet(planetPic, rand()%GAME_WINDOW_MAX_X, 0, planetPic->width(), planetPic->height());
     gameScene->addItem(planet);
     thingList.push_back(planet);
   }
-  */
+  
   
   // add small meteor every 40 ticks
   if (counter > 0 && counter%5 == 0)

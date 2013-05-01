@@ -3,12 +3,15 @@
 #include <stdexcept>
 #include <iostream>
 using namespace std;
+
+/** An Item for each element stored in the linked list*/
 template <typename T>
 struct Item {
   T val;
   Item<T>* next;
 };
 
+/** A linked list data structure*/
 template <typename T>
 class MyList {
  public:
@@ -33,29 +36,32 @@ class MyList {
   Item<T>* getNodeAt(int loc) const;
 
  private:
+  /** The first item in the linked list*/
   Item<T>* head_;
 };
 
-// Write the constructor here
+/** Constructor*/
 template <typename T>
 MyList<T>::MyList()
 {
     head_ = NULL;
 }
 
-template <typename T>
-T& MyList<T>::operator[](int loc)
-{
-    return at(loc);
-}
-  
-// Write the destructor here
+/** Destructor*/
 template <typename T>
 MyList<T>::~MyList()
 {
   clear();
 }
 
+/** Bracket operator serves as at() function*/
+template <typename T>
+T& MyList<T>::operator[](int loc)
+{
+    return at(loc);
+}
+
+/** Boolean function that returns true if list is empty, false otherwise*/
 template <typename T>
 bool MyList<T>::empty() const
 {
@@ -63,9 +69,9 @@ bool MyList<T>::empty() const
         return true;
     else
         return false;
-
 }
 
+/** Function that returns how many elements are in the list*/
 template <typename T>
 int MyList<T>::size() const
 {
@@ -83,6 +89,9 @@ int MyList<T>::size() const
     return counter;
 }
 
+/** Function that returns the Item pointer at a specific location in the list
+  @param loc the location in the list whose Item pointer will be returned
+*/
 template <typename T>
 Item<T>* MyList<T>::getNodeAt(int loc) const
 {
@@ -102,6 +111,9 @@ Item<T>* MyList<T>::getNodeAt(int loc) const
     return copy;
 }
 
+/** Fnction that adds an element to the end of the list
+  @param new_val the value of the element to be added to the list
+*/
 template <typename T>
 void MyList<T>::push_back(const T& new_val)
 {
@@ -121,10 +133,10 @@ void MyList<T>::push_back(const T& new_val)
             copy = copy->next;
             
         copy->next = newptr;
-    }
-    
-} 
+    }    
+}
 
+/** Function that removes the first element in the list*/
 template <typename T>
 void MyList<T>::pop_front()
 {
@@ -133,10 +145,11 @@ void MyList<T>::pop_front()
         Item<T>* copy = head_;
         head_ = head_->next;
         delete copy;
-    
     }
 }
 
+/** Function that returns the value of the first element in the list
+*/
 template <typename T>
 T& MyList<T>::peek_front() const
 {
@@ -146,6 +159,9 @@ T& MyList<T>::peek_front() const
         throw std::invalid_argument("List Empty");
 }
 
+/** Function that moves the first element with the given value in the list
+  @param val the value that is searched for and whose Item will be removed from the lsit
+*/
 template <typename T>
 bool MyList<T>::remove(const T& val)
 {
@@ -159,7 +175,9 @@ bool MyList<T>::remove(const T& val)
         return false;
 }
 
-
+/** Function that returns the value at a specific location in the list
+  @param loc the location in the list whose value will be returned
+*/
 template <typename T>
 T& MyList<T>::at(int loc) const
 {        
@@ -167,6 +185,7 @@ T& MyList<T>::at(int loc) const
     return copy->val;
 }
 
+/** Function that deletes all elements in the list*/
 template <typename T>
 void MyList<T>::clear()
 {
@@ -180,6 +199,10 @@ void MyList<T>::clear()
   head_ = NULL;
 }
 
+/** Function that inserts a specified value into a specified location in the list
+  @param loc the location in the list where the value will be inserted
+  @param val the value to be inserted
+*/
 template <typename T>
 void MyList<T>::insert(int loc, T val)
 {
@@ -220,6 +243,9 @@ void MyList<T>::insert(int loc, T val)
     
 }
 
+/** Function that removes the item at the given location in the list
+  @param loc the location in the list whose Item to delete
+*/
 template <typename T>
 void MyList<T>::pop(int loc)
 {
@@ -238,6 +264,9 @@ void MyList<T>::pop(int loc)
     }
 }
 
+/** Function that returns the location that a specified value is in the list
+  @param val the value searched for in the list
+*/
 template <typename T>
 int MyList<T>::found(const T& val)
 {
