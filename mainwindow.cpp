@@ -148,22 +148,21 @@ void MainWindow::handleTimer() {
     thingList.push_back(planet);
   }
   
-  /*
-  // add small meteor every 40 ticks
-  if (counter > 0 && counter%5 == 0)
+  // add small meteor every 10 ticks
+  if (counter > 0 && counter%10 == 0)
   {
     meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), rand()%50);
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
   }
   
-  // add big meteor every 40 ticks
-  if (counter > 0 && counter%15 == 0)
+  // add big meteor every 20 ticks
+  if (counter > 0 && counter%20 == 0)
   {
     meteor = new Meteor(meteorBigPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), rand()%50);
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
-  }*/
+  }
    
   // add alien every 45 ticks
   if (counter > 0 && (counter)%45 == 0)
