@@ -49,8 +49,5 @@ In the pause menu, there will be buttons to continue, restart, or quit the game.
 ### Preliminary layout
 |               |               |                      |
 |:-------------:|---------------|----------------------|
-|![Start game](images/layout1.png "Storyboarding High Flyer")
-|![Gameplay](images/layout2.png "Storyboarding High Flyer")
-|![Gameover](images/layout3.png "Storyboarding High Flyer")
-|
+|![Start game](images/layout1.png "Storyboarding High Flyer")|![Gameplay](images/layout2.png "Storyboarding High Flyer")|![Gameover](images/layout3.png "Storyboarding High Flyer")|
 
