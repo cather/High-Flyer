@@ -272,7 +272,7 @@ MainWindow::MainWindow(){
   rocketPic = new QPixmap("images/rocket.png");
   planetPic = new QPixmap("images/planet.png");
   starPic = new QPixmap("images/star.png");
-  missilePic = new QPixmap("images/missile_small.jpg");
+  missilePic = new QPixmap("images/missile.png");
   alienPic = new QPixmap("images/alien.png");
   laserPic = new QPixmap("images/laser.jpg");
   meteorPic = new QPixmap("images/meteor_small.png");

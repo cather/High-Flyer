@@ -15,7 +15,7 @@ Missile::Missile(QPixmap* pic, int x, int y, int w, int h, int speed, Rocket* ro
   speed_ = speed;
   explosionCounter = 100;
   
-  recalculateCounter = 10;
+  recalculateCounter = 5;
   
   offScreen = false;
   dead = false;
@@ -36,10 +36,10 @@ void Missile::move(int windowMaxX, int windowMaxY){
   // set velocity to direction of rocket_
   if (recalculateCounter == 0 )
   {
-    velocityX_ = ( rocket_->getX() - x_ )  * speed_;
-    velocityY_ = ( rocket_->getY() - y_ ) * speed_;
+    velocityX_ = ( rocket_->getX() - x_ )/20  * speed_;
+    velocityY_ = ( rocket_->getY() - y_ )/20 * speed_;
+    recalculateCounter = 5;
   }
-  
   recalculateCounter--;
   
   x_ += velocityX_;
