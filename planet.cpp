@@ -4,7 +4,7 @@ using namespace std;
 
 /** Constructor. Planets have a picture, x,y position, width, and height. Velocity is always 0 in x direction and preset to 10 in y direction*/
 Planet::Planet(QPixmap* pic, int x, int y, int w, int h) : Thing(pic, x, y, w, h, 0, 10, 100) {
-  // x-velocity is always 0 -- this item onyl moves horizontally
+  // x-velocity is always 0 -- this item only moves horizontally
   //maxhealth is 100 - basically can't be killed
   collisionCounts = true;
 }
@@ -21,7 +21,7 @@ bool Planet::collidesWith(Thing* rocket){
   bool collide = collidesWithItem(rocket, Qt::IntersectsItemShape);
   if (collide && collisionCounts)
   {
-    rocket->decrementHealth(50);
+    rocket->decrementHealth(rocket->getHealth());
     collisionCounts = false;
     return true;
   }
