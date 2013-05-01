@@ -94,6 +94,7 @@ class MainWindow : public QWidget{
     QPixmap* alienPic;
     QPixmap* laserPic;
     QPixmap* meteorPic;
+    QPixmap* meteorBigPic;
     QPixmap* explosion;
   
   public slots:

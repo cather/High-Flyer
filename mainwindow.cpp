@@ -6,7 +6,7 @@ using namespace std;
   @param AlienMidy the y coordinate to spawn the missile at
 */
 void MainWindow::spawnMissile(int AlienMidx, int AlienMidy){
-  missile = new Missile(missilePic, AlienMidx,  AlienMidy, missilePic->width(), missilePic->height(), 5, rocket, explosion);
+  missile = new Missile(missilePic, AlienMidx,  AlienMidy, missilePic->width(), missilePic->height(), 15, rocket, explosion);
   gameScene->addItem(missile);
   thingList.push_back(missile);
 }
@@ -101,9 +101,10 @@ void MainWindow::endGame(){
 
   while (!thingList.empty())
   {
-//    thingList.peek_front()->hide();
+    thingList.peek_front()->hide();
     thingList.pop_front();
   }
+  thingList.clear();
   validToShoot = false;
 }
 
@@ -116,12 +117,14 @@ void MainWindow::triggerTimer() {
       gameTimer->stop();
       playButton->setText("Play");
       validToShoot = false;
+      rocket->ungrabKeyboard();
     }
     else
     {
       gameTimer->start();
       playButton->setText("Pause");
       validToShoot = true;
+      rocket->grabKeyboard();
     }
   }
 }
@@ -146,10 +149,18 @@ void MainWindow::handleTimer() {
   }
   */
   
-  // add meteor every 40 ticks
-  if (counter > 0 && counter%10 == 0)
+  // add small meteor every 40 ticks
+  if (counter > 0 && counter%5 == 0)
   {
     meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), rand()%50);
+    gameScene->addItem(meteor);
+    thingList.push_back(meteor);
+  }
+  
+  // add big meteor every 40 ticks
+  if (counter > 0 && counter%15 == 0)
+  {
+    meteor = new Meteor(meteorBigPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), rand()%50);
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
   }
@@ -230,14 +241,14 @@ void MainWindow::handleTimer() {
   }
   else
   {
-    if (counter > 0 && counter % 15 == 0)
+    if (counter > 0 && counter % 25 == 0)
       message->setText("");
   }
   score->setText("Score: " + QString::number(points));
   counter++; // update timer counter
   
   // check if player still alive. if not, endgame
-  if (rocket->getHealth() == 0 || rocket->getLives() == 0)
+  if (rocket->getHealth() == 0 && rocket->getLives() == 0)
     endGame();
 }
 
@@ -264,8 +275,9 @@ MainWindow::MainWindow(){
   missilePic = new QPixmap("images/missile_small.jpg");
   alienPic = new QPixmap("images/alien.png");
   laserPic = new QPixmap("images/laser.jpg");
-  meteorPic = new QPixmap("images/meteor.png");
-  explosion = new QPixmap("images/explosion.png");
+  meteorPic = new QPixmap("images/meteor_small.png");
+  meteorBigPic = new QPixmap("images/meteor.png");
+  //explosion = new QPixmap("images/explosion.png");
 
   // construct layout
   layout = new QGridLayout();
@@ -348,7 +360,8 @@ MainWindow::~MainWindow(){
   delete alienPic;
   delete laserPic;
   delete meteorPic;
-  delete explosion;
+  delete meteorBigPic;
+  //delete explosion;
   for (int i = 0; i < thingList.size(); i++)
     delete thingList[i];
 }
