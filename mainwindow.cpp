@@ -37,12 +37,15 @@ void MainWindow::startGame() {
     nameButton->hide();
     nameField->hide();
     message->setText("");
+    
+    playButton->show();
+    resetButton->show();
 
     starting = false;
+    gameTimer->start();
     rocket->show();
     rocket->grabKeyboard();
-
-    gameTimer->start();
+    
     playButton->setText("Pause");
     validToShoot = true;
   }
@@ -50,6 +53,10 @@ void MainWindow::startGame() {
 
 /** Function that resets the game. Updates labels and buttons to indicate a new game is in progress, resets the the timer, clears the scene and deletes all Things, and adds a new rocket*/
 void MainWindow::resetGame(){
+  gameTimer->stop();
+  validToShoot = false;
+//  rocket->ungrabKeyboard();
+  
   connect(nameButton, SIGNAL(clicked()), this, SLOT(startGame()));
   clockTime = 100;
   gameTimer->setInterval(clockTime);
@@ -61,6 +68,9 @@ void MainWindow::resetGame(){
   nameMenuLabel->show();
     nameMenuLabel->setText("Enter your name: ");
   starting = true;
+  
+  playButton->hide();
+  resetButton->hide();
   
   gameTimer->stop();
   playButton->setText("Play");
@@ -88,15 +98,19 @@ void MainWindow::resetGame(){
 /** Function that ends the game. Updates labels and buttons to indicate a game is over. Deletes everything from the scene and displays the final score*/
 void MainWindow::endGame(){  
   gameTimer->stop();
+  validToShoot = false;
+//  rocket->ungrabKeyboard();
+
   nameMenuLabel->show();
   nameMenuLabel->setText("Great flight " + name->text() + "! Stars: " + QString::number(starPoints));
 
   nameButton->show();
   nameButton->setText("Fly again");
     connect(nameButton, SIGNAL(clicked()), this, SLOT(resetGame()));
+  playButton->hide();
+  resetButton->hide();
   
   message->setText("Game Over");
-  rocket->ungrabKeyboard();
 
 
   while (!thingList.empty())
@@ -105,7 +119,6 @@ void MainWindow::endGame(){
     thingList.pop_front();
   }
   thingList.clear();
-  validToShoot = false;
 }
 
 /** Function that triggers the gameTimer on and off. Reconfigures buttons and user-interactivity based on whether the gameTimer is on or off*/
@@ -290,6 +303,7 @@ MainWindow::MainWindow(){
     
   // buttons
   playButton = new QPushButton("Play");
+    playButton->hide();
   stopButton = new QPushButton("Quit");
   resetButton = new QPushButton("Restart");
   nameButton = new QPushButton("Welcome Aboard!");
