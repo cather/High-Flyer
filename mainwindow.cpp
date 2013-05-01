@@ -53,9 +53,10 @@ void MainWindow::startGame() {
 
 /** Function that resets the game. Updates labels and buttons to indicate a new game is in progress, resets the the timer, clears the scene and deletes all Things, and adds a new rocket*/
 void MainWindow::resetGame(){
-  gameTimer->stop();
+  
   validToShoot = false;
-//  rocket->ungrabKeyboard();
+  rocket->ungrabKeyboard();
+  gameTimer->stop();
   
   connect(nameButton, SIGNAL(clicked()), this, SLOT(startGame()));
   clockTime = 100;
