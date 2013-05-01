@@ -26,5 +26,5 @@ doxygen config.txt
 ./directory_name
 ```
 
-### Screenshots -- [Optional]
-You can either remove this section or add screenshots if you wish.
+### Screenshots
+![Screenshot](images/screenshot.JPG "Game in progress")
