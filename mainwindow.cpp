@@ -29,37 +29,32 @@ void MainWindow::shootLaser(int x, int y){
 void MainWindow::startGame() {
   level = 1;
   QString n = nameField->toPlainText();
-  if (!n.isEmpty())
+  if (!n.isEmpty()) // makes sure user has entered something in the field
   {
     enteredName = true;
+    validToShoot = true;
+
     nameMenuLabel->setText("Level " + QString::number(level));
     name->setText(n);
     nameButton->hide();
     nameField->hide();
     message->setText("");
-    
     playButton->show();
+    playButton->setText("Pause");
     resetButton->show();
 
-    starting = false;
-    gameTimer->start();
-    rocket->show();
-    rocket->grabKeyboard();
-    
-    playButton->setText("Pause");
-    validToShoot = true;
+    gameTimer->start(); // start timer
   }
 }
 
-/** Function that resets the game. Updates labels and buttons to indicate a new game is in progress, resets the the timer, clears the scene and deletes all Things, and adds a new rocket*/
+/** Function that resets the game. Updates labels and buttons to indicate a new game can be started, resets the the timer, clears the scene and deletes all Things, and adds a new rocket*/
 void MainWindow::resetGame(){
   
   validToShoot = false;
-  rocket->ungrabKeyboard();
   gameTimer->stop();
   
   connect(nameButton, SIGNAL(clicked()), this, SLOT(startGame()));
-  clockTime = 100;
+  clockTime = 100; // reset length of timer
   gameTimer->setInterval(clockTime);
   
   enteredName = false;
@@ -68,13 +63,12 @@ void MainWindow::resetGame(){
   nameField->show();
   nameMenuLabel->show();
     nameMenuLabel->setText("Enter your name: ");
-  starting = true;
   
   playButton->hide();
+  playButton->setText("Play");
   resetButton->hide();
   
   gameTimer->stop();
-  playButton->setText("Play");
   points = 0;
   counter = 0;
   
@@ -84,27 +78,25 @@ void MainWindow::resetGame(){
     thingList.peek_front()->hide();
     thingList.pop_front();
   }
+  thingList.clear();
   
   //make a new rocket
   rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketPic->width(), rocketPic->height(), rocketSpeed, rocketMaxLife);
   gameScene->addItem(rocket);
-  rocket->hide();
+  rocket->grabKeyboard();
   thingList.push_back(rocket);
      
-  level = 1;
-  //message->setText("Level " + QString::number(level));
+  level = 1; // reset level
   score->setText("Score: -");
 }
 
-/** Function that ends the game. Updates labels and buttons to indicate a game is over. Deletes everything from the scene and displays the final score*/
+/** Function that ends the game. Updates labels and buttons to indicate a game is over. Deletes everything from the scene and displays the final score information*/
 void MainWindow::endGame(){  
   gameTimer->stop();
   validToShoot = false;
-//  rocket->ungrabKeyboard();
-
+  
   nameMenuLabel->show();
   nameMenuLabel->setText("Great flight " + name->text() + "! Stars: " + QString::number(starPoints));
-
   nameButton->show();
   nameButton->setText("Fly again");
     connect(nameButton, SIGNAL(clicked()), this, SLOT(resetGame()));
@@ -113,7 +105,7 @@ void MainWindow::endGame(){
   
   message->setText("Game Over");
 
-
+  // delete everything
   while (!thingList.empty())
   {
     thingList.peek_front()->hide();
@@ -131,14 +123,12 @@ void MainWindow::triggerTimer() {
       gameTimer->stop();
       playButton->setText("Play");
       validToShoot = false;
-      rocket->ungrabKeyboard();
     }
     else
     {
       gameTimer->start();
       playButton->setText("Pause");
       validToShoot = true;
-      rocket->grabKeyboard();
     }
   }
 }
@@ -191,6 +181,8 @@ void MainWindow::handleTimer() {
   for (int i = 0; i < thingList.size(); i++)
   {
     thingList[i]->move(GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
+    
+    //check for collisions with rocket or laser
     if (thingList[i]->getPic() != rocketPic && thingList[i]->getPic() != laserPic)
     {
       // check if touching rocket
@@ -218,13 +210,13 @@ void MainWindow::handleTimer() {
   
 //  gameScene->advance();
 
-  // level up every 200 ticks by making game pass faster
+  // level up every 200 ticks by making timer faster
   if (counter > 0 && counter % 200 == 0)
   {
     level++;
     nameMenuLabel->setText("Level " + QString::number(level));
     message->setText("Level up");
-    clockTime -= 15;
+    clockTime -= 15; // reduce time until gameTimer times out
     if (clockTime < 0 || clockTime == 0)
     {
       gameTimer->stop();
@@ -276,10 +268,9 @@ MainWindow::MainWindow(){
   starPoints = 0;
   validToShoot = false;
   enteredName = false;
-  starting = true;
   clockTime = 100;
   counter = 0;
-  int nW = 200, nH = 25; // variables for name elements
+  int nW = 200, nH = 25; // w/h variables for name elements
   
   // storing graphics  
   rocketPic = new QPixmap("images/rocket.png");
@@ -316,8 +307,8 @@ MainWindow::MainWindow(){
 
   // qlabel for displaying health and lives
   message = new QLabel();
-  health = new QLabel();
-  score = new QLabel();
+  health = new QLabel("Health: ---  Lives: -");
+  score = new QLabel("Score: -");
   name = new QLabel();
   nameMenuLabel = new QLabel("Enter your name:");
     nameMenuLabel->setFixedSize( nW, nH);
@@ -345,10 +336,8 @@ MainWindow::MainWindow(){
   points = 0;
   rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketPic->width(), rocketPic->height(), rocketSpeed, rocketMaxLife);
   gameScene->addItem(rocket);
-  rocket->hide(); // hide until game starts
+  rocket->grabKeyboard(); // rocket responds to keyboard
   thingList.push_back(rocket);
-  health->setText("Health: ---  Lives: -");
-  score->setText("Score: -");
   
   // connections
   connect(gameTimer, SIGNAL(timeout()), this, SLOT(handleTimer()));
@@ -361,8 +350,6 @@ MainWindow::MainWindow(){
 
 /** Destructor*/
 MainWindow::~MainWindow(){
-  //delete gameScene;
-  //delete gameView;
   delete bigView;
   delete bigScene;
   

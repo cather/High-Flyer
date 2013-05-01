@@ -30,8 +30,11 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     void setPos(int x, int y);
     
     virtual void move(int windowMaxX, int windowMaxY);
+    
+    /** Pure virtual function*/
     virtual bool collidesWith(Thing* r) = 0;
 
+    int getLives();
     int getHealth();
     int getMaxHealth();
     void decrementHealth(int num);

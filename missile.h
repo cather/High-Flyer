@@ -5,7 +5,7 @@
 #include "rocket.h"
 #include <math.h>
 
-/** Missile follows rocket ship. Starting position is Alien*/
+/** Missile follows rocket ship. Dies after a certain amount of time. Starting position is Alien*/
 
 class Missile : public Thing {
   public:
@@ -20,8 +20,9 @@ class Missile : public Thing {
     Rocket* rocket_;
     /** the speed of the missile */
     int speed_;
-    int time;
+    /** counter for how many time the missile can move before dying*/
     int explosionCounter;
+    /** counter for how often missile should recalculate its velocity to chase the rocket*/
     int recalculateCounter;
 };
 #endif //MISSILE_H

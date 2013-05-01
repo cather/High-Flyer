@@ -9,6 +9,6 @@ ClickScene::~ClickScene(){}
 
 void ClickScene::mousePressEvent(QGraphicsSceneMouseEvent *e){
   mousePoint = e->scenePos();
-  mainwindow->shootLaser(mousePoint.x(), mousePoint.y());
+  mainwindow->shootLaser(mousePoint.x(), mousePoint.y()); // calls the MainWindow's shootLaser function
 }
 

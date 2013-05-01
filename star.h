@@ -4,7 +4,7 @@
 #include "thing.h"
 #include "rocket.h"
 
-/** Stars have a pic, x, y, width, and height. They appear in random spot in 'background' of game and don't move. They disappear when their collidesWith function returns true*/
+/** Stars have a pic, x, y, width, and height. They appear randomly above the screen and move down in a twitchy pattern. They disappear when their collidesWith function returns true*/
 
 class Star : public Thing {
   public:
@@ -14,7 +14,9 @@ class Star : public Thing {
     bool collidesWith(Thing* rocket);
     void move(int windowMaxX, int windowMaxY);
   private:
+    /** true on the first time the move function is called*/
     bool firstMove;
+    /** true every other time the move function is called*/
     bool down;
 };
 #endif //STAR_H

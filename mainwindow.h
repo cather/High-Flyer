@@ -48,12 +48,13 @@ class MainWindow : public QWidget{
     
   private:
     QGridLayout* layout;
-    QGraphicsItemAnimation* bg;
+//    QGraphicsItemAnimation* bg;
     
     ClickScene* gameScene;
     QGraphicsView* gameView;
     QGraphicsScene* bigScene;
     QGraphicsView* bigView;
+    
     Rocket* rocket;
     Laser* laser;
     Alien* alien;
@@ -61,6 +62,15 @@ class MainWindow : public QWidget{
     Meteor* meteor;
     Planet* planet;
     Star* star;
+    
+    QPixmap* rocketPic;
+    QPixmap* planetPic;
+    QPixmap* starPic;
+    QPixmap* missilePic;
+    QPixmap* alienPic;
+    QPixmap* laserPic;
+    QPixmap* meteorPic;
+    QPixmap* meteorBigPic;
     
     MyList<Thing*> thingList;
     
@@ -76,25 +86,23 @@ class MainWindow : public QWidget{
     QLabel* nameMenuLabel;
     QTextEdit* nameField;
     
+    /** Keeps track of what level of the game the player is on*/
     int level;
+    /** Keeps track of whether or not a laser can be created based on game conditions */
     bool validToShoot;
+    /** keeps track of whether user has entered a name in the nameField*/
     bool enteredName;
-    bool starting;
+//    bool starting;
+    /** Keeps track of user's earned points*/
     int points;
+    /** keeps track of how many times the gametimer times out*/
     int counter;
+    /** keeps track of how long until the timer times out*/
     int clockTime;
+    /** keeps track of where the mouse is clicking in order to create a laser going in the correct direction*/
     QPoint mousePoint;
-    
+    /** keeps track of how many stars the user earned*/
     int starPoints;
-    
-    QPixmap* rocketPic;
-    QPixmap* planetPic;
-    QPixmap* starPic;
-    QPixmap* missilePic;
-    QPixmap* alienPic;
-    QPixmap* laserPic;
-    QPixmap* meteorPic;
-    QPixmap* meteorBigPic;
   
   public slots:
     void handleTimer();

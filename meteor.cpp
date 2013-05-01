@@ -3,8 +3,8 @@ using namespace std;
 /** Constructor. All meteors start at coord -50, 0 and have y-velocity of 0, maxHealth of 1
   @param pic the QPixmap to represent the meteor
   @param y the y position of the meteor
-  @param w the width of the rocket
-  @param h the height of the rocket
+  @param w the width of the meteor
+  @param h the height of the meteor
   @param vx the x-velocity of the meteor */
 Meteor::Meteor(QPixmap* pic, int y, int w, int h, int vx) : Thing(pic, -50, y, w, h, vx, 0, 1){
   offScreen = false;
@@ -27,8 +27,8 @@ bool Meteor::collidesWith(Thing* enemy){
     return false;
   if (collide && collisionCounts)
   {
-    decrementHealth(1);
     enemy->decrementHealth(10);
+    decrementHealth(1);
     //collisionCounts = false;
     return true;
   }

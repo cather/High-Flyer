@@ -50,24 +50,25 @@ int Thing::getHealth(){ return health_; }
 /** Returns max health*/
 int Thing::getMaxHealth(){ return maxHealth_; }
 /** Sets x_
-@param x the new x coord
+  @param x the new x coord
 */
 void Thing::setX(int x){ x_ = x; }
 /** Sets y_
-@param y the new y coord
+  @param y the new y coord
 */
 void Thing::setY(int y){ y_ = y; }
 /** Sets velocityX_
-@param vx the new velocity in the x direction
+  @param vx the new velocity in the x direction
 */
 void Thing::setVx(int vx){ velocityX_ = vx; }
 /** Sets velocityY_
-@param vy the new velocity in the y direction
+  @param vy the new velocity in the y direction
 */
 void Thing::setVy(int vy){ velocityY_ = vy; }
 
+
 /** Decreases current health_. If the result is less than 0, sets health_ to 0. If health = 0, flags the dead bool as true
-@param num the number by which to decrease health_
+  @param num the number by which to decrease health_
 */
 void Thing::decrementHealth(int num){
   health_ = health_ - num;
@@ -86,6 +87,10 @@ void Thing::decrementHealth(int num){
   }
 }
 
+/** Returns number of lives the Thing has*/
+int Thing::getLives(){ return lives_;}
+
+
 /** Moves the Thing. If it goes off screen, marks the offScreen flag as true
   @param windowMaxX the x-area the Thing can move in without being considered offScreen
   @param windowMaxY the y-area the Thing can move in without being considered offScreen
@@ -103,9 +108,6 @@ void Thing::move(int windowMaxX, int windowMaxY){
     setPos(x_,y_);
   }
 }
-
-/** Pure virtual function*/
-
 
 /** Sets position
 @param x the new x position

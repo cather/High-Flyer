@@ -6,15 +6,14 @@ using namespace std;
   @param w the width of the Missile
   @param h the height of the Missile
   @param speed the speed of the Missile
-  @param lifeSpan how many times the missile can move before it explodes
-  @param rocketToChase the Rocket that the missile changes its velocity to move towards
+  @param lifeSpan how many times the Missile can move before it explodes
+  @param rocketToChase the Rocket that the Missile changes its velocity to move towards
 */
 Missile::Missile(QPixmap* pic, int x, int y, int w, int h, int speed, Rocket* rocketToChase) : 
   Thing(pic, x, y, w, h, (rocketToChase->getX() - x_)/50*speed,  (rocketToChase->getY() - y_)/50*speed , 1) {
   rocket_ = rocketToChase;
   speed_ = speed;
   explosionCounter = 100;
-  
   recalculateCounter = 5;
   
   offScreen = false;

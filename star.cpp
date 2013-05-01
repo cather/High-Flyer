@@ -1,9 +1,9 @@
 #include "star.h"
 using namespace std;
-/** Constructor. All stars had velocities of 0 and maxHealth of 1
+/** Constructor. All stars have x-velocities of 5, y-velocity 20, and maxHealth of 1
     @param pix the QPixmap the represent the star
-    @param x the x coord to appear
-    @param y the y coord to appear
+    @param x the x coord at which to appear
+    @param y the y coord at which to appear
     @param w the width of the Star
     @param h the height of the Star
 */
@@ -15,11 +15,10 @@ Star::Star(QPixmap* pic, int x, int y, int w, int h) : Thing(pic, x, y, w, h, 5,
 }
 
 /** Default constructor */
-Star::Star(){
-}
+Star::Star(){}
 /** Destructor */
-Star::~Star(){
-}
+Star::~Star(){}
+
 /** Returns true if the star is intersecting with a Thing, false otherwise. If true, adds 1 to the Thing's star_ count and flags offScreen as true
   @param rocket the Thing the star is checking if it's colliding with
 */
@@ -30,7 +29,7 @@ bool Star::collidesWith(Thing* rocket){
     bool collide = collidesWithItem(rocket, Qt::IntersectsItemShape);
     if (collide && collisionCounts)
     {
-      rocket->addStar(); // hurts adds star
+      rocket->addStar(); // adds star
       offScreen = true;
       collisionCounts = false;
       return true;
@@ -39,7 +38,10 @@ bool Star::collidesWith(Thing* rocket){
       return false;
 }
 
-void Star::move(int windowMaxX, int windowMaxY)
+/** The function that makes the star move in a twitch pattern by going down and to the left, then up and to the right, and repeating
+  @param windowMaxX the x-area the star can move in without being considered offScreen
+  @param windowMaxY the y-area the star can move in without being considered offScreen
+*/void Star::move(int windowMaxX, int windowMaxY)
 {
   if (firstMove)
     velocityX_ = 2*velocityX_;

@@ -24,9 +24,11 @@ Laser::~Laser(){}
   @param mousePointY the y coord of the mouseclick
 */
 void Laser::shoot(int mousePointX, int mousePointY){
+  // velocity depends on the difference between destination and intial position of laser
   int xvel = (mousePointX - x_)/10;
   int yvel = (mousePointY - y_)/10;
   
+  // only move up:
   //int yvel = 0;
   //if (mousePointY < y_)
   //  yvel = -50;

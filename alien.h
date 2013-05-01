@@ -3,7 +3,7 @@
 
 #include "thing.h"
 #include "missile.h"
-/** The Alien class appears from a random position above the screen, and has a random velocity that makes it move around randomly on the screen for a certain time. After that time is up, it moves in constant velocity until exiting the screen. */
+/** The Alien class appears from a random position above the screen, and has a velocity that makes it move around randomly on the screen for a certain time. After that time is up, it moves in constant velocity until exiting the screen. */
 class Alien : public Thing {
   public:
     Alien(QPixmap* pix, int w, int h, int rf);

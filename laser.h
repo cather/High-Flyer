@@ -4,7 +4,7 @@
 #include "thing.h"
 #include "rocket.h"
 
-/* Laser moves in direction from spaceship to mouse. Starting position is tip of the rocketship*/
+/** A Laser Thing that moves in the direction from the rocket to a given point. Starting position is tip of the rocket*/
 
 class Laser : public Thing {
   public:

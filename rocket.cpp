@@ -20,20 +20,14 @@ Rocket::Rocket(QPixmap* pic, int GAME_WINDOW_MAX_X, int GAME_WINDOW_MAX_Y, int w
   lives_ = 4; // start with 4 lives
   gameOver = false;
   setPos(x_,y_);
-  
-      setVx(0);
-    setVy(0);
+
+  setVx(0);
+  setVy(0);
 }
 /** Constructor */
-Rocket::Rocket(){
-}
-
+Rocket::Rocket(){}
 /** Destructor */
-Rocket::~Rocket(){
-}
-
-/** Returns number of lives the rocket has*/
-int Rocket::getLives(){ return lives_;}
+Rocket::~Rocket(){}
 
 /** overloaded keypress event that sets the direction of the rocket to move in the move() function*/
 void Rocket::keyPressEvent(QKeyEvent* e)
@@ -74,7 +68,7 @@ void Rocket::displayHealth(QLabel* label){
     lives_--;
     health_ = maxHealth_;
   }
-  // if on last life and dead, print game over
+  // if on last life and dead, game over
   else if (health_ == 0 && lives_ == 0)
   {
     lives_ = 0;
@@ -85,9 +79,7 @@ void Rocket::displayHealth(QLabel* label){
 }
 
 /** returns how many stars collected */
-int Rocket::getStars(){
-  return (stars_);
-}
+int Rocket::getStars(){ return (stars_); }
 
 /** Function that returns true if colliding with another Thing, false otherwise*/
 bool Rocket::collidesWith(Thing* t){
