@@ -17,8 +17,8 @@ Survive as long as possible. Avoid comets, alien ships, missiles, and planets. C
 | Laser Beam   | Weapon        | Damages enemies. Activated by left-clicking the mouse. The laser shoots (moves) quickly in the direction of the mouse, originating from the rocketship. Only shoots above the rocketship, not below| ![Laser beams](images/laser.png "Laser beams") |
 | Meteor        | Enemy         | Appear randomly on the left of the screen and move in a straight line until going off-screen on the right side. If they hit the rocket, the rocket suffers damage. Meteors can be destroyed by the laser. | ![Meteors](images/meteor.png "Meteor") |
 | Alien ship    | Enemy         | Alien ships appear randomly from off screen, and move randomy on-screen. They drop off missiles in their paths. If the alien ship collides with the rocket, the rocket suffers damage. Alien ships can be attacked with the laser. | ![Alien Ship](images/alien.png "Alien ship") |
-| Missile        | Enemy        | Missiles originate from the location of an Alien ship and travel in a path that follows the rocket. If the missile collides with the rocket, the rocket loses a life. | ![Missile](images/missile.png "Missile") |
-| Planet       | Barrier       | Rocket must avoid colliding with planets or else they lose a life. Planets only move with the background (so only move vertically down). | ![Planets](images/planet1.png "Planets") |
+| Missile        | Enemy        | Missiles originate from the location of an Alien ship and travel in a path that follows the rocket. If the missile collides with the rocket, the rocket loses a life. | ![Missile](images/missile.jpg "Missile") |
+| Planet       | Barrier       | Rocket must avoid colliding with planets or else they lose a life. Planets only move with the background (so only move vertically down). | ![Planets](images/planet.png "Planets") |
 | Star        | Collectable   | The rocket ship collects stars for points. Stars are collected when the rocketship collides with them. Stars move vertically downward with the background, in a twitchy pattern as if they were blinking. | ![Star](images/star.png "Stars") |
 
 ### Controls
