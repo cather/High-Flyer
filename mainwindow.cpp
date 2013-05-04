@@ -81,7 +81,7 @@ void MainWindow::resetGame(){
   thingList.clear();
   
   //make a new rocket
-  rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketPic->width(), rocketPic->height(), rocketSpeed, rocketMaxLife);
+  rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketPic->width(), rocketPic->height(), rocketSpeed/level, rocketMaxLife);
   gameScene->addItem(rocket);
   rocket->grabKeyboard();
   thingList.push_back(rocket);
@@ -112,6 +112,13 @@ void MainWindow::endGame(){
     thingList.pop_front();
   }
   thingList.clear();
+  
+  highscorefile.open("scores.txt");
+  highscorefile << name->text();
+  highscorefile << QString::number(starPoints);
+  highscorefile << score->text();
+  highscorefile << "\n";
+  highscorefile.close();
 }
 
 /** Function that triggers the gameTimer on and off. Reconfigures buttons and user-interactivity based on whether the gameTimer is on or off*/
@@ -139,7 +146,7 @@ void MainWindow::handleTimer() {
     // add star every 50 ticks
   if (counter > 0 && (counter) % 50 == 0)
   {  
-    star = new Star(starPic, rand()%GAME_WINDOW_MAX_X, 0, starPic->width(), starPic->height());
+    star = new Star(starPic, rand()%GAME_WINDOW_MAX_X/level, -starPic->height(), starPic->width(), starPic->height(),5/level, 10/level);
     gameScene->addItem(star);
     thingList.push_back(star);
   }
@@ -155,7 +162,7 @@ void MainWindow::handleTimer() {
   // add small meteor every 10 ticks
   if (counter > 0 && counter%10 == 0)
   {
-    meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), rand()%50);
+    meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), minMeteorSpeed+rand()%meteorSpeedrf);
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
   }
@@ -163,18 +170,21 @@ void MainWindow::handleTimer() {
   // add big meteor every 20 ticks
   if (counter > 0 && counter%20 == 0)
   {
-    meteor = new Meteor(meteorBigPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), rand()%50);
+    meteor = new Meteor(meteorBigPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), minMeteorSpeed+rand()%meteorSpeedrf);
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
   }
    
-  // add alien every 45 ticks
-  if (counter > 0 && (counter)%45 == 0)
+  // add alien every 45 ticks in level 2 and up
+  if (counter > 0 && (counter)%45 == 0 && level > 1)
   {
     alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 55);
     gameScene->addItem(alien);
     thingList.push_back(alien);
-    spawnMissile( (alien->getWidth()-alien->getX())/2, (alien->getHeight()-alien->getY()) );  //add missile
+  
+    // aliens shoot missiles in level 3 and up
+    if (level > 2)
+      spawnMissile( (alien->getWidth()-alien->getX())/2, (alien->getHeight()-alien->getY()) );
   }
   
   // move every Thing, deleting those off-screen
@@ -214,6 +224,8 @@ void MainWindow::handleTimer() {
   if (counter > 0 && counter % 200 == 0)
   {
     level++;
+    meteorSpeedrf += 5;
+    minMeteorSpeed += 5;
     nameMenuLabel->setText("Level " + QString::number(level));
     message->setText("Level up");
     clockTime -= 15; // reduce time until gameTimer times out
@@ -264,6 +276,9 @@ void MainWindow::show(){
 
 /** Constructor. Creates all pixmaps, layout items, buttons, labels, and button connections. Also creates an intial Rocket item and adds it to the screen but hides it until startGame is called*/
 MainWindow::MainWindow(){
+
+  meteorSpeedrf = 5;
+  minMeteorSpeed = 5;
   level = 1;
   starPoints = 0;
   validToShoot = false;
@@ -334,7 +349,7 @@ MainWindow::MainWindow(){
   
   // creates rocket
   points = 0;
-  rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketPic->width(), rocketPic->height(), rocketSpeed, rocketMaxLife);
+  rocket = new Rocket(rocketPic, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y, rocketPic->width(), rocketPic->height(), rocketSpeed/level, rocketMaxLife);
   gameScene->addItem(rocket);
   rocket->grabKeyboard(); // rocket responds to keyboard
   thingList.push_back(rocket);

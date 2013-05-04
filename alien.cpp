@@ -4,7 +4,7 @@
   @param w the width of the alien
   @param h the height of the alien
   @param rf the number by which the alien's velocity will be modulo'd by to produce random velocities
-  @param onScreenFor the number of times the alien can move randomly before moving in a straight line off screen and dieing.*/
+  */
 Alien::Alien(QPixmap* pic, int w, int h, int rf) : Thing(pic, rand()%(rf+1), 0-h, w, h, rand()%(rf+1), rand()%(rf+1), 3)
 {
   randFactor_ = rf+1;

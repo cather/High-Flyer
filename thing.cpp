@@ -2,12 +2,12 @@
 using namespace std;
 
 /** Constructor for a Thing with a pic, position, width and height, velocities in the x and y direction, and a maximum health level
-  param pic the QPixmap to represent the thing
-  param nx the Thing's left-most x coord
-  param ny the Thing's bottom-most y coord
-  param vx the value of the x-velocity
-  param xy the value of the y-velocity
-  param maxHealth the value of the Thing's maximum possible health level
+  @param pic the QPixmap to represent the thing
+  @param nx the Thing's left-most x coord
+  @param ny the Thing's bottom-most y coord
+  @param vx the value of the x-velocity
+  @param xy the value of the y-velocity
+  @param maxHealth the value of the Thing's maximum possible health level
 */
 Thing::Thing(QPixmap* pic, double nx, double ny, int w, int h, int vx, int vy, int maxHealth ) : QGraphicsPixmapItem(*pic) {
   x_ = nx;

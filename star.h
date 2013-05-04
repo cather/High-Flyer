@@ -8,7 +8,7 @@
 
 class Star : public Thing {
   public:
-    Star(QPixmap* pic, int x, int y, int w, int h);
+    Star(QPixmap* pic, int x, int y, int w, int h, int vx, int vy);
     Star();
     ~Star();
     bool collidesWith(Thing* rocket);

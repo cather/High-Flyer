@@ -1,13 +1,13 @@
 #include "star.h"
 using namespace std;
-/** Constructor. All stars have x-velocities of 5, y-velocity 20, and maxHealth of 1
+/** Constructor. All stars have move in a twichy patterna and have maxHealth of 1
     @param pix the QPixmap the represent the star
     @param x the x coord at which to appear
     @param y the y coord at which to appear
     @param w the width of the Star
     @param h the height of the Star
 */
-Star::Star(QPixmap* pic, int x, int y, int w, int h) : Thing(pic, x, y, w, h, 5, 20, 1) {
+Star::Star(QPixmap* pic, int x, int y, int w, int h, int vx, int vy) : Thing(pic, x, y, w, h, vx, vy, 1) {
   offScreen = false;
   collisionCounts = true;
   firstMove = true;

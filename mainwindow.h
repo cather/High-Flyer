@@ -14,8 +14,11 @@
 #include <QTextEdit>
 #include <QMouseEvent>
 
-#include "clickscene.h"
+// for input/output
+#include <iostream>
+#include <fstream>
 
+#include "clickscene.h"
 #include "thing.h"
 #include "rocket.h"
 #include "laser.h"
@@ -86,6 +89,11 @@ class MainWindow : public QWidget{
     QLabel* nameMenuLabel;
     QTextEdit* nameField;
     
+    /** Number to modulo a random number by to determine meteor movement speed*/
+    int meteorSpeedrf;
+    /** Speed at which meteors move at a minimum*/
+    int minMeteorSpeed;
+    
     /** Keeps track of what level of the game the player is on*/
     int level;
     /** Keeps track of whether or not a laser can be created based on game conditions */
@@ -103,6 +111,8 @@ class MainWindow : public QWidget{
     QPoint mousePoint;
     /** keeps track of how many stars the user earned*/
     int starPoints;
+    /** ofstream to a text file containing scores*/
+    ofstream highscorefile;
   
   public slots:
     void handleTimer();
