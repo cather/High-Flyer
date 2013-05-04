@@ -13,10 +13,9 @@
 #include <QString>
 #include <QTextEdit>
 #include <QMouseEvent>
-
-// for input/output
-#include <iostream>
-#include <fstream>
+#include <QFile>
+#include <QTextStream>
+#include <QMessageBox>
 
 #include "clickscene.h"
 #include "thing.h"
@@ -88,6 +87,8 @@ class MainWindow : public QWidget{
     QLabel* name;
     QLabel* nameMenuLabel;
     QTextEdit* nameField;
+    /** QLabel to display scores on screen*/
+    QLabel* displayScores;
     
     /** Number to modulo a random number by to determine meteor movement speed*/
     int meteorSpeedrf;
@@ -111,8 +112,9 @@ class MainWindow : public QWidget{
     QPoint mousePoint;
     /** keeps track of how many stars the user earned*/
     int starPoints;
-    /** ofstream to a text file containing scores*/
-    ofstream highscorefile;
+    /** file containing high scores */
+    QFile scoreFile;
+    
   
   public slots:
     void handleTimer();
@@ -120,6 +122,7 @@ class MainWindow : public QWidget{
     void resetGame();
     void startGame();
     void endGame();
+    void showHighScores();
     
   signals:
     void clicked();

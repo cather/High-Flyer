@@ -25,6 +25,22 @@ void MainWindow::shootLaser(int x, int y){
   }
 }
 
+/** Brings up the file containing high scores*/
+void MainWindow::showHighScores(){
+  
+  QString st;
+  if (!scoreFile.open(QIODevice::ReadOnly))
+    QMessageBox::information(0,"error",scoreFile.errorString());
+
+  QTextStream in(&scoreFile);  
+  while (!in.atEnd())
+  {
+    st.append(in.readLine());
+    displayScores->setText(st);
+  }
+  scoreFile.close();
+}
+
 /** Function that starts the game. Updates labels and buttons to indicate game has started, starts timer, and toggles Laser spawning capability*/
 void MainWindow::startGame() {
   level = 1;
@@ -113,12 +129,17 @@ void MainWindow::endGame(){
   }
   thingList.clear();
   
-  highscorefile.open("scores.txt");
-  highscorefile << name->text();
-  highscorefile << QString::number(starPoints);
-  highscorefile << score->text();
-  highscorefile << "\n";
-  highscorefile.close();
+  // print score to file
+  if (scoreFile.open(QIODevice::ReadWrite | QIODevice::Text))
+  {
+    QTextStream stream(&scoreFile);
+    stream << name->text() << starPoints << score->text() << endl;
+    scoreFile.close();
+  }
+  else
+  {
+    displayScores->setText("Sorry, unable to save score");
+  }
 }
 
 /** Function that triggers the gameTimer on and off. Reconfigures buttons and user-interactivity based on whether the gameTimer is on or off*/
@@ -276,7 +297,6 @@ void MainWindow::show(){
 
 /** Constructor. Creates all pixmaps, layout items, buttons, labels, and button connections. Also creates an intial Rocket item and adds it to the screen but hides it until startGame is called*/
 MainWindow::MainWindow(){
-
   meteorSpeedrf = 5;
   minMeteorSpeed = 5;
   level = 1;
@@ -328,6 +348,17 @@ MainWindow::MainWindow(){
   nameMenuLabel = new QLabel("Enter your name:");
     nameMenuLabel->setFixedSize( nW, nH);
     nameMenuLabel->setAlignment(Qt::AlignHCenter);
+  displayScores = new QLabel();
+  
+  QString filename = "scores.txt";
+  scoreFile(filename);
+  if (scoreFile.open(QIODevice::ReadWrite | QIODevice::Text))
+  {
+    QTextStream stream(scoreFile);
+    stream << " " << "Name" << "Stars" << "Score"<< endl;
+    scoreFile.close();
+  }
+    
 
   //qtextedit for name
   nameField = new QTextEdit();
