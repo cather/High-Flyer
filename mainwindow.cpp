@@ -27,7 +27,7 @@ void MainWindow::shootLaser(int x, int y){
 
 /** Brings up the file containing high scores*/
 void MainWindow::showHighScores(){
-  
+  /*
   QString st;
   if (!scoreFile.open(QIODevice::ReadOnly))
     QMessageBox::information(0,"error",scoreFile.errorString());
@@ -39,6 +39,7 @@ void MainWindow::showHighScores(){
     displayScores->setText(st);
   }
   scoreFile.close();
+  */
 }
 
 /** Function that starts the game. Updates labels and buttons to indicate game has started, starts timer, and toggles Laser spawning capability*/
@@ -316,6 +317,7 @@ MainWindow::MainWindow(){
   laserPic = new QPixmap("images/laser.jpg");
   meteorPic = new QPixmap("images/meteor_small.png");
   meteorBigPic = new QPixmap("images/meteor.png");
+  bg = new QImage("images/bg_1.png");
 
   // construct layout
   layout = new QGridLayout();
@@ -327,6 +329,8 @@ MainWindow::MainWindow(){
     bigView->setLayout(layout);
     gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
     gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
+    
+    gameScene->setBackgroundBrush(QBrush(*bg));
     
   // buttons
   playButton = new QPushButton("Play");
@@ -350,6 +354,7 @@ MainWindow::MainWindow(){
     nameMenuLabel->setAlignment(Qt::AlignHCenter);
   displayScores = new QLabel();
   
+  /*
   QString filename = "scores.txt";
   scoreFile(filename);
   if (scoreFile.open(QIODevice::ReadWrite | QIODevice::Text))
@@ -358,6 +363,7 @@ MainWindow::MainWindow(){
     stream << " " << "Name" << "Stars" << "Score"<< endl;
     scoreFile.close();
   }
+  */
     
 
   //qtextedit for name

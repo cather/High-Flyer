@@ -16,6 +16,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QMessageBox>
+#include <QImage>
 
 #include "clickscene.h"
 #include "thing.h"
@@ -89,6 +90,8 @@ class MainWindow : public QWidget{
     QTextEdit* nameField;
     /** QLabel to display scores on screen*/
     QLabel* displayScores;
+    
+    QImage* bg;
     
     /** Number to modulo a random number by to determine meteor movement speed*/
     int meteorSpeedrf;
