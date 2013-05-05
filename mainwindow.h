@@ -118,7 +118,7 @@ class MainWindow : public QWidget{
     /** keeps track of how many stars the user earned*/
     int starPoints;
     /** file containing high scores */
-    QFile scoreFile;
+    QFile* scoreFile;
     
   
   public slots:

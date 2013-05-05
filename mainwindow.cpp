@@ -27,19 +27,20 @@ void MainWindow::shootLaser(int x, int y){
 
 /** Brings up the file containing high scores*/
 void MainWindow::showHighScores(){
-  /*
-  QString st;
-  if (!scoreFile.open(QIODevice::ReadOnly))
-    QMessageBox::information(0,"error",scoreFile.errorString());
-
-  QTextStream in(&scoreFile);  
-  while (!in.atEnd())
+  
+  QString sc;
+  if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
   {
-    st.append(in.readLine());
-    displayScores->setText(st);
+    QByteArray line = scoreFile->readLine();
+    sc.append(line + '\n');
+    displayScores->setText(sc);
+    scoreFile->close();
   }
-  scoreFile.close();
-  */
+  else
+  {
+    displayScores->setText("Sorry, unable to display score");
+  }
+  
 }
 
 /** Function that starts the game. Updates labels and buttons to indicate game has started, starts timer, and toggles Laser spawning capability*/
@@ -130,12 +131,14 @@ void MainWindow::endGame(){
   }
   thingList.clear();
   
+  QString sc;
   // print score to file
-  if (scoreFile.open(QIODevice::ReadWrite | QIODevice::Text))
+  if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
   {
-    QTextStream stream(&scoreFile);
-    stream << name->text() << starPoints << score->text() << endl;
-    scoreFile.close();
+    QByteArray line = scoreFile->readLine();
+    sc.append(line + '\n');
+    displayScores->setText(sc);
+    scoreFile->close();
   }
   else
   {
@@ -240,15 +243,14 @@ void MainWindow::handleTimer() {
     }
   }
   
-//  gameScene->advance();
 
   // level up every 200 ticks by making timer faster
   if (counter > 0 && counter % 200 == 0)
   {
     level++;
-    if (level == 2)
+    if (level == 2) // background for level 2
       gameScene->setBackgroundBrush(QBrush(*bg2));
-    if (level > 2)
+    if (level > 2) // background for upper levels
       gameScene->setBackgroundBrush(QBrush(*bg3));
     meteorSpeedrf += 5;
     minMeteorSpeed += 5;
@@ -334,7 +336,6 @@ MainWindow::MainWindow(){
     bigView->setLayout(layout);
     gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
     gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
-    
     gameScene->setBackgroundBrush(QBrush(*bg1));
     
   // buttons
@@ -359,16 +360,13 @@ MainWindow::MainWindow(){
     nameMenuLabel->setAlignment(Qt::AlignHCenter);
   displayScores = new QLabel();
   
-  /*
-  QString filename = "scores.txt";
-  scoreFile(filename);
-  if (scoreFile.open(QIODevice::ReadWrite | QIODevice::Text))
+  scoreFile = new QFile("scores.txt");
+  if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
   {
-    QTextStream stream(scoreFile);
-    stream << " " << "Name" << "Stars" << "Score"<< endl;
-    scoreFile.close();
+    displayScores->setText("Name     Stars     Score" + '\n');
+    scoreFile->close();
   }
-  */
+  
     
 
   //qtextedit for name
@@ -388,6 +386,7 @@ MainWindow::MainWindow(){
     layout->addWidget(message, 4, 1);
     layout->addWidget(health, 4, 2);
     layout->addWidget(score, 4, 3);
+  layout->addWidget(displayScores,5,1,1,-1);
   
   // creates rocket
   points = 0;
