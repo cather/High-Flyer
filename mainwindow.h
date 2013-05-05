@@ -91,7 +91,9 @@ class MainWindow : public QWidget{
     /** QLabel to display scores on screen*/
     QLabel* displayScores;
     
-    QImage* bg;
+    QImage* bg1;
+    QImage* bg2;
+    QImage* bg3;
     
     /** Number to modulo a random number by to determine meteor movement speed*/
     int meteorSpeedrf;

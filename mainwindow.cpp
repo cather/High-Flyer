@@ -246,6 +246,10 @@ void MainWindow::handleTimer() {
   if (counter > 0 && counter % 200 == 0)
   {
     level++;
+    if (level == 2)
+      gameScene->setBackgroundBrush(QBrush(*bg2));
+    if (level > 2)
+      gameScene->setBackgroundBrush(QBrush(*bg3));
     meteorSpeedrf += 5;
     minMeteorSpeed += 5;
     nameMenuLabel->setText("Level " + QString::number(level));
@@ -317,7 +321,9 @@ MainWindow::MainWindow(){
   laserPic = new QPixmap("images/laser.jpg");
   meteorPic = new QPixmap("images/meteor_small.png");
   meteorBigPic = new QPixmap("images/meteor.png");
-  bg = new QImage("images/bg_1.png");
+  bg1 = new QImage("images/bg1.png");
+  bg2 = new QImage("images/bg2.png");
+  bg3 = new QImage("images/bg3.png");
 
   // construct layout
   layout = new QGridLayout();
@@ -325,12 +331,11 @@ MainWindow::MainWindow(){
   bigView = new QGraphicsView(bigScene);
   gameScene = new ClickScene(this);
   gameView = new QGraphicsView(gameScene);
-    gameScene->addPixmap(QPixmap("bg.png"));
     bigView->setLayout(layout);
     gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
     gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
     
-    gameScene->setBackgroundBrush(QBrush(*bg));
+    gameScene->setBackgroundBrush(QBrush(*bg1));
     
   // buttons
   playButton = new QPushButton("Play");
