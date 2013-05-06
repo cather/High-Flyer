@@ -179,7 +179,7 @@ void MainWindow::handleTimer() {
   // add megastar every 100 ticks
   if (counter > 0 && counter % 100 == 0)
   {
-    megastar = new Megastar(megastarPic, rand()%GAME_WINDOW_MAX_X/level, 0, megastarPic->width(), megastarPic->height(), 2, rocket);
+    megastar = new Megastar(megastarPic, rand()%GAME_WINDOW_MAX_X/level, 0, megastarPic->width(), megastarPic->height(), 5, rocket);
     gameScene->addItem(megastar);
     thingList.push_back(megastar);
   }
@@ -344,9 +344,9 @@ MainWindow::MainWindow(){
   meteorPic = new QPixmap("images/meteor_small.png");
   meteorBigPic = new QPixmap("images/meteor.png");
   megastarPic = new QPixmap("images/megastar.png");
-  bg1 = new QImage("images/bg1.png");
-  bg2 = new QImage("images/bg2.png");
-  bg3 = new QImage("images/bg3.png");
+  bg1 = new QImage("images/bg_fabric.png");
+  bg2 = new QImage("images/bg_dots.png");
+  bg3 = new QImage("images/bg_lines.png");
 
   // construct layout
   layout = new QGridLayout();
