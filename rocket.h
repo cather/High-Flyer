@@ -14,6 +14,7 @@ class Rocket : public Thing {
     void dead();
     void displayHealth(QLabel* label);
     int getStars();
+    int getMegastars();
     void keepOnScreen();
     void move(int windowMaxX, int windowMaxY);
     bool collidesWith(Thing* t);

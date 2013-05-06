@@ -27,6 +27,7 @@
 #include "meteor.h"
 #include "planet.h"
 #include "star.h"
+#include "megastar.h"
 #include "mylist.h"
 
 #define BIG_WINDOW_MAX_X 500
@@ -65,6 +66,7 @@ class MainWindow : public QWidget{
     Meteor* meteor;
     Planet* planet;
     Star* star;
+    Megastar* megastar;
     
     QPixmap* rocketPic;
     QPixmap* planetPic;
@@ -74,6 +76,7 @@ class MainWindow : public QWidget{
     QPixmap* laserPic;
     QPixmap* meteorPic;
     QPixmap* meteorBigPic;
+    QPixmap* megastarPic;
     
     MyList<Thing*> thingList;
     

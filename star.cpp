@@ -1,6 +1,6 @@
 #include "star.h"
 using namespace std;
-/** Constructor. All stars have move in a twichy patterna and have maxHealth of 1
+/** Constructor. All stars move in a twichy patterna and have maxHealth of 1
     @param pix the QPixmap the represent the star
     @param x the x coord at which to appear
     @param y the y coord at which to appear

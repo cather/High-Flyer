@@ -176,6 +176,14 @@ void MainWindow::handleTimer() {
     thingList.push_back(star);
   }
   
+  // add megastar every 100 ticks
+  if (counter > 0 && counter % 100 == 0)
+  {
+    megastar = new Megastar(megastarPic, rand()%GAME_WINDOW_MAX_X/level, 0, megastarPic->width(), megastarPic->height(), 2, rocket);
+    gameScene->addItem(megastar);
+    thingList.push_back(megastar);
+  }
+  
   //add planet every 60 ticks
   if (counter > 0 && (counter) % 60 == 0)
   {  
@@ -244,8 +252,8 @@ void MainWindow::handleTimer() {
   }
   
 
-  // level up every 200 ticks by making timer faster
-  if (counter > 0 && counter % 200 == 0)
+  // level up every 300 ticks by making timer faster
+  if (counter > 0 && counter % 300 == 0)
   {
     level++;
     if (level == 2) // background for level 2
@@ -289,6 +297,18 @@ void MainWindow::handleTimer() {
     if (counter > 0 && counter % 25 == 0)
       message->setText("");
   }
+  // update score for megastar points
+  if (rocket->getMegastars() == starPoints+1)
+  {
+    points = points+50; 
+    starPoints += 1;
+    message->setText("Collected MEGAstar!");
+  }
+  else
+  {
+    if (counter > 0 && counter % 25 == 0)
+      message->setText("");
+  }
   score->setText("Score: " + QString::number(points));
   counter++; // update timer counter
   
@@ -323,6 +343,7 @@ MainWindow::MainWindow(){
   laserPic = new QPixmap("images/laser.jpg");
   meteorPic = new QPixmap("images/meteor_small.png");
   meteorBigPic = new QPixmap("images/meteor.png");
+  megastarPic = new QPixmap("images/megastar.png");
   bg1 = new QImage("images/bg1.png");
   bg2 = new QImage("images/bg2.png");
   bg3 = new QImage("images/bg3.png");

@@ -81,6 +81,9 @@ void Rocket::displayHealth(QLabel* label){
 /** returns how many stars collected */
 int Rocket::getStars(){ return (stars_); }
 
+/** returns how many megastars collected */
+int Rocket::getMegastars(){ return (megastars_); }
+
 /** Function that returns true if colliding with another Thing, false otherwise*/
 bool Rocket::collidesWith(Thing* t){
   bool collide = collidesWithItem(t, Qt::IntersectsItemShape);

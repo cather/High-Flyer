@@ -39,6 +39,7 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     int getMaxHealth();
     void decrementHealth(int num);
     void addStar();
+    void addMegastar();
     
     /** Flag that is true when the Item is not within the parameters of the area in which it is allowed to move*/
     bool offScreen;
@@ -48,6 +49,8 @@ class Thing : public QObject, public QGraphicsPixmapItem{
     bool collisionCounts;
     /** Count of Stars collected*/
     int stars_;
+    /** Count of Megastars collected */
+    int megastars_;
   
   protected:
     /** The X coord of the Thing's left-most point*/

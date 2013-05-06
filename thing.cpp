@@ -24,6 +24,7 @@ Thing::Thing(QPixmap* pic, double nx, double ny, int w, int h, int vx, int vy, i
   dead = false;
   collisionCounts = true;
   stars_ = 0;
+  megastars_ = 0;
   
   lives_ = 1;
   
@@ -123,4 +124,9 @@ void Thing::setPos(int x, int y){
 /** Increases stars_ count by 1*/
 void Thing::addStar(){
   stars_ += 1;
+}
+
+/** Increases megastars_ count by 1*/
+void Thing::addMegastar(){
+  megastars_ += 1;
 }
