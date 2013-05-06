@@ -179,7 +179,7 @@ void MainWindow::handleTimer() {
   // add megastar every 100 ticks
   if (counter > 0 && counter % 100 == 0)
   {
-    megastar = new Megastar(megastarPic, rand()%GAME_WINDOW_MAX_X/level, 0, megastarPic->width(), megastarPic->height(), 5, rocket);
+    megastar = new Megastar(megastarPic, rand()%GAME_WINDOW_MAX_X/level, 0, megastarPic->width(), megastarPic->height(), 3, rocket);
     gameScene->addItem(megastar);
     thingList.push_back(megastar);
   }

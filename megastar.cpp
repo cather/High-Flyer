@@ -1,16 +1,16 @@
 #include "megastar.h"
 
 using namespace std;
-/** Constructor. All Megastars move diagonally down the screen and have maxHealth of 1
+/** Constructor. All Megastars (initially) move diagonally down the screen and have maxHealth of 1
     @param pix the QPixmap the represent the Megastar
     @param x the x coord at which to appear
     @param y the y coord at which to appear
     @param w the width of the Megastar
     @param h the height of the Megastar
     @param speed the speed the Megastar will move
-    @param rocketToAvoid the Rocket that the Megastar moves to avoid
+    @param rocketToAvoid the Rocket that the Megastar moves away from
 */
-Megastar::Megastar(QPixmap* pic, int x, int y, int w, int h, int speed, Rocket* rocketToAvoid) : Thing(pic, x, y, w, h, 3, 3, 1) {
+Megastar::Megastar(QPixmap* pic, int x, int y, int w, int h, int speed, Rocket* rocketToAvoid) : Thing(pic, x, y, w, h, speed, speed, 1) {
   offScreen = false;
   collisionCounts = true;
   rocket_ = rocketToAvoid;
@@ -22,7 +22,7 @@ Megastar::Megastar(){}
 /** Destructor */
 Megastar::~Megastar(){}
 
-/** Returns true if the Megastar is intersecting with a Thing, false otherwise. If true, adds 1 to the Thing's Megastar_ count and flags offScreen as true
+/** Returns true if the Megastar is intersecting with a Thing, false otherwise. If true, adds 1 to the Thing's megastar_ count and flags offScreen as true
   @param rocket the Thing the Megastar is checking if it's colliding with
 */
 bool Megastar::collidesWith(Thing* rocket){
@@ -56,10 +56,11 @@ bool Megastar::collidesWith(Thing* rocket){
     velocityX_ = (x_ - rocket_->getX())/15*speed_;
     velocityY_ = (y_ - rocket_->getY())/15*speed_;
   }
+  // otherwise, moves diagonally at original speed
   else
   {
-    velocityX_ = 3;
-    velocityY_ = 3;
+    velocityX_ = speed_;
+    velocityY_ = speed_;
   }
   
   x_ += velocityX_;
@@ -69,6 +70,5 @@ bool Megastar::collidesWith(Thing* rocket){
   // keep track of whether on screen or not
   if ( (x_+width_)< 0  ||  (y_+height_)< 0 || (x_ > windowMaxX ) || ( y_ > windowMaxY ) )
     offScreen = true;
-    
     
 }
