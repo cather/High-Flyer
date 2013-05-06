@@ -193,7 +193,7 @@ void MainWindow::handleTimer() {
   }
   
   // add small meteor every 10 ticks
-  if (counter > 0 && counter%10 == 0)
+  if (counter > 0 && counter%20 == 0)
   {
     meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), minMeteorSpeed+rand()%meteorSpeedrf);
     gameScene->addItem(meteor);
@@ -201,21 +201,21 @@ void MainWindow::handleTimer() {
   }
   
   // add big meteor every 20 ticks
-  if (counter > 0 && counter%20 == 0)
+  if (counter > 0 && counter%30 == 0)
   {
     meteor = new Meteor(meteorBigPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), minMeteorSpeed+rand()%meteorSpeedrf);
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
   }
    
-  // add alien every 45 ticks in level 2 and up
+  // add alien every 45 ticks after level 1
   if (counter > 0 && (counter)%45 == 0 && level > 1)
   {
-    alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 55);
+    alien = new Alien(alienPic, alienPic->width(), alienPic->height(), 40);
     gameScene->addItem(alien);
     thingList.push_back(alien);
   
-    // aliens shoot missiles in level 3 and up
+    // aliens shoot missiles after level 2
     if (level > 2)
       spawnMissile( (alien->getWidth()-alien->getX())/2, (alien->getHeight()-alien->getY()) );
   }
@@ -256,12 +256,17 @@ void MainWindow::handleTimer() {
   if (counter > 0 && counter % 300 == 0)
   {
     level++;
-    if (level == 2) // background for level 2
+    if (level == 2) // specs for level 2
+    {
       gameScene->setBackgroundBrush(QBrush(*bg2));
-    if (level > 2) // background for upper levels
+      minMeteorSpeed += 5;
+    }
+    if (level > 2) // specs for upper levels
+    {
       gameScene->setBackgroundBrush(QBrush(*bg3));
-    meteorSpeedrf += 5;
-    minMeteorSpeed += 5;
+      minMeteorSpeed += 7;
+      meteorSpeedrf += 5;
+    }
     nameMenuLabel->setText("Level " + QString::number(level));
     message->setText("Level up");
     clockTime -= 15; // reduce time until gameTimer times out
