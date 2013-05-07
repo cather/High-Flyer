@@ -6,23 +6,23 @@ using namespace std;
 void MainWindow::showHighScores(){
 
   delete displayScores;
-  displayScores = new QGraphicsTextItem("HIGH SCORES \nName     Stars     Score ");
   
-  gameScene->addItem(displayScores);
-/*  
-  QString sc;
+  displayScores = new QGraphicsTextItem();
+
+  QString sc = "HIGH SCORES \nName     Stars     Score ";
   if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
   {
     QByteArray line = scoreFile->readLine();
-    sc.append(line + '\n');
-    displayScores->setText(sc);
+    sc.append("\n" + line);
+    displayScores->setPlainText(sc);
     scoreFile->close();
   }
   else
   {
-    displayScores->setText("Sorry, unable to display score");
+    displayScores->setPlainText("Sorry, unable to display score");
   }
-*/
+
+  gameScene->addItem(displayScores);
   
 }
 
