@@ -53,13 +53,13 @@ class MainWindow : public QWidget{
     
   private:
     QGridLayout* layout;
-    
     ClickScene* gameScene;
     QGraphicsView* gameView;
     QGraphicsScene* bigScene;
     QGraphicsView* bigView;
-    //QGraphicsScene* scoreScene;
-    //QGraphicsView* scoreView;
+    
+    QGraphicsScene* scoreScene;
+    QGraphicsView* scoreView;
     
     Rocket* rocket;
     Laser* laser;

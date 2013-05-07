@@ -14,13 +14,41 @@ void MainWindow::showHighScores(){
   else
   {
     displayScores = new QGraphicsTextItem();
-
-    QString sc = "HIGH SCORES \nName     Stars     Score ";
-    if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
-    {
+    QString sc = "HIGH SCORES \n        Name           Stars   Megastars    Score ";
+    
+    QString name;
+    int stars;
+    int megastars;
+    int totalScore;
+    
+    
+    /*
       QByteArray line = scoreFile->readLine();
       sc.append("\n" + line);
       displayScores->setPlainText(sc);
+      scoreFile->close();
+    */
+    
+    QTextStream stream(scoreFile);
+    
+    if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+      for (int i = 0; i < 3; i++)
+      {
+        sc.append("\n" + QString::number(i+1) + ". "); // numbering
+    
+        stream >> name;
+        stream >> stars;
+        stream >> megastars;
+        stream >> totalScore;
+        
+        if (!(stars == 0 && megastars == 0 && totalScore == 0))
+        {
+          sc.append( name + "     " + QString::number(stars) + "     " + QString::number(megastars) + "     " + QString::number(totalScore));
+         }
+      }
+      displayScores->setPlainText(sc);
+      
       scoreFile->close();
     }
     else
@@ -29,7 +57,7 @@ void MainWindow::showHighScores(){
     }
 
     gameScene->addItem(displayScores);
-    scoreButton->setText("Hide high scores");
+   // scoreButton->setText("Hide high scores");
   }
   
   
