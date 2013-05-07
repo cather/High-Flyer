@@ -17,6 +17,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QImage>
+#include <QGraphicsTextItem>
 
 #include "clickscene.h"
 #include "thing.h"
@@ -52,12 +53,13 @@ class MainWindow : public QWidget{
     
   private:
     QGridLayout* layout;
-//    QGraphicsItemAnimation* bg;
     
     ClickScene* gameScene;
     QGraphicsView* gameView;
     QGraphicsScene* bigScene;
     QGraphicsView* bigView;
+    //QGraphicsScene* scoreScene;
+    //QGraphicsView* scoreView;
     
     Rocket* rocket;
     Laser* laser;
@@ -85,14 +87,18 @@ class MainWindow : public QWidget{
     QPushButton* stopButton;
     QPushButton* playButton;
     QPushButton* nameButton;
+    QPushButton* scoreButton;
     QLabel* message;
     QLabel* health;
     QLabel* score;
     QLabel* name;
     QLabel* nameMenuLabel;
     QTextEdit* nameField;
-    /** QLabel to display scores on screen*/
-    QLabel* displayScores;
+    
+    /** QGraphicsTextItem to display scores on screen*/
+    QGraphicsTextItem* displayScores;
+    /** file containing high scores */
+    QFile* scoreFile;
     
     QImage* bg1;
     QImage* bg2;
@@ -120,8 +126,6 @@ class MainWindow : public QWidget{
     QPoint mousePoint;
     /** keeps track of how many stars the user earned*/
     int starPoints;
-    /** file containing high scores */
-    QFile* scoreFile;
     
   
   public slots:
