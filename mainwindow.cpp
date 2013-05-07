@@ -3,7 +3,65 @@ using namespace std;
 
 /** Updates high scores after a game ends*/
 void MainWindow::updateHighScores(){
- }
+  //scoreView->show();
+  QString name, name2;
+  int stars, stars2;
+  int totalScore, totalScore2;
+  QTextStream stream(scoreFile);
+  QString dataP1;
+  QString dataP2;
+  
+  if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
+  {
+    for (int i = 1; i < 4; i++)
+    {
+      stream >> name; 
+      stream >> stars;
+      stream >> totalScore;
+      if (i == 1)
+      {
+        dataP1 = name + " " + stars + " " + totalScore;
+        stream >> name2; 
+        stream >> stars2;
+        stream >> totalScore2;
+        stream >> name2; 
+        stream >> stars2;
+        stream >> totalScore2;
+        
+        dataP2 = name2 + " " + stars2 + " " + totalScore2;
+      }
+      if (i == 2)
+        dataP2 = name + " " + stars + " " + totalScore;
+      
+     //if player belongs on scoreboard
+     if (points > totalScore)
+     {
+       if (i == 1)
+       {
+         stream << playerName << " " << starPoints << " " << points;
+         stream << "\n" << dataP1;
+         stream << "\n" << dataP2;
+       }
+       else if (i == 2)
+       {
+         stream << dataP1;
+         stream << "\n" << playerName << " " << starPoints << " " << points;
+         stream << "\n" << dataP2;
+       }
+       else
+       {
+          stream << dataP1;
+          stream << "\n" << dataP2;
+          stream << "\n" << playerName << " " << starPoints << " " << points;
+       } 
+     
+     }
+     
+     
+    }
+  }
+    scoreFile->close();
+}
 
 
 /** Toggles the file containing high scores*/
@@ -21,7 +79,7 @@ void MainWindow::showHighScores(){
     int stars;
     int totalScore;
     QTextStream stream(scoreFile);
-    if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
+    if (scoreFile->open(QIODevice::ReadOnly | QIODevice::Text))
     {
       scoreRank[0]->setText("");
       scoreName[0]->setText("Name");
@@ -186,6 +244,7 @@ MainWindow::~MainWindow(){
   delete meteorPic;
   delete meteorBigPic;
   for (int i = 0; i < thingList.size(); i++)
+  {
     delete thingList[i];
+  }
 }
-

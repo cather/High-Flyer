@@ -34,6 +34,9 @@ void MainWindow::startGame() {
     enteredName = true;
     validToShoot = true;
 
+    scoreView->hide();
+    scoresVisible = false;
+
     nameMenuLabel->setText("Level " + QString::number(level));
     name->setText(playerName);
     nameButton->hide();
@@ -52,6 +55,9 @@ void MainWindow::resetGame(){
   
   validToShoot = false;
   gameTimer->stop();
+  
+  scoreView->show();
+  scoresVisible = true;
   
   connect(nameButton, SIGNAL(clicked()), this, SLOT(startGame()));
   clockTime = 100; // reset length of timer
@@ -94,6 +100,9 @@ void MainWindow::resetGame(){
 void MainWindow::endGame(){  
   gameTimer->stop();
   validToShoot = false;
+  
+  scoreView->show();
+  scoresVisible = true;
   
   nameMenuLabel->show();
   nameMenuLabel->setText("Great flight " + name->text() + "! Stars: " + QString::number(starPoints));
