@@ -7,12 +7,16 @@ void MainWindow::showHighScores(){
 
   if (displayScores != NULL)
   {
+    layout->addWidget(gameView, 3, 1, 1, -1);
+    scoreView->hide();
     delete displayScores;
     displayScores = NULL;
     scoreButton->setText("Show high scores");
+    
   }
   else
   {
+    layout->addWidget(scoreView, 3, 2);
     displayScores = new QGraphicsTextItem();
     QString sc = "HIGH SCORES \n        Name           Stars   Megastars    Score ";
     
@@ -20,44 +24,33 @@ void MainWindow::showHighScores(){
     int stars;
     int megastars;
     int totalScore;
-    
-    
-    /*
-      QByteArray line = scoreFile->readLine();
-      sc.append("\n" + line);
-      displayScores->setPlainText(sc);
-      scoreFile->close();
-    */
-    
     QTextStream stream(scoreFile);
     
     if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
     {
-      for (int i = 0; i < 3; i++)
+      for (int i = 1; i < 4; i++)
       {
-        sc.append("\n" + QString::number(i+1) + ". "); // numbering
+        QLabel* number = new QLabel(QString::number(i) + ". "); // numbering
     
-        stream >> name;
-        stream >> stars;
-        stream >> megastars;
-        stream >> totalScore;
+        stream >> name; QLabel* nm = new QLabel(name);
+        stream >> stars; QLabel* strs = new QLabel(QString::number(stars));
+        stream >> megastars; QLabel* mstrs = new QLabel(QString::number(megastars));
+        stream >> totalScore; QLabel* scr = new QLabel(QString::number(totalScore));
         
-        if (!(stars == 0 && megastars == 0 && totalScore == 0))
-        {
-          sc.append( name + "     " + QString::number(stars) + "     " + QString::number(megastars) + "     " + QString::number(totalScore));
-         }
+        highscoretablelayout->addWidget(number,i,0);
+        highscoretablelayout->addWidget(nm,i,1);
+        highscoretablelayout->addWidget(strs,i,2);
+        highscoretablelayout->addWidget(mstrs,i,3);
+        highscoretablelayout->addWidget(scr,i,4);
       }
-      displayScores->setPlainText(sc);
-      
       scoreFile->close();
     }
     else
     {
-      displayScores->setPlainText("Sorry, unable to display score");
+      QLabel* error = new QLabel("Sorry, unable to display score");
+      highscoretablelayout->addWidget(error);
     }
-
-    gameScene->addItem(displayScores);
-   // scoreButton->setText("Hide high scores");
+   scoreButton->setText("Hide high scores");
   }
   
   
@@ -100,8 +93,14 @@ MainWindow::MainWindow(){
     gameScene->setSceneRect(0, 0, GAME_WINDOW_MAX_X, GAME_WINDOW_MAX_Y);
     gameView->setFixedSize(BIG_WINDOW_MAX_X, BIG_WINDOW_MAX_Y);
     gameScene->setBackgroundBrush(QBrush(*bg1));
-  //scoreScene = new QGraphicsScene();
-  //scoreView = new QGraphicsView(scoreScene);
+  
+  //for high scores
+  highscoretablelayout = new QGridLayout();
+  scoreScene = new QGraphicsScene();
+  scoreView = new QGraphicsView(scoreScene);
+  scoreView->setLayout(highscoretablelayout);
+  scoreScene->setSceneRect(BIG_WINDOW_MAX_X/2, BIG_WINDOW_MAX_Y/2, BIG_WINDOW_MAX_X/4, BIG_WINDOW_MAX_Y/4);
+  scoreView->setFixedSize(BIG_WINDOW_MAX_X/2+30, BIG_WINDOW_MAX_Y/2+30);
     
   // buttons
   playButton = new QPushButton("Play");

@@ -58,6 +58,7 @@ class MainWindow : public QWidget{
     QGraphicsScene* bigScene;
     QGraphicsView* bigView;
     
+    QGridLayout* highscoretablelayout;
     QGraphicsScene* scoreScene;
     QGraphicsView* scoreView;
     
