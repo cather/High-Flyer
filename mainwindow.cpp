@@ -5,20 +5,21 @@ using namespace std;
 /** Toggles the file containing high scores*/
 void MainWindow::showHighScores(){
 
-  if (displayScores != NULL)
+  if (scoresVisible)
   {
-    layout->addWidget(gameView, 3, 1, 1, -1);
     scoreView->hide();
-    delete displayScores;
-    displayScores = NULL;
     scoreButton->setText("Show high scores");
-    
+    while (!scoreLabelList.empty())
+      scoreLabelList.pop_front();
+    scoresVisible = false;
   }
   else
   {
-    layout->addWidget(scoreView, 3, 2);
-    displayScores = new QGraphicsTextItem();
-    QString sc = "HIGH SCORES \n        Name           Stars   Megastars    Score ";
+    scoreView->show();
+    QLabel* nmlb = new QLabel("Name");
+    QLabel* stlb = new QLabel("Stars");
+    QLabel* mgstlb = new QLabel("Megastars");
+    QLabel* ttlb = new QLabel("TOTAL");
     
     QString name;
     int stars;
@@ -28,6 +29,11 @@ void MainWindow::showHighScores(){
     
     if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
     {
+      highscoretablelayout->addWidget(nmlb,0,1);
+      highscoretablelayout->addWidget(stlb,0,2);
+      highscoretablelayout->addWidget(mgstlb,0,3);
+      highscoretablelayout->addWidget(ttlb,0,4);
+
       for (int i = 1; i < 4; i++)
       {
         QLabel* number = new QLabel(QString::number(i) + ". "); // numbering
@@ -42,6 +48,12 @@ void MainWindow::showHighScores(){
         highscoretablelayout->addWidget(strs,i,2);
         highscoretablelayout->addWidget(mstrs,i,3);
         highscoretablelayout->addWidget(scr,i,4);
+        
+        scoreLabelList.push_back(number);
+        scoreLabelList.push_back(nm);
+        scoreLabelList.push_back(strs);
+        scoreLabelList.push_back(mstrs);
+        scoreLabelList.push_back(scr);
       }
       scoreFile->close();
     }
@@ -49,8 +61,10 @@ void MainWindow::showHighScores(){
     {
       QLabel* error = new QLabel("Sorry, unable to display score");
       highscoretablelayout->addWidget(error);
+      scoreLabelList.push_back(error);
     }
    scoreButton->setText("Hide high scores");
+   scoresVisible = true;
   }
   
   
@@ -99,8 +113,11 @@ MainWindow::MainWindow(){
   scoreScene = new QGraphicsScene();
   scoreView = new QGraphicsView(scoreScene);
   scoreView->setLayout(highscoretablelayout);
-  scoreScene->setSceneRect(BIG_WINDOW_MAX_X/2, BIG_WINDOW_MAX_Y/2, BIG_WINDOW_MAX_X/4, BIG_WINDOW_MAX_Y/4);
-  scoreView->setFixedSize(BIG_WINDOW_MAX_X/2+30, BIG_WINDOW_MAX_Y/2+30);
+  scoreScene->setSceneRect(200, BIG_WINDOW_MAX_Y/2, 500, BIG_WINDOW_MAX_Y/4);
+  scoreView->setFixedSize(300, 100);
+    scoreView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    scoreView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  scoresVisible = false;
     
   // buttons
   playButton = new QPushButton("Play");
@@ -123,25 +140,8 @@ MainWindow::MainWindow(){
   nameMenuLabel = new QLabel("Enter your name:");
     nameMenuLabel->setFixedSize( nW, nH);
     nameMenuLabel->setAlignment(Qt::AlignHCenter);
-  displayScores = NULL;
   
   scoreFile = new QFile("scores.txt");
-  
-  /*
-  QString s;
-  if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
-  {
-    
-    QTextStream stream(&scoreFile);
-    while (!stream.atEnd())
-    {
-      s.append(stream.readAll());
-    }
-    displayScores->setPlainText(s);
-    displayScores->show();
-    scoreFile->close();
-  }
-  */
   
   //qtextedit for name
   nameField = new QTextEdit();
@@ -157,6 +157,8 @@ MainWindow::MainWindow(){
     layout->addWidget(resetButton, 2, 3);
     layout->setRowMinimumHeight(2, 50);
   layout->addWidget(gameView, 3, 1, 1, -1);
+  layout->addWidget(scoreView, 3, 1, 1, -1);
+  scoreView->hide();
     layout->addWidget(message, 4, 1);
     layout->addWidget(health, 4, 2);
     layout->addWidget(score, 4, 3);

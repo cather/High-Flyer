@@ -82,6 +82,7 @@ class MainWindow : public QWidget{
     QPixmap* megastarPic;
     
     MyList<Thing*> thingList;
+    MyList<QLabel*> scoreLabelList;
     
     QTimer* gameTimer;
     QPushButton* resetButton;
@@ -96,10 +97,9 @@ class MainWindow : public QWidget{
     QLabel* nameMenuLabel;
     QTextEdit* nameField;
     
-    /** QGraphicsTextItem to display scores on screen*/
-    QGraphicsTextItem* displayScores;
     /** file containing high scores */
     QFile* scoreFile;
+    bool scoresVisible;
     
     QImage* bg1;
     QImage* bg2;
