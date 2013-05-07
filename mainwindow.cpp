@@ -2,27 +2,36 @@
 using namespace std;
 
 
-/** Brings up the file containing high scores*/
+/** Toggles the file containing high scores*/
 void MainWindow::showHighScores(){
 
-  delete displayScores;
-  
-  displayScores = new QGraphicsTextItem();
-
-  QString sc = "HIGH SCORES \nName     Stars     Score ";
-  if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
+  if (displayScores != NULL)
   {
-    QByteArray line = scoreFile->readLine();
-    sc.append("\n" + line);
-    displayScores->setPlainText(sc);
-    scoreFile->close();
+    delete displayScores;
+    displayScores = NULL;
+    scoreButton->setText("Show high scores");
   }
   else
   {
-    displayScores->setPlainText("Sorry, unable to display score");
-  }
+    displayScores = new QGraphicsTextItem();
 
-  gameScene->addItem(displayScores);
+    QString sc = "HIGH SCORES \nName     Stars     Score ";
+    if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+      QByteArray line = scoreFile->readLine();
+      sc.append("\n" + line);
+      displayScores->setPlainText(sc);
+      scoreFile->close();
+    }
+    else
+    {
+      displayScores->setPlainText("Sorry, unable to display score");
+    }
+
+    gameScene->addItem(displayScores);
+    scoreButton->setText("Hide high scores");
+  }
+  
   
 }
 
@@ -87,7 +96,7 @@ MainWindow::MainWindow(){
   nameMenuLabel = new QLabel("Enter your name:");
     nameMenuLabel->setFixedSize( nW, nH);
     nameMenuLabel->setAlignment(Qt::AlignHCenter);
-  displayScores = new QGraphicsTextItem();
+  displayScores = NULL;
   
   scoreFile = new QFile("scores.txt");
   
