@@ -1,75 +1,48 @@
 #include "mainwindow.h"
 using namespace std;
 
+/** Updates high scores after a game ends*/
+void MainWindow::updateHighScores(){
+ }
+
 
 /** Toggles the file containing high scores*/
 void MainWindow::showHighScores(){
-
   if (scoresVisible)
   {
     scoreView->hide();
     scoreButton->setText("Show high scores");
-    while (!scoreLabelList.empty())
-      scoreLabelList.pop_front();
     scoresVisible = false;
   }
   else
   {
     scoreView->show();
-    QLabel* nmlb = new QLabel("Name");
-    QLabel* stlb = new QLabel("Stars");
-    QLabel* mgstlb = new QLabel("Megastars");
-    QLabel* ttlb = new QLabel("TOTAL");
-    
     QString name;
     int stars;
-    int megastars;
     int totalScore;
     QTextStream stream(scoreFile);
-    
     if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
     {
-      highscoretablelayout->addWidget(nmlb,0,1);
-      highscoretablelayout->addWidget(stlb,0,2);
-      highscoretablelayout->addWidget(mgstlb,0,3);
-      highscoretablelayout->addWidget(ttlb,0,4);
-
+      scoreRank[0]->setText("");
+      scoreName[0]->setText("Name");
+      scoreStars[0]->setText("Stars");
+      scoreTotal[0]->setText("TOTAL SCORE");
       for (int i = 1; i < 4; i++)
       {
-        QLabel* number = new QLabel(QString::number(i) + ". "); // numbering
-    
-        stream >> name; QLabel* nm = new QLabel(name);
-        stream >> stars; QLabel* strs = new QLabel(QString::number(stars));
-        stream >> megastars; QLabel* mstrs = new QLabel(QString::number(megastars));
-        stream >> totalScore; QLabel* scr = new QLabel(QString::number(totalScore));
-        
-        highscoretablelayout->addWidget(number,i,0);
-        highscoretablelayout->addWidget(nm,i,1);
-        highscoretablelayout->addWidget(strs,i,2);
-        highscoretablelayout->addWidget(mstrs,i,3);
-        highscoretablelayout->addWidget(scr,i,4);
-        
-        scoreLabelList.push_back(number);
-        scoreLabelList.push_back(nm);
-        scoreLabelList.push_back(strs);
-        scoreLabelList.push_back(mstrs);
-        scoreLabelList.push_back(scr);
+        scoreRank[i]->setText(QString::number(i) + ".");
+        stream >> name; 
+        scoreName[i]->setText(name);
+        stream >> stars;
+        scoreStars[i]->setText(QString::number(stars));
+        stream >> totalScore; 
+        scoreTotal[i]->setText(QString::number(totalScore));
       }
       scoreFile->close();
-    }
-    else
-    {
-      QLabel* error = new QLabel("Sorry, unable to display score");
-      highscoretablelayout->addWidget(error);
-      scoreLabelList.push_back(error);
     }
    scoreButton->setText("Hide high scores");
    scoresVisible = true;
   }
-  
-  
 }
-
 
 /** Constructor. Creates all pixmaps, layout items, buttons, labels, and button connections. Also creates an intial Rocket item and adds it to the screen but hides it until startGame is called*/
 MainWindow::MainWindow(){
@@ -109,6 +82,7 @@ MainWindow::MainWindow(){
     gameScene->setBackgroundBrush(QBrush(*bg1));
   
   //for high scores
+  scoreFile = new QFile("scores.txt");
   highscoretablelayout = new QGridLayout();
   scoreScene = new QGraphicsScene();
   scoreView = new QGraphicsView(scoreScene);
@@ -118,7 +92,26 @@ MainWindow::MainWindow(){
     scoreView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scoreView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   scoresVisible = false;
+  for (int i = 0; i < 4; i++)
+  {
+    QLabel* rank = new QLabel();
+    QLabel* nm = new QLabel();
+    QLabel* strs = new QLabel();
+    QLabel* tot = new QLabel();
     
+    scoreRank.push_back(rank);
+    scoreName.push_back(nm);
+    scoreStars.push_back(strs);
+    scoreTotal.push_back(tot);
+    
+    highscoretablelayout->addWidget(scoreRank[i],i,1);
+    highscoretablelayout->addWidget(scoreName[i],i,2);
+    highscoretablelayout->addWidget(scoreStars[i],i,3);
+    highscoretablelayout->addWidget(scoreTotal[i],i,4);
+  }
+
+  
+  
   // buttons
   playButton = new QPushButton("Play");
     playButton->hide();
@@ -140,8 +133,6 @@ MainWindow::MainWindow(){
   nameMenuLabel = new QLabel("Enter your name:");
     nameMenuLabel->setFixedSize( nW, nH);
     nameMenuLabel->setAlignment(Qt::AlignHCenter);
-  
-  scoreFile = new QFile("scores.txt");
   
   //qtextedit for name
   nameField = new QTextEdit();

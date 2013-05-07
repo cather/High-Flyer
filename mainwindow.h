@@ -82,7 +82,6 @@ class MainWindow : public QWidget{
     QPixmap* megastarPic;
     
     MyList<Thing*> thingList;
-    MyList<QLabel*> scoreLabelList;
     
     QTimer* gameTimer;
     QPushButton* resetButton;
@@ -100,6 +99,17 @@ class MainWindow : public QWidget{
     /** file containing high scores */
     QFile* scoreFile;
     bool scoresVisible;
+    MyList<QLabel*> scoreRank;
+    MyList<QLabel*> scoreName;
+    MyList<QLabel*> scoreStars;
+    MyList<QLabel*> scoreTotal;
+    
+    
+    
+    
+    
+    
+    QString playerName;
     
     QImage* bg1;
     QImage* bg2;
@@ -116,7 +126,6 @@ class MainWindow : public QWidget{
     bool validToShoot;
     /** keeps track of whether user has entered a name in the nameField*/
     bool enteredName;
-//    bool starting;
     /** Keeps track of user's earned points*/
     int points;
     /** keeps track of how many times the gametimer times out*/
@@ -136,6 +145,7 @@ class MainWindow : public QWidget{
     void startGame();
     void endGame();
     void showHighScores();
+    void updateHighScores();
     
   signals:
     void clicked();

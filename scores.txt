@@ -1,3 +1,2 @@
-Cathy 2 0 34
-Boo 0 3 444
-i f 234 5 4
+Cathy 2 34
+Boo 3 444

@@ -28,14 +28,14 @@ void MainWindow::shootLaser(int x, int y){
 /** Function that starts the game. Updates labels and buttons to indicate game has started, starts timer, and toggles Laser spawning capability*/
 void MainWindow::startGame() {
   level = 1;
-  QString n = nameField->toPlainText();
-  if (!n.isEmpty()) // makes sure user has entered something in the field
+  playerName = nameField->toPlainText();
+  if (!playerName.isEmpty()) // makes sure user has entered something in the field
   {
     enteredName = true;
     validToShoot = true;
 
     nameMenuLabel->setText("Level " + QString::number(level));
-    name->setText(n);
+    name->setText(playerName);
     nameButton->hide();
     nameField->hide();
     message->setText("");
@@ -113,9 +113,10 @@ void MainWindow::endGame(){
   }
   thingList.clear();
   
- showHighScores();
-  
+ updateHighScores();  
 }
+
+
 /** Function that triggers the gameTimer on and off. Reconfigures buttons and user-interactivity based on whether the gameTimer is on or off*/
 void MainWindow::triggerTimer() {
   if (enteredName)
