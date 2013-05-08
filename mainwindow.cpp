@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 using namespace std;
 
-/** Updates high scores after a game ends*/
+/** Updates high scores into a text file. If current points are greater than any of the 3 scores in the file, it replaces the lowest score it exceeds*/
 void MainWindow::updateHighScores(){
 
   QString name1 = "";
@@ -45,7 +45,7 @@ void MainWindow::updateHighScores(){
 
 }
 
-/** Toggles visibility of the high score list*/
+/** Toggles visibility of the high score list. The file containing high scores is read and its contents are displayed using QLabels*/
 void MainWindow::toggleHighScores(){
   if (scoresVisible)
   {
@@ -81,9 +81,6 @@ void MainWindow::toggleHighScores(){
     scoresVisible = true;
   }
 }
-
-#include "mainwindow.h"
-using namespace std;
 
 /** Adds a Missile to the screen and pushes it back to the thingList
   @param AlienMidx the x coordinate to spawn the missile at
