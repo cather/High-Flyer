@@ -80,6 +80,9 @@ class MainWindow : public QWidget{
     QPixmap* meteorPic;
     QPixmap* meteorBigPic;
     QPixmap* megastarPic;
+    QImage* bg1;
+    QImage* bg2;
+    QImage* bg3;
     
     MyList<Thing*> thingList;
     
@@ -108,10 +111,6 @@ class MainWindow : public QWidget{
     MyList<QLabel*> scoreTotal;
     
     QString playerName;
-    
-    QImage* bg1;
-    QImage* bg2;
-    QImage* bg3;
     
     /** Number to modulo a random number by to determine meteor movement speed*/
     int meteorSpeedrf;
