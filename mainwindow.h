@@ -93,15 +93,20 @@ class MainWindow : public QWidget{
     QLabel* score;
     QLabel* name;
     QLabel* nameMenuLabel;
+    QLabel* highscoretabletitle;
     QTextEdit* nameField;
     
     /** file containing high scores */
     QFile* scoreFile;
-    QFile* scoreFileTEMP;
+    /** bool to determine when to make high scores visible on screen*/
     bool scoresVisible;
+    /** List of QLabels for each rank number in my scoring display*/
     MyList<QLabel*> scoreRank;
+    /** List of QLabels for each player's name in my scoring display*/
     MyList<QLabel*> scoreName;
+    /** List of QLabels for each player's score in my scoring display*/
     MyList<QLabel*> scoreTotal;
+    
     QString playerName;
     
     QImage* bg1;

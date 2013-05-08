@@ -12,47 +12,40 @@ void MainWindow::updateHighScores(){
   QString total3 = "";
   
   QTextStream read(scoreFile);
-  
-  QTextStream read2(scoreFile);
-  QTextStream write(scoreFileTEMP);
+  QTextStream write(scoreFile);
   QString p1;
   QString p2;
   QString p3;
   
+  // read info from file
   if (scoreFile->open(QIODevice::ReadOnly | QIODevice::Text))
   {
     read >> total1 >> name1 >> total2 >> name2 >> total3 >> name3;
     p1 = total1 + " " + name1;
     p2 = total2 + " " +  name2;
     p3 = total3 + " " +  name3;
-    
-    
     scoreFile->close();
   }
   
-  if (scoreFileTEMP->open(QIODevice::ReadWrite | QIODevice::Text))
+  // write info to file depending on score
+  if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
   {
-   
-    cout << points << " ? " << total1.toInt() <<endl;  
-    
-    // if new #1
+    // if new #1 score
     if (points > total1.toInt())
       write << points << " " << playerName << "\n" << p1 << "\n" << p2;
-    else if (points > total2.toInt())
+    // if new #2 score
+    else if (points > total2.toInt()) 
       write << p1 << "\n" << points << " " << playerName << "\n" << p2;
+    // if new #3 score
     else if (points > total3.toInt())
       write << p1 << "\n" << p2   << "\n" << points << " " << playerName;
      
-   scoreFileTEMP->close();
+   scoreFile->close();
    }
-   delete scoreFile;
-   scoreFileTEMP->rename("scoresTEMP.txt", "scores.txt");
-    scoreFile = new QFile("scoresTEMP.txt");
 
 }
 
-
-/** Toggles the file containing high scores*/
+/** Toggles visibility of the high score list*/
 void MainWindow::toggleHighScores(){
   if (scoresVisible)
   {
@@ -65,6 +58,7 @@ void MainWindow::toggleHighScores(){
     int totalScore;
     QTextStream stream(scoreFile);
     
+    // opens file to read and display text on scre
     if (scoreFile->open(QIODevice::ReadOnly | QIODevice::Text))
     {
       scoreRank[0]->setText("");
@@ -80,7 +74,8 @@ void MainWindow::toggleHighScores(){
         scoreName[i]->setText(name);
       }
     }
-    // makes visible
+    
+    // makes everything visible
     scoreFile->close();
     scoreView->show();
     scoresVisible = true;
@@ -437,7 +432,6 @@ MainWindow::MainWindow(){
   
   //for high scores
   scoreFile = new QFile("scores.txt");
-  scoreFileTEMP = new QFile("scoresTEMP.txt");
   
   highscoretablelayout = new QGridLayout();
   scoreScene = new QGraphicsScene();
@@ -449,10 +443,11 @@ MainWindow::MainWindow(){
     scoreView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   scoresVisible = false;
 
-   QLabel* highscoretabletitle = new QLabel("HIGH SCORES");
+   highscoretabletitle = new QLabel("HIGH SCORES");
    highscoretablelayout->addWidget(highscoretabletitle,0,1,1,-1);
    
 
+  // create all labels needed to display high scores nad add them to layout
   for (int i = 1; i < 5; i++)
   {
     QLabel* rank = new QLabel();
@@ -467,9 +462,6 @@ MainWindow::MainWindow(){
     highscoretablelayout->addWidget(scoreName[i],i,2);
     highscoretablelayout->addWidget(scoreTotal[i],i,3);
   }
-  updateHighScores(); // open high score view
-
-  
   
   // buttons
   playButton = new QPushButton("Play");
@@ -512,6 +504,7 @@ MainWindow::MainWindow(){
     layout->addWidget(health, 4, 2);
     layout->addWidget(score, 4, 3);
   
+  updateHighScores(); // open high score view
   toggleHighScores(); // turn on high score view
   
   // creates rocket
@@ -534,8 +527,6 @@ MainWindow::MainWindow(){
 MainWindow::~MainWindow(){
   delete bigView;
   delete bigScene;
-  
- // delete highscoretabletitle;
   
   delete rocketPic;
   delete planetPic;
