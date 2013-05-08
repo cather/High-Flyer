@@ -4,72 +4,51 @@ using namespace std;
 /** Updates high scores after a game ends*/
 void MainWindow::updateHighScores(){
   //scoreView->show();
-  QString name, name2;
-  int stars, stars2;
-  int totalScore, totalScore2;
-  QTextStream stream(scoreFile);
-  QString dataP1;
-  QString dataP2;
+  QString name;
+  int stars;
+  int totalScore;
+  QTextStream out(scoreFile);
+  QTextStream in(scoreFile);
+  QString p1;
+  QString p2;
+  QString p3;
   
-  if (scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
+  if (scoreFile->open(QIODevice::ReadOnly | QIODevice::Text))
   {
-    for (int i = 1; i < 4; i++)
-    {
-      stream >> name; 
-      stream >> stars;
-      stream >> totalScore;
-      if (i == 1)
-      {
-        dataP1 = name + " " + stars + " " + totalScore;
-        stream >> name2; 
-        stream >> stars2;
-        stream >> totalScore2;
-        stream >> name2; 
-        stream >> stars2;
-        stream >> totalScore2;
-        
-        dataP2 = name2 + " " + stars2 + " " + totalScore2;
-      }
-      if (i == 2)
-        dataP2 = name + " " + stars + " " + totalScore;
-      
-     //if player belongs on scoreboard
-     if (points > totalScore)
-     {
-       if (i == 1)
-       {
-         stream << playerName << " " << starPoints << " " << points;
-         stream << "\n" << dataP1;
-         stream << "\n" << dataP2;
-       }
-       else if (i == 2)
-       {
-         stream << dataP1;
-         stream << "\n" << playerName << " " << starPoints << " " << points;
-         stream << "\n" << dataP2;
-       }
-       else
-       {
-          stream << dataP1;
-          stream << "\n" << dataP2;
-          stream << "\n" << playerName << " " << starPoints << " " << points;
-       } 
-     
-     }
-     
-     
-    }
+    p1 = out.readLine();
+    p2 = out.readLine();
+    p3 = out.readLine();
   }
-    scoreFile->close();
+  scoreFile->close();
+  
+  scoreFile2 = new QFile("scores2.txt");
+  if (scoreFile2->open(QIODevice::ReadWrite | QIODevice::Text))
+  {
+    QTextStream readData(scoreFile2);
+    readData >> name; 
+    readData >> stars; 
+    readData >> totalScore; 
+    
+    if (points > totalScore)
+    {
+      in << playerName << " " << starPoints << " " << points << "\n";
+      in << p1 << "\n";
+      in << p2 << "\n";
+    }
+   }
+   scoreFile2->close();
+   
+   scoreFile2->rename("scores2.txt", "scores.txt");
+   
+  
 }
 
 
 /** Toggles the file containing high scores*/
-void MainWindow::showHighScores(){
+void MainWindow::toggleHighScores(){
   if (scoresVisible)
   {
     scoreView->hide();
-    scoreButton->setText("Show high scores");
     scoresVisible = false;
   }
   else
@@ -94,17 +73,28 @@ void MainWindow::showHighScores(){
         scoreStars[i]->setText(QString::number(stars));
         stream >> totalScore; 
         scoreTotal[i]->setText(QString::number(totalScore));
+        if (totalScore == 0)
+        {
+          scoreName[i]->hide();
+          scoreStars[i]->hide();
+          scoreTotal[i]->hide();
+        }
+        else
+        {
+          scoreName[i]->show();
+          scoreStars[i]->show();
+          scoreTotal[i]->show();
+        }
       }
       scoreFile->close();
     }
-   scoreButton->setText("Hide high scores");
    scoresVisible = true;
   }
 }
 
 /** Constructor. Creates all pixmaps, layout items, buttons, labels, and button connections. Also creates an intial Rocket item and adds it to the screen but hides it until startGame is called*/
 MainWindow::MainWindow(){
-  meteorSpeedrf = 5;
+  meteorSpeedrf = 10;
   minMeteorSpeed = 5;
   level = 1;
   starPoints = 0;
@@ -150,7 +140,12 @@ MainWindow::MainWindow(){
     scoreView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scoreView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   scoresVisible = false;
-  for (int i = 0; i < 4; i++)
+
+   QLabel* highscoretabletitle = new QLabel("HIGH SCORES");
+   highscoretablelayout->addWidget(highscoretabletitle,0,1,1,-1);
+   
+
+  for (int i = 1; i < 5; i++)
   {
     QLabel* rank = new QLabel();
     QLabel* nm = new QLabel();
@@ -167,6 +162,7 @@ MainWindow::MainWindow(){
     highscoretablelayout->addWidget(scoreStars[i],i,3);
     highscoretablelayout->addWidget(scoreTotal[i],i,4);
   }
+  updateHighScores(); // open high score view
 
   
   
@@ -177,7 +173,6 @@ MainWindow::MainWindow(){
   resetButton = new QPushButton("Restart");
   nameButton = new QPushButton("Welcome Aboard!");
     nameButton->setGeometry((GAME_WINDOW_MAX_X-nW)/2,(GAME_WINDOW_MAX_Y)/2+nH, nW, nH);
-  scoreButton = new QPushButton("High scores");
   
   // Timer to keep track of score, health, etc
   gameTimer = new QTimer(this);
@@ -211,7 +206,8 @@ MainWindow::MainWindow(){
     layout->addWidget(message, 4, 1);
     layout->addWidget(health, 4, 2);
     layout->addWidget(score, 4, 3);
-  layout->addWidget(scoreButton,5,1);
+  
+  toggleHighScores(); // turn on high score view
   
   // creates rocket
   points = 0;
@@ -226,7 +222,6 @@ MainWindow::MainWindow(){
   connect(playButton, SIGNAL(clicked()), this, SLOT(triggerTimer()));
   connect(resetButton, SIGNAL(clicked()), this, SLOT(resetGame()));
   connect(stopButton, SIGNAL(clicked()), qApp, SLOT(quit()));
-  connect(scoreButton, SIGNAL(clicked()), this, SLOT(showHighScores()));
 
 }
 
@@ -234,6 +229,8 @@ MainWindow::MainWindow(){
 MainWindow::~MainWindow(){
   delete bigView;
   delete bigScene;
+  
+ // delete highscoretabletitle;
   
   delete rocketPic;
   delete planetPic;

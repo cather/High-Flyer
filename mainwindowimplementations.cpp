@@ -28,9 +28,12 @@ void MainWindow::shootLaser(int x, int y){
 /** Function that starts the game. Updates labels and buttons to indicate game has started, starts timer, and toggles Laser spawning capability*/
 void MainWindow::startGame() {
   level = 1;
+  points = 0;
   playerName = nameField->toPlainText();
   if (!playerName.isEmpty()) // makes sure user has entered something in the field
   {
+    toggleHighScores(); // closes highscore view
+  
     enteredName = true;
     validToShoot = true;
 
@@ -56,8 +59,7 @@ void MainWindow::resetGame(){
   validToShoot = false;
   gameTimer->stop();
   
-  scoreView->show();
-  scoresVisible = true;
+  toggleHighScores(); // closes highscore view
   
   connect(nameButton, SIGNAL(clicked()), this, SLOT(startGame()));
   clockTime = 100; // reset length of timer
@@ -101,9 +103,6 @@ void MainWindow::endGame(){
   gameTimer->stop();
   validToShoot = false;
   
-  scoreView->show();
-  scoresVisible = true;
-  
   nameMenuLabel->show();
   nameMenuLabel->setText("Great flight " + name->text() + "! Stars: " + QString::number(starPoints));
   nameButton->show();
@@ -123,6 +122,7 @@ void MainWindow::endGame(){
   thingList.clear();
   
  updateHighScores();  
+ toggleHighScores(); // opens highscore view
 }
 
 
@@ -142,6 +142,8 @@ void MainWindow::triggerTimer() {
       playButton->setText("Pause");
       validToShoot = true;
     }
+    
+    toggleHighScores();
   }
 }
 
@@ -172,15 +174,15 @@ void MainWindow::handleTimer() {
     thingList.push_back(planet);
   }
   
-  // add small meteor every 10 ticks
-  if (counter > 0 && counter%20 == 0)
+  // add small meteor every 15 ticks
+  if (counter > 0 && counter%15 == 0)
   {
     meteor = new Meteor(meteorPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), minMeteorSpeed+rand()%meteorSpeedrf);
     gameScene->addItem(meteor);
     thingList.push_back(meteor);
   }
   
-  // add big meteor every 20 ticks
+  // add big meteor every 30 ticks
   if (counter > 0 && counter%30 == 0)
   {
     meteor = new Meteor(meteorBigPic, rand()%GAME_WINDOW_MAX_Y, meteorPic->width(), meteorPic->height(), minMeteorSpeed+rand()%meteorSpeedrf);
@@ -239,13 +241,13 @@ void MainWindow::handleTimer() {
     if (level == 2) // specs for level 2
     {
       gameScene->setBackgroundBrush(QBrush(*bg2));
-      minMeteorSpeed += 5;
+      minMeteorSpeed += 7;
     }
     if (level > 2) // specs for upper levels
     {
       gameScene->setBackgroundBrush(QBrush(*bg3));
-      minMeteorSpeed += 7;
-      meteorSpeedrf += 5;
+      minMeteorSpeed += 10;
+      meteorSpeedrf += 10;
     }
     nameMenuLabel->setText("Level " + QString::number(level));
     message->setText("Level up");
@@ -273,27 +275,25 @@ void MainWindow::handleTimer() {
   // update score for star points
   if (rocket->getStars() == starPoints+1)
   {
-    points = points+10; 
     starPoints += 1;
-    message->setText("Collected star!");
+    if (rocket->getMegastars() == starPoints+1)
+    {
+      points = points+50; 
+      message->setText("Collected MEGAstar!");
+    }
+    else
+    {
+      points = points+10; 
+      message->setText("Collected star!");
+    }
   }
   else
   {
     if (counter > 0 && counter % 25 == 0)
       message->setText("");
   }
-  // update score for megastar points
-  if (rocket->getMegastars() == starPoints+1)
-  {
-    points = points+50; 
-    starPoints += 1;
-    message->setText("Collected MEGAstar!");
-  }
-  else
-  {
-    if (counter > 0 && counter % 25 == 0)
-      message->setText("");
-  }
+  
+  
   score->setText("Score: " + QString::number(points));
   counter++; // update timer counter
   

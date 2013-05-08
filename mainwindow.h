@@ -88,7 +88,6 @@ class MainWindow : public QWidget{
     QPushButton* stopButton;
     QPushButton* playButton;
     QPushButton* nameButton;
-    QPushButton* scoreButton;
     QLabel* message;
     QLabel* health;
     QLabel* score;
@@ -98,6 +97,7 @@ class MainWindow : public QWidget{
     
     /** file containing high scores */
     QFile* scoreFile;
+    QFile* scoreFile2;
     bool scoresVisible;
     MyList<QLabel*> scoreRank;
     MyList<QLabel*> scoreName;
@@ -144,7 +144,7 @@ class MainWindow : public QWidget{
     void resetGame();
     void startGame();
     void endGame();
-    void showHighScores();
+    void toggleHighScores();
     void updateHighScores();
     
   signals:
