@@ -428,8 +428,6 @@ MainWindow::MainWindow(){
     gameScene->setBackgroundBrush(QBrush(*bg1));
   
   //for high scores
-  scoreFile = new QFile("scores.txt");
-  
   highscoretablelayout = new QGridLayout();
   scoreScene = new QGraphicsScene();
   scoreView = new QGraphicsView(scoreScene);
@@ -439,12 +437,12 @@ MainWindow::MainWindow(){
     scoreView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scoreView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   scoresVisible = false;
-
-   highscoretabletitle = new QLabel("HIGH SCORES");
-   highscoretablelayout->addWidget(highscoretabletitle,0,1,1,-1);
+  scoreFile = new QFile("scores.txt");
+  highscoretabletitle = new QLabel("HIGH SCORES");
+  highscoretablelayout->addWidget(highscoretabletitle,0,1,1,-1);
    
 
-  // create all labels needed to display high scores nad add them to layout
+  // create all labels needed to display high scores and add them to layout
   for (int i = 1; i < 5; i++)
   {
     QLabel* rank = new QLabel();
@@ -534,7 +532,6 @@ MainWindow::~MainWindow(){
   delete meteorPic;
   delete meteorBigPic;
   for (int i = 0; i < thingList.size(); i++)
-  {
     delete thingList[i];
-  }
+
 }
