@@ -4,11 +4,13 @@ using namespace std;
 /** Updates high scores after a game ends*/
 void MainWindow::updateHighScores(){
 
-  QString name = "";
-  QString totalScore = "";
-  int total1 = 0;
-  int total2 = 0;
-  int total3 = 0;
+  QString name1 = "";
+  QString name2 = "";
+  QString name3 = "";
+  QString total1 = "";
+  QString total2 = "";
+  QString total3 = "";
+  
   QTextStream read(scoreFile);
   
   QTextStream read2(scoreFile);
@@ -19,12 +21,10 @@ void MainWindow::updateHighScores(){
   
   if (scoreFile->open(QIODevice::ReadOnly | QIODevice::Text))
   {
-    p1 = read.readLine();
-    p2 = read.readLine();
-    p3 = read.readLine();
-    
-    read >> total1 >> name >> total2 >> name >> total3 >> name;
-    
+    read >> total1 >> name1 >> total2 >> name2 >> total3 >> name3;
+    p1 = total1 + " " + name1;
+    p2 = total2 + " " +  name2;
+    p3 = total3 + " " +  name3;
     
     
     scoreFile->close();
@@ -33,10 +33,15 @@ void MainWindow::updateHighScores(){
   if (scoreFileTEMP->open(QIODevice::ReadWrite | QIODevice::Text))
   {
    
-    cout << points << " ? " << total1 <<endl;  
-    if (points > total1)
+    cout << points << " ? " << total1.toInt() <<endl;  
+    
+    // if new #1
+    if (points > total1.toInt())
       write << points << " " << playerName << "\n" << p1 << "\n" << p2;
-     
+    else if (points > total2.toInt())
+      write << p1 << "\n" << points << " " << playerName << "\n" << p2;
+    else if (points > total3.toInt())
+      write << p1 << "\n" << p2   << "\n" << points << " " << playerName;
      
    scoreFileTEMP->close();
    }
