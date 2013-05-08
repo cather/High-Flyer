@@ -96,12 +96,11 @@ class MainWindow : public QWidget{
     QTextEdit* nameField;
     
     /** file containing high scores */
-    QFile* scoreFile;
-    QFile* scoreFile2;
+    QFile* scoreFileRO;
+    QFile* scoreFileRW;
     bool scoresVisible;
     MyList<QLabel*> scoreRank;
     MyList<QLabel*> scoreName;
-    MyList<QLabel*> scoreStars;
     MyList<QLabel*> scoreTotal;
     
     
