@@ -4,67 +4,46 @@ using namespace std;
 /** Updates high scores after a game ends*/
 void MainWindow::updateHighScores(){
 
-/*
-  QString name;
-  int totalScore;
-  QTextStream out(scoreFileRO);
-  QTextStream in(scoreFileRW);
+  QString name = "";
+  QString totalScore = "";
+  int total1 = 0;
+  int total2 = 0;
+  int total3 = 0;
+  QTextStream read(scoreFile);
+  
+  QTextStream read2(scoreFile);
+  QTextStream write(scoreFileTEMP);
   QString p1;
   QString p2;
   QString p3;
   
-  if (scoreFileRO->open(QIODevice::ReadOnly | QIODevice::Text))
+  if (scoreFile->open(QIODevice::ReadOnly | QIODevice::Text))
   {
-    p1 = out.readLine();
-    p2 = out.readLine();
-    p3 = out.readLine();
-  }
-  scoreFileRO->close();
-  
-  
-  if (scoreFileRW->open(QIODevice::ReadWrite | QIODevice::Text))
-  {
-  
-    in >> totalScore;
-    if (points > totalScore )
-    {
-      cout << "Writing scores to file"<<endl;
-      in << points << " " << playerName << "\n";
-      in << p1 << "\n";
-      in << p2 << "\n";
-    }
-    else
-    {
-      in >> name;
-      in >> totalScore;
-      if (points > totalScore )
-      {
-        cout << "Writing scores to file"<<endl;
-        in << p1 << "\n";
-        in << points << " " << playerName << "\n";
-        in << p2 << "\n";
-      }
-      else
-      {
-        in >> name;
-        in >> totalScore;
-        if (points > totalScore )
-        {
-          cout << "Writing scores to file"<<endl;
-          in << p1 << "\n";
-          in << p2 << "\n";
-          in << points << " " << playerName << "\n";
-        }
-
-      }
-
-    }
+    p1 = read.readLine();
+    p2 = read.readLine();
+    p3 = read.readLine();
     
+    read >> total1 >> name >> total2 >> name >> total3 >> name;
+    
+    
+    
+    scoreFile->close();
+  }
+  
+  if (scoreFileTEMP->open(QIODevice::ReadWrite | QIODevice::Text))
+  {
+   
+    cout << points << " ? " << total1 <<endl;  
+    if (points > total1)
+      write << points << " " << playerName << "\n" << p1 << "\n" << p2;
+     
+     
+   scoreFileTEMP->close();
    }
-   scoreFileRW->close();
-   scoreFileRO->rename("scoresRO.txt", "scoresRW.txt");
-   scoreFileRW->rename("scoresRW.txt", "scoresRO.txt");
-   */
+   delete scoreFile;
+   scoreFileTEMP->rename("scoresTEMP.txt", "scores.txt");
+    scoreFile = new QFile("scoresTEMP.txt");
+
 }
 
 
@@ -79,9 +58,9 @@ void MainWindow::toggleHighScores(){
   {
     QString name; 
     int totalScore;
-    QTextStream stream(scoreFileRO);
+    QTextStream stream(scoreFile);
     
-    if (scoreFileRO->open(QIODevice::ReadOnly | QIODevice::Text))
+    if (scoreFile->open(QIODevice::ReadOnly | QIODevice::Text))
     {
       scoreRank[0]->setText("");
       scoreName[0]->setText("Name");
@@ -97,7 +76,7 @@ void MainWindow::toggleHighScores(){
       }
     }
     // makes visible
-    scoreFileRO->close();
+    scoreFile->close();
     scoreView->show();
     scoresVisible = true;
   }
@@ -452,8 +431,8 @@ MainWindow::MainWindow(){
     gameScene->setBackgroundBrush(QBrush(*bg1));
   
   //for high scores
-  scoreFileRO = new QFile("scoresRO.txt");
-  scoreFileRW = new QFile("scoresRW.txt");
+  scoreFile = new QFile("scores.txt");
+  scoreFileTEMP = new QFile("scoresTEMP.txt");
   
   highscoretablelayout = new QGridLayout();
   scoreScene = new QGraphicsScene();
